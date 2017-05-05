@@ -1,6 +1,6 @@
-**/.idea*/*
 **/.*xml
 **/*.iml
 **/*.swp
 **/*.out
 /out/
+/.idea/
