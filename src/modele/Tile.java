@@ -1,19 +1,10 @@
 package modele;
 
+import modele.Config.Color;
+
 public class Tile{
 	
 	private Color color;
-	
-	public enum Color {
-		ILLEGAL,
-		EMPTY,
-		BLACK,
-		WHITE,
-		RED,
-		GREEN,
-		BLUE,
-		YELLOW
-	}
 
 	public Tile(Color color){
 		this.color = color;
