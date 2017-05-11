@@ -1,5 +1,6 @@
 package modele;
 import modele.Config.Color;
+import modele.Config.Direction;
 public class Board {
     private Tile GameBoard[][];
 
@@ -53,5 +54,23 @@ public class Board {
     		}
     		System.out.println("");
     	}
+    }
+    
+    // Moves
+    
+    public void sumito_2_1(Coords pieces[], int player){
+    	//Direction k = (Direction)pieces[3].x%10;
+    }
+    public void sumito_3_1(Coords pieces, int player){
+    	
+    }
+    public void sumito_3_2(Coords pieces, int player){
+    	
+    }
+    public void broadside(Coords pieces, int player){
+    	
+    }
+    public void simple_move(Coords pieces, int player){
+    	
     }
 }
