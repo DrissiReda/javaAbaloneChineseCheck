@@ -12,4 +12,14 @@ public class Config {
 		BLUE,
 		YELLOW
 	}
+	
+	public enum Direction {
+		LEFT,
+		RIGHT,
+		UPLEFT,
+		DOWNRIGHT,
+		UPRIGHT,
+		DOWNLEFT
+	}
+
 }
