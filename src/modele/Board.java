@@ -3,7 +3,7 @@ import modele.Config.Color;
 public class Board {
     private Tile GameBoard[][];
 
-    public Board(int height,int width) {
+    public Board(int height, int width) {
         GameBoard = new Tile[height][width];
         for (int j = 0; j < 11; j++)
             GameBoard[0][j] = new Tile(((j % 2) == 0 ?Color.ILLEGAL : Color.EMPTY));
@@ -29,5 +29,22 @@ public class Board {
                 GameBoard[5+i][width - j-1] = new Tile((((i + j) % 2) == 0 ? Color.BLACK : Color.EMPTY));
             }
         }
+    }
+    
+    public void displayBoard()
+    {
+    	for(int i = 0; i < 11; i++){
+    		for(int j = 0; j < 19; j++){
+    			if(GameBoard[i][j].getColor() == Color.ILLEGAL)
+    				System.out.print(" ");
+    			else if(GameBoard[i][j].getColor() == Color.EMPTY)
+    				System.out.print(".");
+    			else if(GameBoard[i][j].getColor() == Color.BLACK)
+    				System.out.print("B");
+    			else if(GameBoard[i][j].getColor() == Color.WHITE)
+    				System.out.print("W");
+    		}
+    		System.out.println("");
+    	}
     }
 }
