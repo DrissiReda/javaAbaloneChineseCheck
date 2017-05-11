@@ -3,7 +3,14 @@ import modele.Config.Color;
 public class Board {
     private Tile GameBoard[][];
 
-    public Board(int height, int width) {
+    public Color getCase(int i,int j){
+        return GameBoard[i][j].getColor();
+    }
+    public void SetCase(int i,int j,Color c){
+        GameBoard[i][j].setColor(c);
+    }
+    
+    public Board(int height,int width) {
         GameBoard = new Tile[height][width];
         for (int j = 0; j < 11; j++)
             GameBoard[0][j] = new Tile(((j % 2) == 0 ?Color.ILLEGAL : Color.EMPTY));
