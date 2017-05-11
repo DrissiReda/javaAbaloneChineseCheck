@@ -20,12 +20,12 @@ public class Board {
                                 };
     private int height, width;
 
-    public Color getCase(int i, int j){
-        return GameBoard[i][j].getColor();
+    public Color getCase(Coords pos){
+        return GameBoard[pos.x][pos.y].getColor();
     }
     
-    public void SetCase(int i, int j, Color c){
-        GameBoard[i][j].setColor(c);
+    public void setCase(Coords pos, Color c){
+        GameBoard[pos.x][pos.y].setColor(c);
     }
     
     public Board(){
@@ -61,28 +61,28 @@ public class Board {
     public Direction toDir(int value)
     {
     	switch(value){
-	    	case 0 : return Direction.LEFT;
-			case 1 : return Direction.RIGHT;
+    		case 0 : return Direction.LEFT;
+	    	case 1 : return Direction.RIGHT;
 	    	case 2 : return Direction.UPLEFT;
 	    	case 3 : return Direction.DOWNRIGHT;
 	    	case 4 : return Direction.UPRIGHT;
 	    	case 5 : return Direction.DOWNLEFT;
-			default : return Direction.LEFT;
+	    	default : return Direction.LEFT;
     	}
     }
 
     public Color toColor(int value)
     {
     	switch(value){
-	    	case 0 : return Color.ILLEGAL;
-			case 1 : return Color.EMPTY;
-	    	case 2 : return Color.BLACK;
-	    	case 3 : return Color.WHITE;
-	    	case 4 : return Color.RED;
-	    	case 5 : return Color.GREEN;
-	    	case 6 : return Color.BLUE;
-	    	case 7 : return Color.YELLOW;
-			default : return Color.ILLEGAL;
+    		case 0 : return Color.ILLEGAL;
+    		case 1 : return Color.EMPTY;
+    		case 2 : return Color.BLACK;
+    		case 3 : return Color.WHITE;
+    		case 4 : return Color.RED;
+    		case 5 : return Color.GREEN;
+    		case 6 : return Color.BLUE;
+    		case 7 : return Color.YELLOW;
+    		default : return Color.ILLEGAL;
     	}
     }
     
