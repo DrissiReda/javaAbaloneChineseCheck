@@ -14,12 +14,16 @@ public class Config {
 	}
 	
 	public enum Direction {
-		LEFT,
-		RIGHT,
-		UPLEFT,
-		DOWNRIGHT,
-		UPRIGHT,
-		DOWNLEFT
-	}
-
+		LEFT(0),
+		RIGHT(1),
+		UPLEFT(2),
+		DOWNRIGHT(3),
+		UPRIGHT(4),
+		DOWNLEFT(5);
+		
+		private int val;
+		Direction(int val){
+			this.val = val;
+		}
+	};
 }

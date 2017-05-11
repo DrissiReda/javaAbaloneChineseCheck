@@ -1,47 +1,46 @@
 package modele;
 import modele.Config.Color;
 import modele.Config.Direction;
-public class Board {
-    private Tile GameBoard[][];
 
-    public Color getCase(int i,int j){
+public class Board {
+	
+	public static Coords[] tabPieces = new Coords[4];
+											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
+    private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.EMPTY  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.WHITE  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
+                                };
+    private int height, width;
+
+    public Color getCase(int i, int j){
         return GameBoard[i][j].getColor();
     }
-    public void SetCase(int i,int j,Color c){
+    
+    public void SetCase(int i, int j, Color c){
         GameBoard[i][j].setColor(c);
     }
     
-    public Board(int height,int width) {
-        GameBoard = new Tile[height][width];
-        for (int j = 0; j < 11; j++)
-            GameBoard[0][j] = new Tile(((j % 2) == 0 ?Color.ILLEGAL : Color.EMPTY));
-        for (int j = 0; j < 11; j++)
-            GameBoard[height-1][j] = new Tile(((j % 2) == 0 ? Color.ILLEGAL : Color.EMPTY));
-        for (int i = 5; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                GameBoard[5-i][j] = new Tile((((i + j) % 2) == 0 ? Color.ILLEGAL : Color.EMPTY));
-                GameBoard[5-i][width - j-1] = new Tile((((i + j) % 2) == 0 ? Color.ILLEGAL : Color.EMPTY));
-            }
-            for (int j=i;j<width-i-1;j++){
-                GameBoard[5-i][j] = new Tile((((i + j) % 2) == 0 ? Color.WHITE : Color.EMPTY));
-                GameBoard[5-i][width - j-1] = new Tile((((i + j) % 2) == 0 ? Color.WHITE : Color.EMPTY));
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < i; j++) {
-                GameBoard[5+i][j] = new Tile((((i + j) % 2) == 0 ? Color.ILLEGAL : Color.EMPTY));
-                GameBoard[5+i][width - j-1] = new Tile((((i + j) % 2) == 0 ? Color.ILLEGAL : Color.EMPTY));
-            }
-            for (int j=i;j<width-i-1;j++){
-                GameBoard[5+i][j] = new Tile((((i + j) % 2) == 0 ? Color.BLACK : Color.EMPTY));
-                GameBoard[5+i][width - j-1] = new Tile((((i + j) % 2) == 0 ? Color.BLACK : Color.EMPTY));
-            }
-        }
+    public Board(){
+        height = 11;
+        width = 19;
+    }
+    
+    public Board(int h, int w) {
+        height = h;
+        width = w;
     }
     
     public void displayBoard()
     {
-    	for(int i = 0; i < 11; i++){
+    	for(int i = 0; i < height; i++){
     		for(int j = 0; j < 19; j++){
     			if(GameBoard[i][j].getColor() == Color.ILLEGAL)
     				System.out.print(" ");
@@ -58,19 +57,106 @@ public class Board {
     
     // Moves
     
-    public void sumito_2_1(Coords pieces[], int player){
-    	//Direction k = (Direction)pieces[3].x%10;
+    // Converts integer to Direction
+    public Direction toDir(int value)
+    {
+    	switch(value){
+	    	case 0 : return Direction.LEFT;
+			case 1 : return Direction.RIGHT;
+	    	case 2 : return Direction.UPLEFT;
+	    	case 3 : return Direction.DOWNRIGHT;
+	    	case 4 : return Direction.UPRIGHT;
+	    	case 5 : return Direction.DOWNLEFT;
+			default : return Direction.LEFT;
+    	}
     }
-    public void sumito_3_1(Coords pieces, int player){
-    	
+
+    public Color toColor(int value)
+    {
+    	switch(value){
+	    	case 0 : return Color.ILLEGAL;
+			case 1 : return Color.EMPTY;
+	    	case 2 : return Color.BLACK;
+	    	case 3 : return Color.WHITE;
+	    	case 4 : return Color.RED;
+	    	case 5 : return Color.GREEN;
+	    	case 6 : return Color.BLUE;
+	    	case 7 : return Color.YELLOW;
+			default : return Color.ILLEGAL;
+    	}
     }
-    public void sumito_3_2(Coords pieces, int player){
-    	
+    
+    public Coords next_coord(Coords pos, Direction dir)
+    {
+    	switch(dir){
+    		case LEFT : pos.y -= 2; break;
+    		case RIGHT : pos.y +=2; break;
+    		case UPLEFT : pos.x-=1; pos.y-=1; break;
+    		case DOWNRIGHT : pos.x+=1; pos.y+=1; break;
+    		case UPRIGHT : pos.x-=1; pos.y+=1; break;
+    		case DOWNLEFT : pos.x+=1; pos.y-=1; break;
+    		default : break;
+    	}
+		return pos;
     }
-    public void broadside(Coords pieces, int player){
-    	
+    
+    public boolean inTab(Coords pos)
+    {
+    	if(pos.x >= 0 && pos.x < height && pos.y >= 0 && pos.y < width)
+    		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL)
+    			return true;
+    	return false;
     }
-    public void simple_move(Coords pieces, int player){
-    	
+    
+    public Color switchPlayer(Color player)
+    {
+    	return player == Color.WHITE ? Color.BLACK : Color.WHITE;
+    }
+    
+    public void sumito_2_1(Coords pieces[], Color player){
+    	Direction dir = toDir(pieces[3].x % 10);
+    	Coords marble = next_coord(pieces[1], dir);
+    	GameBoard[pieces[0].x][pieces[0].y].setColor(Color.EMPTY);
+    	GameBoard[marble.x][marble.y].setColor(player);
+    	marble = next_coord(marble, dir);
+    	if(inTab(marble))
+    		GameBoard[marble.x][marble.y].setColor(switchPlayer(player));
+    }
+    
+    public void sumito_3_1(Coords pieces[], Color player){
+    	Direction dir = toDir(pieces[3].x % 10);
+    	Coords marble = next_coord(pieces[2], dir);
+    	GameBoard[pieces[0].x][pieces[0].y].setColor(Color.EMPTY);
+    	GameBoard[marble.x][marble.y].setColor(player);
+    	marble = next_coord(marble, dir);
+    	if(inTab(marble))
+    		GameBoard[marble.x][marble.y].setColor(switchPlayer(player));  	
+    }
+    
+    public void sumito_3_2(Coords pieces[], Color player){
+    	Direction dir = toDir(pieces[3].x % 10);
+    	Coords marble = next_coord(pieces[2], dir);
+    	GameBoard[pieces[0].x][pieces[0].y].setColor(Color.EMPTY);
+    	GameBoard[marble.x][marble.y].setColor(player);
+    	marble = next_coord(next_coord(marble, dir), dir);
+    	if(inTab(marble))
+    		GameBoard[marble.x][marble.y].setColor(switchPlayer(player)); 
+    }
+    
+    public void broadside(Coords pieces[], Color player){
+    	simple_move(pieces, player);
+    }
+    
+    public void simple_move(Coords pieces[], Color player){
+    	Direction dir = toDir(pieces[3].x % 10);
+    	Coords marble;
+    	for(int i = 2; i >= 0; i--){
+    		if(pieces[i].x == 22)
+    			continue;
+    		GameBoard[pieces[i].x][pieces[i].y].setColor(Color.EMPTY);
+    		marble = next_coord(pieces[i], dir);
+    		GameBoard[marble.x][marble.y].setColor(player);
+    		
+    	}
     }
 }
