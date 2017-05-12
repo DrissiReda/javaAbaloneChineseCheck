@@ -67,10 +67,13 @@ public class Board {
     	Coords defaultDir = null;
     	defaultPos.x = 22; defaultPos.y = 22;
     	defaultDir.x = 88; defaultDir.y = 88;
-    	for (int i = 0; i < 4; i++){
-    		tabPieces[i] = i == 3 ? defaultDir : defaultPos;
-    	}
-    		
+    	for (int i = 0; i < 4; i++)
+    		tabPieces[i] = i == 3 ? defaultDir : defaultPos;	
+    }
+    
+    public void test()
+    {
+    	System.out.println("ok");
     }
     
     public void selectMarble(Coords pos)
