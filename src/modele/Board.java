@@ -2,6 +2,10 @@ package modele;
 import modele.Config.Color;
 import modele.Config.Direction;
 
+/**
+ * @author Etienne
+ *
+ */
 public class Board {
 	
 	public static Coords[] tabPieces = new Coords[4];
@@ -31,11 +35,13 @@ public class Board {
     public Board(){
         height = 11;
         width = 19;
+        initTabPieces();
     }
     
     public Board(int h, int w) {
         height = h;
         width = w;
+        initTabPieces();
     }
     
     public void displayBoard()
@@ -55,9 +61,28 @@ public class Board {
     	}
     }
     
-    // Moves
+    public void initTabPieces()
+    {
+    	Coords defaultPos = null;
+    	Coords defaultDir = null;
+    	defaultPos.x = 22; defaultPos.y = 22;
+    	defaultDir.x = 88; defaultDir.y = 88;
+    	for (int i = 0; i < 4; i++){
+    		tabPieces[i] = i == 3 ? defaultDir : defaultPos;
+    	}
+    		
+    }
     
-    // Converts integer to Direction
+    public void selectMarble(Coords pos)
+    {
+    	
+    }
+    
+    /**
+     * Converts integer to Direction
+     * @param value (int)
+     * @return Direction
+     */
     public Direction toDir(int value)
     {
     	switch(value){
@@ -70,7 +95,12 @@ public class Board {
 	    	default : return Direction.LEFT;
     	}
     }
-
+    
+    /**
+     * Converts integer to Color
+     * @param value (int)
+     * @return Color
+     */
     public Color toColor(int value)
     {
     	switch(value){
@@ -86,6 +116,12 @@ public class Board {
     	}
     }
     
+    /**
+     * Returns the next coordinates for a given position
+     * @param pos (Coords)
+     * @param dir (Direction)
+     * @return Coords
+     */
     public Coords next_coord(Coords pos, Direction dir)
     {
     	switch(dir){
@@ -100,6 +136,11 @@ public class Board {
 		return pos;
     }
     
+    /**
+     * Verifies if the given position is in the board
+     * @param pos (Coords)
+     * @return boolean
+     */
     public boolean inTab(Coords pos)
     {
     	if(pos.x >= 0 && pos.x < height && pos.y >= 0 && pos.y < width)
@@ -108,11 +149,21 @@ public class Board {
     	return false;
     }
     
+    /**
+     * Switch player : Returns Color.WHITE if player is Color.BLACK and conversely
+     * @param player (Color)
+     * @return Color
+     */
     public Color switchPlayer(Color player)
     {
     	return player == Color.WHITE ? Color.BLACK : Color.WHITE;
     }
     
+    /**
+     * Function for sumito 2 marbles vs 1
+     * @param pieces (Coords [])
+     * @param player (Color)
+     */
     public void sumito_2_1(Coords pieces[], Color player){
     	Direction dir = toDir(pieces[3].x % 10);
     	Coords marble = next_coord(pieces[1], dir);
