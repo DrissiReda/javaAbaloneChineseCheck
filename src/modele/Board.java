@@ -2,10 +2,6 @@ package modele;
 import modele.Config.Color;
 import modele.Config.Direction;
 
-/**
- * @author Etienne
- *
- */
 public class Board {
 	
 	public static Coords[] tabPieces = new Coords[4];
@@ -47,7 +43,7 @@ public class Board {
     public void displayBoard()
     {
     	for(int i = 0; i < height; i++){
-    		for(int j = 0; j < 19; j++){
+    		for(int j = 0; j < width; j++){
     			if(GameBoard[i][j].getColor() == Color.ILLEGAL)
     				System.out.print(" ");
     			else if(GameBoard[i][j].getColor() == Color.EMPTY)
@@ -63,17 +59,49 @@ public class Board {
     
     public void initTabPieces()
     {
-    	Coords defaultPos = null;
-    	Coords defaultDir = null;
-    	defaultPos.x = 22; defaultPos.y = 22;
-    	defaultDir.x = 88; defaultDir.y = 88;
+    	Coords defaultPos = new Coords(22, 22);
+    	Coords defaultDir = new Coords(88, 88);
     	for (int i = 0; i < 4; i++)
     		tabPieces[i] = i == 3 ? defaultDir : defaultPos;	
     }
     
-    public void test()
+    public void printTabPieces()
     {
-    	System.out.println("ok");
+    	System.out.print("Pièces sélectionnées : ");
+    	for (int i = 0; i < 3; i++){
+    		if(tabPieces[i].x != 22)
+    			System.out.print("["+tabPieces[i].x+";"+tabPieces[i].y+"]");
+    		else{
+    			if(tabPieces[0].x == 22){
+    				System.out.print("Aucune");
+    				break;
+    			}	
+    		}
+    	}
+    	System.out.println("");
+    	System.out.print("Direction : ");
+    	if (tabPieces[3].x != 88)
+    		System.out.println(toDir(tabPieces[3].x));
+    	else
+    		System.out.println("Non définie");
+    }
+    
+    /**
+     * Converts a string like "4,8" to new Coords(4, 8);
+     * @param str
+     * @return Coords
+     */
+    public Coords stringToCoords(String str)
+    {
+		int x = 0, y = 0;
+		Coords pos;
+
+		String [] cut = str.split(",");
+		x = Integer.parseInt(cut[0]);
+		y = Integer.parseInt(cut[1]);
+
+		pos = new Coords(x, y);
+		return pos;
     }
     
     public void selectMarble(Coords pos)
@@ -211,6 +239,19 @@ public class Board {
     		marble = next_coord(pieces[i], dir);
     		GameBoard[marble.x][marble.y].setColor(player);
     		
+    	}
+    }
+    
+    public void executeMove(Coords pieces[], Color player){
+    	int type = pieces[3].x/10;
+    	
+    	switch(type){
+    		case 3 : simple_move(pieces, player); break;
+    		case 4 : sumito_2_1(pieces, player); break;
+    		case 5 : sumito_3_1(pieces, player); break;
+    		case 6 : sumito_3_2(pieces, player); break;
+    		case 7 : broadside(pieces, player); break;
+    		default : break;
     	}
     }
 }
