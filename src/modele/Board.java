@@ -85,7 +85,21 @@ public class Board {
     	else
     		System.out.println("Non définie");
     }
-    
+
+    public String MoveToString(Coords[] tab)
+	{
+		String ret="";
+		for(int i=0;i<4;i++)
+		{
+			if(tab[i].x<10)
+				ret=ret+"0";
+			ret=ret+tab[i].x;
+			if(tab[i].y<10)
+				ret=ret+"0";
+			ret=ret+tab[i].y;
+		}
+		return ret;
+	}
     /**
      * Converts a string like "4,8" to new Coords(4, 8);
      * @param str
@@ -126,7 +140,7 @@ public class Board {
 	    	default : return Direction.LEFT;
     	}
     }
-    
+
     /**
      * Converts integer to Color
      * @param value (int)
@@ -166,7 +180,20 @@ public class Board {
     	}
 		return pos;
     }
-    
+    public int ally_next(Coords pos,Direction dir,Color player)
+	{
+		if(getCase(next_coord(pos,dir))==player)
+			return 1; //Same color
+		if(getCase(next_coord(pos,dir))==Color.ILLEGAL)
+			return 2; //illegal
+		return 0;   // enemy or empty
+	}
+    public int free_next(Coords pos,Direction dir)
+	{
+		if(getCase(next_coord(pos,dir))==Color.EMPTY)
+			return 1;
+		return 0;
+	}
     /**
      * Verifies if the given position is in the board
      * @param pos (Coords)
@@ -192,66 +219,175 @@ public class Board {
     
     /**
      * Function for sumito 2 marbles vs 1
-     * @param pieces (Coords [])
+     * @param tabPieces (Coords [])
      * @param player (Color)
      */
-    public void sumito_2_1(Coords pieces[], Color player){
-    	Direction dir = toDir(pieces[3].x % 10);
-    	Coords marble = next_coord(pieces[1], dir);
-    	GameBoard[pieces[0].x][pieces[0].y].setColor(Color.EMPTY);
+    public void sumito_2_1(Coords tabPieces[], Color player){
+    	Direction dir = toDir(tabPieces[3].x % 10);
+    	Coords marble = next_coord(tabPieces[1], dir);
+    	GameBoard[tabPieces[0].x][tabPieces[0].y].setColor(Color.EMPTY);
     	GameBoard[marble.x][marble.y].setColor(player);
     	marble = next_coord(marble, dir);
     	if(inTab(marble))
     		GameBoard[marble.x][marble.y].setColor(switchPlayer(player));
     }
     
-    public void sumito_3_1(Coords pieces[], Color player){
-    	Direction dir = toDir(pieces[3].x % 10);
-    	Coords marble = next_coord(pieces[2], dir);
-    	GameBoard[pieces[0].x][pieces[0].y].setColor(Color.EMPTY);
+    public void sumito_3_1(Coords tabPieces[], Color player){
+    	Direction dir = toDir(tabPieces[3].x % 10);
+    	Coords marble = next_coord(tabPieces[2], dir);
+    	GameBoard[tabPieces[0].x][tabPieces[0].y].setColor(Color.EMPTY);
     	GameBoard[marble.x][marble.y].setColor(player);
     	marble = next_coord(marble, dir);
     	if(inTab(marble))
     		GameBoard[marble.x][marble.y].setColor(switchPlayer(player));  	
     }
     
-    public void sumito_3_2(Coords pieces[], Color player){
-    	Direction dir = toDir(pieces[3].x % 10);
-    	Coords marble = next_coord(pieces[2], dir);
-    	GameBoard[pieces[0].x][pieces[0].y].setColor(Color.EMPTY);
+    public void sumito_3_2(Coords tabPieces[], Color player){
+    	Direction dir = toDir(tabPieces[3].x % 10);
+    	Coords marble = next_coord(tabPieces[2], dir);
+    	GameBoard[tabPieces[0].x][tabPieces[0].y].setColor(Color.EMPTY);
     	GameBoard[marble.x][marble.y].setColor(player);
     	marble = next_coord(next_coord(marble, dir), dir);
     	if(inTab(marble))
     		GameBoard[marble.x][marble.y].setColor(switchPlayer(player)); 
     }
     
-    public void broadside(Coords pieces[], Color player){
-    	simple_move(pieces, player);
+    public void broadside(Coords tabPieces[], Color player){
+    	simple_move(tabPieces, player);
     }
     
-    public void simple_move(Coords pieces[], Color player){
-    	Direction dir = toDir(pieces[3].x % 10);
+    public void simple_move(Coords tabPieces[], Color player){
+    	Direction dir = toDir(tabPieces[3].x % 10);
     	Coords marble;
     	for(int i = 2; i >= 0; i--){
-    		if(pieces[i].x == 22)
+    		if(tabPieces[i].x == 22)
     			continue;
-    		GameBoard[pieces[i].x][pieces[i].y].setColor(Color.EMPTY);
-    		marble = next_coord(pieces[i], dir);
+    		GameBoard[tabPieces[i].x][tabPieces[i].y].setColor(Color.EMPTY);
+    		marble = next_coord(tabPieces[i], dir);
     		GameBoard[marble.x][marble.y].setColor(player);
     		
     	}
     }
     
-    public void executeMove(Coords pieces[], Color player){
-    	int type = pieces[3].x/10;
+    public void executeMove(Coords tabPieces[], Color player){
+    	int type = tabPieces[3].x/10;
     	
     	switch(type){
-    		case 3 : simple_move(pieces, player); break;
-    		case 4 : sumito_2_1(pieces, player); break;
-    		case 5 : sumito_3_1(pieces, player); break;
-    		case 6 : sumito_3_2(pieces, player); break;
-    		case 7 : broadside(pieces, player); break;
+    		case 3 : simple_move(tabPieces, player); break;
+    		case 4 : sumito_2_1(tabPieces, player); break;
+    		case 5 : sumito_3_1(tabPieces, player); break;
+    		case 6 : sumito_3_2(tabPieces, player); break;
+    		case 7 : broadside(tabPieces, player); break;
     		default : break;
     	}
     }
+	public String AvailableMoves(Color player)
+	{
+ 		String Av_Moves="";
+		Coords marble,marble2,marble3;
+		for(int i=1;i<height;i++)
+		{
+			for(int j=1;j<width;j++)
+			{
+				tabPieces[0].x=i;
+				tabPieces[0].y=j;
+				if(!inTab(tabPieces[0]) || GameBoard[i][j].getColor()!=player)
+					continue;
+				else
+				{
+					for(Direction k : Direction.values()) //Cycle through neighbors
+					{
+						marble=next_coord(tabPieces[0],k);
+						if(inTab(marble))
+						{
+							if(ally_next(tabPieces[0],k,player)==1) //groups of 2
+							{
+								tabPieces[1]=marble;
+								if(ally_next(marble,k,player)==1)   // groups of 3
+								{
+									marble2=next_coord(marble,k);
+									//if(inTab(marble2))
+									{
+										if(ally_next(marble2,k,switchPlayer(player))==1)
+										{
+											marble3=next_coord(marble2,k);
+											if(ally_next(marble3,k,switchPlayer(player))==1)
+											{
+												if(free_next(next_coord(marble3,k),k)==0 || !inTab(next_coord(next_coord(marble3,k),k))) // case of 3v3+ no move in this direction
+												{
+													tabPieces[2]=marble2;//sumito_3_2
+													tabPieces[3].x=60+k.ordinal();     tabPieces[3].y=88;   //88 is code name for direction for debugging purposes,
+													/*if(!inTab(next_coord(next_coord(marble3,k),k)))
+													{tabPieces[4].x=1; tabPieces[4].y=0;}
+													else
+													{tabPieces[4].x=0; tabPieces[4].y=0;}*/
+													Av_Moves=Av_Moves+MoveToString(tabPieces);       //we add 60 to make the direction easily distinguishable
+													//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);         //we add the broadside moves
+												}
+											}
+											else if(free_next(marble3,k)==0 || !inTab(next_coord(marble3,k)))
+											{
+												tabPieces[2]=marble2;   //sumito_3_1
+												tabPieces[3].x=50+k.ordinal();          tabPieces[3].y=88;       //88 is code name for direction for debugging purposes,
+												/*
+												if(!inTab(next_coord(marble3,k)))
+												{tabPieces[4].x=1;  tabPieces[4].y=0;}               //Capture
+												else
+												{tabPieces[4].x=0;  tabPieces[4].y=0;}
+												*/               //Attack
+												Av_Moves=Av_Moves+MoveToString(tabPieces);          //we add 50 to make the direction easily distinguishable
+												//Av_Moves=concat(Av_Moves,BroadsideMoves(tabPieces));        //we add the broadside moves
+											}
+										}
+										else if(free_next(marble2,k)==0)
+										{
+											tabPieces[2]=marble2;    //simple_move
+											tabPieces[3].x=30+k.ordinal();          tabPieces[3].y=88;
+											//tabPieces[4].setCoords(0,0);          //no captures
+											Av_Moves=Av_Moves+MoveToString(tabPieces);            //we add 30 to make the direction easily distinguishable
+											//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);          //we add the broadside moves
+										}
+									}
+								}
+								else if(ally_next(marble,k,switchPlayer(player))==1)
+								{
+
+									if(free_next(next_coord(marble,k),k)==0 || !inTab(next_coord(next_coord(marble,k),k)))
+									{
+										tabPieces[2].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
+										tabPieces[3].setCoords(40+k.ordinal(),88); //sumito_2_1
+										/*
+										if(!inTab(next_coord(next_coord(marble,k),k)))
+										{tabPieces[4].x=1;     tabPieces[4].y=0;}              //Capture
+										else
+										{tabPieces[4].x=0;     tabPieces[4].y=0;}              //Attack
+										*/
+										Av_Moves=Av_Moves+MoveToString(tabPieces);
+										//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);          //we add the broadside moves
+									}
+								}
+								else if(free_next(marble,k)==0)
+								{
+									tabPieces[2].setCoords(22,22);
+									tabPieces[3].setCoords(30+k.ordinal(),88);
+									//tabPieces[4].setCoords(0,0);          //no captures
+									Av_Moves=Av_Moves+MoveToString(tabPieces);
+									//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);  // we add the broadside moves
+								}
+							}
+						}
+						if(free_next(tabPieces[0],k)==0)
+						{
+							tabPieces[1].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
+							tabPieces[2].setCoords(22,22);
+							tabPieces[3].setCoords(30+k.ordinal(),88);//simple_move
+							//tabPieces[4].setCoords(0,0); //no captures
+							Av_Moves=Av_Moves+MoveToString(tabPieces);//no need for broadsides
+						}
+					}
+				}
+			}
+		}
+		return Av_Moves;
+	}
 }

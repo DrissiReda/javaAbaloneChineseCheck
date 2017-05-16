@@ -8,4 +8,9 @@ public class Coords {
 		this.x = x;
 		this.y = y;
 	}
+	public void setCoords(int a,int b)
+	{
+		x=a;
+		y=b;
+	}
 }
