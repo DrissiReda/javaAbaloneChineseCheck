@@ -194,6 +194,32 @@ public class Board {
 			return 1;
 		return 0;
 	}
+	Direction find_direction(Coords marble1,Coords marble2)
+	{
+		if(marble2.x > marble1.x)
+		{
+			if(marble2.y < marble1.y)
+				return Direction.DOWNLEFT;
+			else if(marble2.y > marble1.y)
+				return Direction.DOWNRIGHT;
+		}
+		else if(marble2.x  <marble1.x)
+		{
+			if(marble2.y<marble1.y)
+				return Direction.UPLEFT;
+			else if (marble2.y> marble1.y)
+				return Direction.UPRIGHT;
+		}
+		else
+		{
+			if(marble2.x == marble1.x)
+				if(marble2.y > marble1.y)
+					return Direction.RIGHT;
+				else if(marble2.y < marble1.y)
+					return Direction.LEFT;
+		}
+		return Direction.LEFT;
+	}
     /**
      * Verifies if the given position is in the board
      * @param pos (Coords)
@@ -321,8 +347,7 @@ public class Board {
 													{tabPieces[4].x=1; tabPieces[4].y=0;}
 													else
 													{tabPieces[4].x=0; tabPieces[4].y=0;}*/
-													Av_Moves=Av_Moves+MoveToString(tabPieces);       //we add 60 to make the direction easily distinguishable
-													//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);         //we add the broadside moves
+													Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);         //we add the broadside moves
 												}
 											}
 											else if(free_next(marble3,k)==0 || !inTab(next_coord(marble3,k)))
@@ -335,8 +360,7 @@ public class Board {
 												else
 												{tabPieces[4].x=0;  tabPieces[4].y=0;}
 												*/               //Attack
-												Av_Moves=Av_Moves+MoveToString(tabPieces);          //we add 50 to make the direction easily distinguishable
-												//Av_Moves=concat(Av_Moves,BroadsideMoves(tabPieces));        //we add the broadside moves
+												Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);        //we add the broadside moves
 											}
 										}
 										else if(free_next(marble2,k)==0)
@@ -344,8 +368,7 @@ public class Board {
 											tabPieces[2]=marble2;    //simple_move
 											tabPieces[3].x=30+k.ordinal();          tabPieces[3].y=88;
 											//tabPieces[4].setCoords(0,0);          //no captures
-											Av_Moves=Av_Moves+MoveToString(tabPieces);            //we add 30 to make the direction easily distinguishable
-											//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);          //we add the broadside moves
+											Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
 										}
 									}
 								}
@@ -362,8 +385,7 @@ public class Board {
 										else
 										{tabPieces[4].x=0;     tabPieces[4].y=0;}              //Attack
 										*/
-										Av_Moves=Av_Moves+MoveToString(tabPieces);
-										//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);          //we add the broadside moves
+										Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
 									}
 								}
 								else if(free_next(marble,k)==0)
@@ -371,8 +393,7 @@ public class Board {
 									tabPieces[2].setCoords(22,22);
 									tabPieces[3].setCoords(30+k.ordinal(),88);
 									//tabPieces[4].setCoords(0,0);          //no captures
-									Av_Moves=Av_Moves+MoveToString(tabPieces);
-									//Av_Moves=Av_Moves+BroadsideMoves(tabPieces);  // we add the broadside moves
+									Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);  // we add the broadside moves
 								}
 							}
 						}
@@ -390,4 +411,47 @@ public class Board {
 		}
 		return Av_Moves;
 	}
+
+
+//Implementation of generation of broadside moves
+
+String BroadsideMoves(Coords[] tabPieces){
+
+		String Bs_Moves="";
+		Coords marble;
+		tabPieces[4].setCoords(0,0) ;          //no captures
+		for(Direction k : Direction.values())
+		{
+			for(int i=0;i<3;i++)
+			{
+				if(tabPieces[i].x==22)
+					continue;
+				if(tabPieces[i].y==88)
+				{
+					tabPieces[i].x=70+k.ordinal();  // 70 for Broadside
+					Bs_Moves=Bs_Moves+MoveToString(tabPieces);
+				}
+				if (find_direction(tabPieces[0],tabPieces[1])!=Direction.LEFT && find_direction(tabPieces[0],tabPieces[1])!=Direction.RIGHT)
+				{
+					marble=next_coord(tabPieces[i],k);
+					if(!inTab(marble) || getCase(marble)!= Color.EMPTY)
+						break;
+				}
+				if (find_direction(tabPieces[0],tabPieces[1])!=Direction.UPLEFT && find_direction(tabPieces[0],tabPieces[1])!=Direction.DOWNRIGHT)
+				{
+					marble=next_coord(tabPieces[i],k);
+					if(!inTab(marble) || getCase(marble)!= Color.EMPTY)
+						break;
+				}
+				if (find_direction(tabPieces[0],tabPieces[1])!=Direction.DOWNLEFT && find_direction(tabPieces[0],tabPieces[1])!=Direction.UPRIGHT)
+				{
+					marble=next_coord(tabPieces[i],k);
+					if(!inTab(marble) || getCase(marble)!= Color.EMPTY)
+						break;
+				}
+			}
+		}
+		return Bs_Moves;
+	}
+
 }
