@@ -188,11 +188,12 @@ public class Board {
 			return 2; //illegal
 		return 0;   // enemy or empty
 	}
-    public int free_next(Coords pos,Direction dir)
+    public boolean free_next(Coords pos,Direction dir)
 	{
 		if(getCase(next_coord(pos,dir))==Color.EMPTY)
-			return 1;
-		return 0;
+			return true;
+		else
+			return false;
 	}
 	Direction find_direction(Coords marble1,Coords marble2)
 	{
@@ -339,7 +340,7 @@ public class Board {
 											marble3=next_coord(marble2,k);
 											if(ally_next(marble3,k,switchPlayer(player))==1)
 											{
-												if(free_next(next_coord(marble3,k),k)==0 || !inTab(next_coord(next_coord(marble3,k),k))) // case of 3v3+ no move in this direction
+												if(free_next(next_coord(marble3,k),k) || !inTab(next_coord(next_coord(marble3,k),k))) // case of 3v3+ no move in this direction
 												{
 													tabPieces[2]=marble2;//sumito_3_2
 													tabPieces[3].x=60+k.ordinal();     tabPieces[3].y=88;   //88 is code name for direction for debugging purposes,
@@ -350,7 +351,7 @@ public class Board {
 													Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);         //we add the broadside moves
 												}
 											}
-											else if(free_next(marble3,k)==0 || !inTab(next_coord(marble3,k)))
+											else if(free_next(marble3,k) || !inTab(next_coord(marble3,k)))
 											{
 												tabPieces[2]=marble2;   //sumito_3_1
 												tabPieces[3].x=50+k.ordinal();          tabPieces[3].y=88;       //88 is code name for direction for debugging purposes,
@@ -363,7 +364,7 @@ public class Board {
 												Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);        //we add the broadside moves
 											}
 										}
-										else if(free_next(marble2,k)==0)
+										else if(free_next(marble2,k))
 										{
 											tabPieces[2]=marble2;    //simple_move
 											tabPieces[3].x=30+k.ordinal();          tabPieces[3].y=88;
@@ -375,7 +376,7 @@ public class Board {
 								else if(ally_next(marble,k,switchPlayer(player))==1)
 								{
 
-									if(free_next(next_coord(marble,k),k)==0 || !inTab(next_coord(next_coord(marble,k),k)))
+									if(free_next(next_coord(marble,k),k) || !inTab(next_coord(next_coord(marble,k),k)))
 									{
 										tabPieces[2].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
 										tabPieces[3].setCoords(40+k.ordinal(),88); //sumito_2_1
@@ -388,7 +389,7 @@ public class Board {
 										Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
 									}
 								}
-								else if(free_next(marble,k)==0)
+								else if(free_next(marble,k))
 								{
 									tabPieces[2].setCoords(22,22);
 									tabPieces[3].setCoords(30+k.ordinal(),88);
@@ -397,7 +398,7 @@ public class Board {
 								}
 							}
 						}
-						if(free_next(tabPieces[0],k)==0)
+						if(free_next(tabPieces[0],k))
 						{
 							tabPieces[1].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
 							tabPieces[2].setCoords(22,22);
