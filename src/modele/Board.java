@@ -5,6 +5,8 @@ import modele.Config.Direction;
 public class Board {
 	
 	public static Coords[] tabPieces = new Coords[4];
+	public static Color player = Color.BLACK;
+
 											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
 	private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
                                 {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
@@ -40,6 +42,11 @@ public class Board {
         initTabPieces();
     }
     
+    public void printPosition(Coords pos)
+    {
+    	System.out.println(GameBoard[pos.x][pos.y].getColor());
+    }
+    
     public void displayBoard()
     {
     	for(int i = 0; i < height; i++){
@@ -59,12 +66,17 @@ public class Board {
     
     public void initTabPieces()
     {
-    	Coords defaultPos = new Coords(22, 22);
+    	Coords defaultPos;
     	Coords defaultDir = new Coords(88, 88);
-    	for (int i = 0; i < 4; i++)
-    		tabPieces[i] = i == 3 ? defaultDir : defaultPos;	
+    	for (int i = 0; i < 4; i++){
+    		defaultPos = new Coords(22, 22);
+    		tabPieces[i] = i == 3 ? defaultDir : defaultPos;
+    	}
     }
     
+    public void addPiece(){
+    	tabPieces[0].setCoords(1, 1);
+    }
     public void printTabPieces()
     {
     	System.out.print("Pièces sélectionnées : ");
@@ -85,10 +97,130 @@ public class Board {
     	else
     		System.out.println("Non définie");
     }
+    
+    public int nbPiece()
+    {
+    	int nb = 0;
+    	for(int i = 0; i < 2; i++){ // Parcours des cases pour les pions (les 3 premières)
+    		if(tabPieces[i].x != 22)
+    			nb++;
+    		else
+    			break;
+    	}
+    	return nb;
+    }
+
+    public void check(int indice){
+    	System.out.println("contenu : " + tabPieces[indice].x + ";" + tabPieces[indice].y);
+    }
+
+    public boolean selectPiece(Coords position)
+    {
+    	// Vérifie que le pion n'est pas déjà sélectionné et est valide
+    	if(checkSelected(position) && isMarble(position) && isValid(position)){
+    		// Recherche une place disponible dans le tableau
+    		for (int i = 0; i < 3; i++){
+    			System.out.println("valeur dans le tab : " + tabPieces[i].x);
+    			if(tabPieces[i].x == 22){
+    				tabPieces[i].x = position.x;
+    				tabPieces[i].y = position.y;
+    				return true;
+    			}
+    		}
+    	}
+    	return false; //Pas de place disponible ou pion déjà sélectionné
+    }
+    
+    // Ici il faut voir si on doit reset aussi le mouvement ecrit ou pas
+    public void cancelSelection()
+    {
+    	/*for(int i = 0; i < 3; i++){
+    		tabPieces[i].x = 
+    		
+    	}*/
+    	
+    	initTabPieces();
+    }
+    
+    public boolean isMarble(Coords position){ // + Color player
+    	Tile selected = GameBoard[position.x][position.y];
+    	switch(selected.getColor()){
+    		case ILLEGAL : return false;
+    		case EMPTY : return false;
+    		case WHITE : 
+    			if(player == Color.WHITE)
+    				return true;
+    			else
+    				return false;
+    		case BLACK :
+    			if(player == Color.BLACK)
+    				return true;
+    			else
+    				return false;
+    		default : break;
+    	}
+		return false;
+    }
+    
+    public boolean checkSelected(Coords position)
+    {
+    	for (int i = 0; i < 3; i++){
+    		if(tabPieces[i].x == position.x && tabPieces[i].y == position.y)
+    			return false;
+    	}
+    	return true;
+    }
+
+    public boolean isValid(Coords position)
+    {
+    	int x, y;
+    	boolean result = false;
+    	boolean isEmpty = true;
+    	boolean twoMarbles = false;
+
+    	for (int i = 0; i < 3; i++){
+    		if(tabPieces[i].x != 22){
+    			if(i == 1)
+    				twoMarbles = true;
+
+    			isEmpty = true;
+    			x = tabPieces[i].x - position.x;
+    			y = tabPieces[i].y - position.y;
+
+    			if(x == 0){ // les deux pions sont sur la meme ligne
+    				if(y == 2 || y == -2)
+    					result = true;
+    			}
+    			else if (x == -1 || x == 1){
+    				if(y == 1 || y == -1)
+    					result = true;
+    			}
+    		}
+    	}
+    	
+    	/* Dans le cas où deux pions ont déjà été sélectionnés il faut
+    	 * s'assurer que le troisième soit placé dans la continuité */ 
+    	
+		if (twoMarbles){
+			if (tabPieces[0].x == tabPieces[1].x){
+				if(position.x != tabPieces[0].x)
+					result = false;
+			}
+			else{
+				if(position.x == tabPieces[0].x || position.x == tabPieces[1].x)
+					result = false;
+			}
+		}
+		
+		if(isEmpty)
+			result = true;
+		
+		return result;
+    }
 
     public String MoveToString(Coords[] tab)
 	{
-		String ret="";
+		String ret = "";
 		for(int i=0;i<4;i++)
 		{
 			if(tab[i].x<10)
@@ -117,11 +249,7 @@ public class Board {
 		pos = new Coords(x, y);
 		return pos;
     }
-    
-    public void selectMarble(Coords pos)
-    {
-    	
-    }
+
     
     /**
      * Converts integer to Direction
