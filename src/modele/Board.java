@@ -214,7 +214,7 @@ public class Board {
 		
 		if(isEmpty)
 			result = true;
-		
+
 		return result;
     }
 
@@ -420,7 +420,6 @@ public class Board {
     		GameBoard[tabPieces[i].x][tabPieces[i].y].setColor(Color.EMPTY);
     		marble = next_coord(tabPieces[i], dir);
     		GameBoard[marble.x][marble.y].setColor(player);
-    		
     	}
     }
     
