@@ -17,9 +17,9 @@ public class Main {
 		//board.printPosition(piece);		
 
 		if(board.selectPiece(piece))
-			System.out.println("Pion sélectionné");
+			System.out.println("Pion selectionne");
 		else
-			System.out.println("Impossible de sélectionner le pion");
+			System.out.println("Impossible de selectionner le pion");
 		
 		board.selectPiece(piece2);
 		board.selectPiece(piece3);

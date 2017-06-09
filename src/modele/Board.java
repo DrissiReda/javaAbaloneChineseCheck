@@ -22,6 +22,8 @@ public class Board {
                                 };
     private int height, width;
 
+    public int getHeight(){return height;}
+    public int getWidth() {return width;}
     public Color getCase(Coords pos){
         return GameBoard[pos.x][pos.y].getColor();
     }
@@ -310,6 +312,8 @@ public class Board {
     }
     public int ally_next(Coords pos,Direction dir,Color player)
 	{
+		if(!inTab(next_coord(pos,dir)))
+			return 2;
 		if(getCase(next_coord(pos,dir))==player)
 			return 1; //Same color
 		if(getCase(next_coord(pos,dir))==Color.ILLEGAL)
