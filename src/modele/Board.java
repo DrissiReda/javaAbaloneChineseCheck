@@ -312,12 +312,10 @@ public class Board {
     }
     public int ally_next(Coords pos,Direction dir,Color player)
 	{
-		if(!inTab(next_coord(pos,dir)))
-			return 2;
+		if(!inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.ILLEGAL)
+			return 2; // illegal
 		if(getCase(next_coord(pos,dir))==player)
 			return 1; //Same color
-		if(getCase(next_coord(pos,dir))==Color.ILLEGAL)
-			return 2; //illegal
 		return 0;   // enemy or empty
 	}
     public boolean free_next(Coords pos,Direction dir)
@@ -520,7 +518,7 @@ public class Board {
 										Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
 									}
 								}
-								else if(free_next(marble,k))
+								else if(free_next(marble,k) && inTab(marble))
 								{
 									tabPieces[2].setCoords(22,22);
 									tabPieces[3].setCoords(30+k.ordinal(),88);
@@ -529,7 +527,7 @@ public class Board {
 								}
 							}
 						}
-						if(free_next(tabPieces[0],k))
+						if(free_next(tabPieces[0],k) && inTab(marble))
 						{
 							tabPieces[1].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
 							tabPieces[2].setCoords(22,22);
@@ -556,6 +554,7 @@ String BroadsideMoves(Coords[] tabPieces){
 		{
 			for(int i=0;i<3;i++)
 			{
+
 				if(tabPieces[i].x==22)
 					continue;
 				if(tabPieces[i].y==88)
