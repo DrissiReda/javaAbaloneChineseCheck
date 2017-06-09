@@ -1,6 +1,6 @@
 package modele;
 import java.*;
-import modele.Config.Direction;
+import modele.Config.*;
 
 public class Main {
 
@@ -25,5 +25,6 @@ public class Main {
 		board.selectPiece(piece3);
 
 		board.printTabPieces();
+		System.out.println(board.AvailableMoves(Color.WHITE));
 	}
 }
