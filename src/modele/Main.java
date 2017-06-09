@@ -25,6 +25,9 @@ public class Main {
 		board.selectPiece(piece3);
 
 		board.printTabPieces();
-		System.out.println(board.AvailableMoves(Color.WHITE));
+		System.out.println(board.AvailableMoves(Color.BLACK));
+		//AlphaBeta a=new AlphaBeta(board);
+		//System.out.println(a.alphaBeta(2,2,Integer.MIN_VALUE,Integer.MAX_VALUE,"",
+		//		Color.WHITE,Color.WHITE));
 	}
 }
