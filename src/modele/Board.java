@@ -322,7 +322,7 @@ public class Board {
 	}
     public boolean free_next(Coords pos,Direction dir)
 	{
-		if(getCase(next_coord(pos,dir))==Color.EMPTY)
+		if(!inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)
 			return true;
 		else
 			return false;
@@ -496,7 +496,7 @@ public class Board {
 												Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);        //we add the broadside moves
 											}
 										}
-										else if(free_next(marble2,k))
+										else if(free_next(marble2,k) && ally_next(marble2,k,player)==0)
 										{
 											tabPieces[2]=marble2;    //simple_move
 											tabPieces[3].x=30+k.ordinal();          tabPieces[3].y=88;
