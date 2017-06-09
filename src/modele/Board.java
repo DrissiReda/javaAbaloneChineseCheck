@@ -220,6 +220,16 @@ public class Board {
 		return result;
     }
 
+    public Coords[] stringToMove(String str){
+
+    	Coords tab[]={
+    			new Coords(Integer.parseInt(str.substring(0,2)),Integer.parseInt(str.substring(2,4))),
+				new Coords(Integer.parseInt(str.substring(4,6)),Integer.parseInt(str.substring(6,8))),
+				new Coords(Integer.parseInt(str.substring(8,10)),Integer.parseInt(str.substring(10,12))),
+				new Coords(Integer.parseInt(str.substring(12,14)),Integer.parseInt(str.substring(14,16))),
+					};
+		return tab;
+	}
     public String MoveToString(Coords[] tab)
 	{
 		String ret = "";
@@ -437,6 +447,71 @@ public class Board {
     		default : break;
     	}
     }
+    public void undo(Coords tabPieces[],Color player)
+	{
+		int i=2;
+		Direction k     = toDir(tabPieces[3].x %10); // find the direction to invert
+		//DIRECTION not_k = invert_direction(k);
+		int type        = tabPieces[3].x /10; // find the type of move to know what to do
+		while(i>=0 && tabPieces[i].x==22 )
+			i--;
+		if(i<0)
+			i=0;
+		int j=i;// we modify the substantial tabPieces so we need to decrement
+		switch(type)    // back since we stopped at direction and type info
+		{
+			case 3 : {               // simple_move (almost)same as broadside
+				while(j>=0)
+				{
+					setCase(tabPieces[j],player);
+					j--;
+				}
+				Coords marble=next_coord(tabPieces[i],k);
+				setCase(marble,Color.EMPTY);
+				break;
+			}
+			case 4 :   {    // sumito_2_1
+				Coords marble        = next_coord(tabPieces[1],k);
+				Coords marble2       = next_coord(marble,k);
+				setCase(marble,switchPlayer(player));
+				if(inTab(marble2))
+					setCase(marble2,Color.EMPTY);
+				setCase(tabPieces[0],player);
+				break;
+			}
+			case 5 :   {  //  sumito_3_1
+				// only difference between 4 and 5 is here j is going to be bigger by one
+				Coords marble        = next_coord(tabPieces[2],k);
+				Coords marble2       = next_coord(marble,k);
+				setCase(marble,switchPlayer(player));
+				if(inTab(marble2))
+					setCase(marble2,Color.EMPTY);
+				setCase(tabPieces[0],player);
+				break;
+			}
+			case 6 :   {  // sumito_3_2
+				// same thing but we go marbles deeper (1 step)
+				Coords marble          = next_coord(tabPieces[2],k);
+				Coords marble3         = next_coord(next_coord(marble,k),k);
+				setCase(marble,switchPlayer(player));
+				if(inTab(marble3))
+					setCase(marble3,Color.EMPTY);
+				setCase(tabPieces[0],player);
+				break;
+			}
+			case 7 :   {           // broadside same as simple_move
+				while(j>=0)
+				{
+					setCase(tabPieces[j],player);
+					Coords marble=next_coord(tabPieces[j],k);
+					setCase(marble,Color.EMPTY);
+					j--;
+				}
+				break;
+			}
+		}
+	}
+
 	public String AvailableMoves(Color player)
 	{
  		String Av_Moves="";
