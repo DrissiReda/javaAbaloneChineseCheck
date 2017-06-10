@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		Board board = new Board();
-		board.displayBoard();
+		/*board.displayBoard();
 		board.printTabPieces();
 
 		Coords piece = new Coords(1,5);
@@ -24,10 +24,20 @@ public class Main {
 		board.selectPiece(piece2);
 		board.selectPiece(piece3);
 
-		board.printTabPieces();
+		board.printTabPieces();*/
 		System.out.println(board.AvailableMoves(Color.BLACK));
-		//AlphaBeta a=new AlphaBeta(board);
-		//System.out.println(a.alphaBeta(2,2,Integer.MIN_VALUE,Integer.MAX_VALUE,"",
-		//		Color.WHITE,Color.WHITE));
+		System.out.println(board.AvailableMoves(Color.BLACK).length());
+		int i=10;
+		Color player=Color.BLACK;
+		while(i-->0) {
+			AlphaBeta a = new AlphaBeta(board);
+			//System.out.println(a.MoveOrdering(board.AvailableMoves(player)));
+			String move=a.alphaBeta(600, 600, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
+					player, player);
+			System.out.println(move+" "+player);
+			board.executeMove(board.stringToMove(move.substring(0,16)),player);
+			board.displayBoard();
+			player=board.switchPlayer(player);
+		}
 	}
 }

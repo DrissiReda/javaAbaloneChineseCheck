@@ -310,15 +310,14 @@ public class Board {
     public Coords next_coord(Coords pos, Direction dir)
     {
     	switch(dir){
-    		case LEFT : pos.y -= 2; break;
-    		case RIGHT : pos.y +=2; break;
-    		case UPLEFT : pos.x-=1; pos.y-=1; break;
-    		case DOWNRIGHT : pos.x+=1; pos.y+=1; break;
-    		case UPRIGHT : pos.x-=1; pos.y+=1; break;
-    		case DOWNLEFT : pos.x+=1; pos.y-=1; break;
-    		default : break;
+    		case LEFT :      return new Coords(pos.x,pos.y-2);
+    		case RIGHT :     return new Coords(pos.x,pos.y+2);
+    		case UPLEFT :    return new Coords(pos.x-1,pos.y-1);
+    		case DOWNRIGHT : return new Coords(pos.x+1,pos.y+1);
+    		case UPRIGHT :   return new Coords(pos.x-1,pos.y+1);
+    		case DOWNLEFT :  return new Coords(pos.x+1,pos.y-1);
+			default : return pos;
     	}
-		return pos;
     }
     public int ally_next(Coords pos,Direction dir,Color player)
 	{
@@ -425,13 +424,11 @@ public class Board {
     
     public void simple_move(Coords tabPieces[], Color player){
     	Direction dir = toDir(tabPieces[3].x % 10);
-    	Coords marble;
     	for(int i = 2; i >= 0; i--){
     		if(tabPieces[i].x == 22)
     			continue;
-    		GameBoard[tabPieces[i].x][tabPieces[i].y].setColor(Color.EMPTY);
-    		marble = next_coord(tabPieces[i], dir);
-    		GameBoard[marble.x][marble.y].setColor(player);
+    		setCase(tabPieces[i],Color.EMPTY);
+			setCase(next_coord(tabPieces[i], dir), player);
     		
     	}
     }
@@ -467,8 +464,7 @@ public class Board {
 					setCase(tabPieces[j],player);
 					j--;
 				}
-				Coords marble=next_coord(tabPieces[i],k);
-				setCase(marble,Color.EMPTY);
+				setCase(next_coord(tabPieces[i],k),Color.EMPTY);
 				break;
 			}
 			case 4 :   {    // sumito_2_1
@@ -569,7 +565,7 @@ public class Board {
 												Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);        //we add the broadside moves
 											}
 										}
-										else if(free_next(marble2,k) && ally_next(marble2,k,player)==0)
+										else if(free_next(marble2,k) && inTab(next_coord(marble2,k)))
 										{
 											tabPieces[2]=marble2;    //simple_move
 											tabPieces[3].x=30+k.ordinal();          tabPieces[3].y=88;
@@ -594,7 +590,7 @@ public class Board {
 										Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
 									}
 								}
-								else if(free_next(marble,k) && inTab(marble))
+								else if(free_next(marble,k) && inTab(next_coord(marble,k)))
 								{
 									tabPieces[2].setCoords(22,22);
 									tabPieces[3].setCoords(30+k.ordinal(),88);
@@ -625,7 +621,7 @@ String BroadsideMoves(Coords[] tabPieces){
 
 		String Bs_Moves="";
 		Coords marble;
-		tabPieces[4].setCoords(0,0) ;          //no captures
+		//tabPieces[4].setCoords(0,0) ;          //no captures
 		for(Direction k : Direction.values())
 		{
 			for(int i=0;i<3;i++)

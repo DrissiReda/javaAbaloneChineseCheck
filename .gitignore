@@ -3,8 +3,9 @@
 /out/
 /.idea/
 <<<<<<< HEAD
-/.gitignore
 =======
 /.gitignore
 >>>>>>> b270e164ce02a0346d341e8ebc3d416ddfc16463
 /build/
+/javaAbaloneChineseCheck.iml
+javaAbaloneChineseCheck.iml
