@@ -41,8 +41,8 @@ public class AlphaBeta {
                 zobristTableB.put(i*b.getWidth()+j,(int)Math.random()%10000);
             }
     }
-    int getPlayerVal(Color b){return b==Color.WHITE?1:-1;}
-    int eval_adjacency()
+    private int getPlayerVal(Color b){return b==Color.WHITE?1:-1;}
+    private int eval_adjacency(Color player)
     {
         int res=0;
         //initialisation du tableau de visites
@@ -71,7 +71,7 @@ public class AlphaBeta {
         return res;
     }
 
-    long eval_board(Color player)
+    public long eval_board(Color player)
     {
         long res=0;
         if(marble_count(Color.WHITE)<=8)
@@ -87,18 +87,18 @@ public class AlphaBeta {
                     res+=getPlayerVal(b.getCase(marble))*ABweight[i][j];
             }
         }
-        return getPlayerVal(player)*(res +eval_adjacency() + (marble_count(Color.WHITE)-marble_count(Color.BLACK))*500);
+        return getPlayerVal(player)*(res +eval_adjacency(player) + (marble_count(Color.WHITE)-marble_count(Color.BLACK))*2000);
     }
-    int marble_count(Color player)
+    public int marble_count(Color player)
     {
-        int count=0,i,j;
-        for(i=0;i<b.getHeight();i++)
-            for(j=0;j<b.getWidth();j++)
+        int count=0;
+        for(int i=0;i<b.getHeight();i++)
+            for(int j=0;j<b.getWidth();j++)
                 if(b.getCase(new Coords(i,j)) == player)
                     count++;
         return count;
     }
-    String MoveOrdering(String moves)
+    public String MoveOrdering(String moves)
     {
         String  sumito32A="";
         String  sumito32C="";
@@ -133,7 +133,7 @@ public class AlphaBeta {
                     /*if(moves.substring(i+16,i+17),"A"))
                         sumito21A=concat(sumito21A,substr(moves,i,17));
                     else*/
-                        sumito21C=sumito21C+moves.substring(i,16);
+                        sumito21C=sumito21C+moves.substring(i,i+16);
                     break;
                 }
                 case 5 : {
@@ -219,14 +219,18 @@ public class AlphaBeta {
 //(*)  main keeps track of the player wanting to make the smart move, crucial to differentiate
 //     evaluations, as maximizing/minimizing should be done for the same respective player throughout
 //     the lifetime of the function
-    String alphaBeta(int deptG,int dept, int alpha, int beta,String current,Color player,Color main)
+    public String alphaBeta(int deptG,int dept, int alpha, int beta,String current,Color player,Color main)
     {
         long eval=eval_board(main);
-        //String moves= MoveOrdering(b.AvailableMoves(player));
-        String moves=b.AvailableMoves(player);
+        String moves= MoveOrdering(b.AvailableMoves(player));
+        //String moves=b.AvailableMoves(player);
+        if(b.AvailableMoves(player).length()%16 != 0) {
+            System.out.println(b.AvailableMoves(player));
+            System.out.println(b.AvailableMoves(player).length());
+        }
         int hash_id = hashZobrist() %900000;
 
-        if(score.containsKey(hash_id) && !current.substring(0,16).equals(score.get(hash_id).substring(0,16)))
+        if(score.containsKey(hash_id) && current.substring(0,16).equals(score.get(hash_id).substring(0,16)))
         {
             return score.get(hash_id);
         }
@@ -234,13 +238,15 @@ public class AlphaBeta {
         {
             score.put(hash_id,current+eval);// we can always check
             return score.get(hash_id);
+            //return current+eval;
         }
         for(int i=0;i<moves.length();i+=16)
         {
+            //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+16));
             b.executeMove(b.stringToMove(moves.substring(i,i+16)),player);
             String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+16), b.switchPlayer(player),main);
             int value = Integer.parseInt(returnString.substring(16));
-            b.undo(b.stringToMove(moves.substring(i,16)),player);
+            b.undo(b.stringToMove(moves.substring(i,i+16)),player);
             if (player==b.switchPlayer(main)){
                 if (value<=beta)
                 {
@@ -288,7 +294,7 @@ public class AlphaBeta {
         }
     }
 
-    int hashZobrist()
+    public int hashZobrist()
     {
         int hash=0;
         for(int i=0;i<b.getHeight();i++)
