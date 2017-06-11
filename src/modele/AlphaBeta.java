@@ -37,8 +37,8 @@ public class AlphaBeta {
         score=new HashMap<>();
         for(int i=0;i<b.getHeight();i++)
             for(int j=0;j<b.getWidth();j++){
-                zobristTableW.put(i*b.getWidth()+j,(int)Math.random()%10000);
-                zobristTableB.put(i*b.getWidth()+j,(int)Math.random()%10000);
+                zobristTableW.put(i*b.getWidth()+j,(int)Math.random()*10000000);
+                zobristTableB.put(i*b.getWidth()+j,(int)Math.random()*10000000);
             }
     }
     private int getPlayerVal(Color b){return b==Color.WHITE?1:-1;}
