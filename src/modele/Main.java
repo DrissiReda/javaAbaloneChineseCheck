@@ -36,7 +36,7 @@ public class Main {
 		while(i-->0) {
 			AlphaBeta a = new AlphaBeta(board);
 			//System.out.println(a.MoveOrdering(board.AvailableMoves(player)));
-			String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
+			String move=a.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
 					player, player);
 			System.out.println(move+" "+player);
 			board.executeMove(board.stringToMove(move.substring(0,16)),player);
