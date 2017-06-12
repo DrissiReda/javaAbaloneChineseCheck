@@ -7,6 +7,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		Board board = new Board();
+		BoardDC board_dc = new BoardDC();
+
 		/*board.displayBoard();
 		board.printTabPieces();
 
@@ -25,6 +27,8 @@ public class Main {
 		board.selectPiece(piece3);
 
 		board.printTabPieces();*/
+		
+		/*
 		System.out.println(board.AvailableMoves(Color.BLACK));
 		System.out.println(board.AvailableMoves(Color.BLACK).length());
 		int i=200;
@@ -43,6 +47,8 @@ public class Main {
 				System.out.println("============Victory at "+i+" =============");
 				break;
 			}
-		}
+		}*/
+		board_dc.affichePlateau();
+		
 	}
 }
