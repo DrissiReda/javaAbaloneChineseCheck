@@ -111,12 +111,8 @@ public class Board {
     	}
     	return nb;
     }
-
-    public void check(int indice){
-    	System.out.println("contenu : " + tabPieces[indice].x + ";" + tabPieces[indice].y);
-    }
-
-    public boolean selectPiece(Coords position)
+    
+    public boolean selectMarble(Coords position)
     {
     	// Vérifie que le pion n'est pas déjà sélectionné et est valide
     	if(checkSelected(position) && isMarble(position) && isValid(position)){
@@ -319,6 +315,7 @@ public class Board {
 			default : return pos;
     	}
     }
+    
     public int ally_next(Coords pos,Direction dir,Color player)
 	{
 		if(!inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.ILLEGAL)
@@ -327,6 +324,7 @@ public class Board {
 			return 1; //Same color
 		return 0;   // enemy or empty
 	}
+    
     public boolean free_next(Coords pos,Direction dir)
 	{
 		if(!inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)
@@ -334,6 +332,7 @@ public class Board {
 		else
 			return false;
 	}
+    
 	Direction find_direction(Coords marble1,Coords marble2)
 	{
 		if(marble2.x > marble1.x)
