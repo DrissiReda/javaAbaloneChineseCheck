@@ -48,6 +48,7 @@ public class Main {
 				break;
 			}
 		}*/
+		board_dc.initBoard();
 		board_dc.affichePlateau();
 		
 	}
