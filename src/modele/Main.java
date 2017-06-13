@@ -1,6 +1,8 @@
 package modele;
 
 import java.*;
+import java.util.concurrent.TimeUnit;
+
 import modele.Config.*;
 import vue.*;
 
@@ -36,7 +38,7 @@ public class Main {
 		}
 
 
-		Fenetre fen = new Fenetre();
+		Fenetre fen = new Fenetre(); // adri
 
 
 
@@ -45,6 +47,15 @@ public class Main {
 		int i=200;
 		Color player=Color.BLACK;
 		while(i-->0) {
+
+			//delay adri
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+
 			AlphaBeta a = new AlphaBeta(board);
 			//System.out.println(a.MoveOrdering(board.AvailableMoves(player)));
 			String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
@@ -53,10 +64,12 @@ public class Main {
 			board.executeMove(board.stringToMove(move.substring(0,16)),player);
 			board.displayBoard();
 
-			fen.copyTab(board);
-			fen.updateTab();
+			fen.copyTab(board); // adri
 
 			player=board.switchPlayer(player);
+
+			fen.setPlayer(player); // adri
+
 			if(a.marble_count(player)<=8 || a.marble_count(board.switchPlayer(player))<=8)
 			{
 				System.out.println("============Victory at "+i+" =============");
