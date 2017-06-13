@@ -3,8 +3,8 @@ package modele;
 import modele.Config.Color;
 import modele.Config.Direction;
 
-public class BoardDC {
-	
+public class BoardDC extends Board{
+
 	// 27 * 19
 	private Tile GameBoard[][]={
 				// 0						1						2						3						4						5						6						7						8						9						10						11						12						13						14						15						16						17						18						19						20						21						22						23						24						25						26
@@ -30,8 +30,11 @@ public class BoardDC {
 		
 	};
 	
-	private int height = 19, width = 27;
 	private static Coords marble = null;
+	
+	public BoardDC() {
+		super(19, 27);
+	}
 
 	public void affichePlateau()
 	{
@@ -49,23 +52,37 @@ public class BoardDC {
     		System.out.println("");
 		}
 	}
-	
+
 	// Remplissage de pions bleu pour commencer les déplacements
 	public void initBoard()
 	{
 		for(int i=14;i<height;i++){
 			for(int j=0; j<width; j++){
-				if(GameBoard[i][j].getColor() != Color.ILLEGAL)
+				if(GameBoard[i][j].getColor() != Color.ILLEGAL){
 					GameBoard[i][j].setColor(Color.BLUE);
+					System.out.println("["+i+";"+j+"]");
+				}
+					
 			}
 		}
 	}
 	
-	public boolean selectMarble(Coords position)
+	public boolean selectMarble(Coords pos)
 	{
 		// faire la condition, si le pion appartient bien au joueur alors
-		marble = position;
-		return true;
+		System.out.println(GameBoard[pos.x][pos.y].getColor());
+		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL && GameBoard[pos.x][pos.y].getColor() != Color.EMPTY){
+			marble = pos;
+			return true;
+		}
+		return false;
+	}
+	
+	public void printTabPieces(){
+		if(marble != null)
+			System.out.println("Selection : ["+marble.x+","+marble.y+"]");
+		else
+			System.out.println("Pas de selection");
 	}
 	
 	public boolean move(Direction dir)
@@ -87,23 +104,28 @@ public class BoardDC {
 		Color player = Color.BLUE; // A modifier pour adapter à chaque joueur
 		Coords newMarble = next_coord(marble, dir);
     	GameBoard[marble.x][marble.y].setColor(Color.EMPTY);
-    	GameBoard[marble.x][marble.y].setColor(player);
-		cancelSelect();
+    	GameBoard[newMarble.x][newMarble.y].setColor(player);
+    	cancelSelection();
 	}
 	
 	public void jump_move(Direction dir){
 		Color player = Color.BLUE; // A modifier pour adapter à chaque joueur
 		Coords newMarble = next_coord(next_coord(marble, dir), dir);
     	GameBoard[marble.x][marble.y].setColor(Color.EMPTY);
-    	GameBoard[marble.x][marble.y].setColor(player);
-		cancelSelect();
+    	GameBoard[newMarble.x][newMarble.y].setColor(player);
+    	cancelSelection();
 	}
 	
-	public void cancelSelect(){
+	public void cancelSelection(){
 		marble = null;
 	}
 	
-	public boolean inTab(Coords pos)
+    /**
+     * Verifies if the given position is in the board
+     * @param pos (Coords)
+     * @return boolean
+     */
+    public boolean inTab(Coords pos)
     {
     	if(pos.x >= 0 && pos.x < height && pos.y >= 0 && pos.y < width)
     		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL)
@@ -111,30 +133,13 @@ public class BoardDC {
     	return false;
     }
 	
-	public Color getCase(Coords pos){
-        return GameBoard[pos.x][pos.y].getColor();
-    }
-	
 	public boolean free_next(Coords pos,Direction dir)
 	{
-		if(!inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)
+		if(inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)
 			return true;
 		else
 			return false;
 	}
-	
-    public Coords next_coord(Coords pos, Direction dir)
-    {
-    	switch(dir){
-    		case LEFT :      return new Coords(pos.x,pos.y-2);
-    		case RIGHT :     return new Coords(pos.x,pos.y+2);
-    		case UPLEFT :    return new Coords(pos.x-1,pos.y-1);
-    		case DOWNRIGHT : return new Coords(pos.x+1,pos.y+1);
-    		case UPRIGHT :   return new Coords(pos.x-1,pos.y+1);
-    		case DOWNLEFT :  return new Coords(pos.x+1,pos.y-1);
-			default : return pos;
-    	}
-    }
 
 }
 

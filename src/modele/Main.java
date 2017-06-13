@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Board board = new Board();
+		BoardAbalone board = new BoardAbalone();
 		BoardDC board_dc = new BoardDC();
 
 		/*board.displayBoard();
@@ -50,6 +50,15 @@ public class Main {
 		}*/
 		board_dc.initBoard();
 		board_dc.affichePlateau();
+		Coords m1 = new Coords(14, 10);
+		if(board_dc.selectMarble(m1))
+			System.out.println("ok");
+		board_dc.printTabPieces();
 		
+		if(board_dc.move(Direction.UPLEFT)){
+			System.out.println("mouvement ok");
+		}
+			
+		board_dc.affichePlateau();
 	}
 }

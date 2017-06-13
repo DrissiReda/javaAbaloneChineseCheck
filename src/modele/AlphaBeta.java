@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class AlphaBeta {
 
-    Board b;
+    BoardAbalone b;
     Map<Integer,Integer> zobristTableW;
     Map<Integer,Integer> zobristTableB;
     Map<Integer,String> score;
@@ -30,7 +30,7 @@ public class AlphaBeta {
         {0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0}
 
     };
-    public AlphaBeta(Board b){
+    public AlphaBeta(BoardAbalone b){
         this.b=b;
         zobristTableB=new HashMap<>();
         zobristTableW=new HashMap<>();
