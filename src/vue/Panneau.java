@@ -12,8 +12,8 @@ import javax.swing.*;
 
 public class Panneau extends JPanel {
 
-    int oranLeft = 14;
-    int bleuLeft = 14;
+    int marbleLeftBlack = 14;
+    int marbleLeftWhite = 14;
 
     Config.Color player = Config.Color.BLACK;
 
@@ -21,8 +21,10 @@ public class Panneau extends JPanel {
 
     int initParam=1;
 
-    JLabel scoreB = new JLabel("restants : "+oranLeft);
-    JLabel scoreW = new JLabel("restants : "+bleuLeft);
+    JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
+    JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
+    JLabel validButton = new JLabel(new ImageIcon("Images/ValidDown.png"));
+
 
 
     public void paintComponent(Graphics g) {
@@ -39,6 +41,8 @@ public class Panneau extends JPanel {
             scoreW.setBounds(730, 487, 170, 50);
             add(scoreB);
             add(scoreW);
+
+            validButton.setBounds(530, 140, 170, 50);
 
             //police
             try {
@@ -65,13 +69,13 @@ public class Panneau extends JPanel {
             e.printStackTrace();
         }
 
-/*
-        JButton button = new JButton(new ImageIcon("Images/ValidDown.png"));
-        button.setBounds(5, 5, 170, 50);
-        add(button);
-*/
-        scoreB.setText("restants : "+oranLeft);
-        scoreW.setText("restants : "+bleuLeft);
+
+        //affiche boutonValider
+        add(validButton);
+
+        //Mets à jour les "Boules restants
+        scoreB.setText("restants : "+marbleLeftBlack);
+        scoreW.setText("restants : "+marbleLeftWhite);
 
         int widthOffset = 0;
         int heightOffset = 153;
@@ -113,15 +117,11 @@ public class Panneau extends JPanel {
         return null;
     }
 
+    public void setMarbleLeftBlack(int marbleLeftBlack) {
+        this.marbleLeftBlack = marbleLeftBlack;
+    }
 
-
-
-
-
-
-
-
-
-
-
+    public void setMarbleLeftWhite(int marbleLeftWhite) {
+        this.marbleLeftWhite = marbleLeftWhite;
+    }
 }

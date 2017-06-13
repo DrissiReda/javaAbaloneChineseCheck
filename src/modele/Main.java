@@ -64,6 +64,8 @@ public class Main {
 			board.executeMove(board.stringToMove(move.substring(0,16)),player);
 			board.displayBoard();
 
+			fen.setMarbleLeftBlack(a.marble_count(Color.BLACK)); // adri
+			fen.setMarbleLeftWhite(a.marble_count(Color.WHITE)); // adri
 			fen.copyTab(board); // adri
 
 			player=board.switchPlayer(player);

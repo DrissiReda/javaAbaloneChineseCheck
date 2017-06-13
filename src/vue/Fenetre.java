@@ -33,7 +33,13 @@ public class Fenetre extends JFrame {
         pan.setPlayer(player);
     }
 
+    public void setMarbleLeftBlack(int marbleLeftBlack) {
+        pan.setMarbleLeftBlack(marbleLeftBlack);
+    }
 
+    public void setMarbleLeftWhite(int marbleLeftWhite) {
+        pan.setMarbleLeftWhite(marbleLeftWhite);
+    }
 
 
 
