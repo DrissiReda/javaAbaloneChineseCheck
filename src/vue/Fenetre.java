@@ -26,7 +26,7 @@ public class Fenetre extends JFrame {
     }
 
     public void copyTab(Board b){
-        pan.copyTab(b);
+        pan.copyTab((BoardAbalone)b);
     }
 
     public void setPlayer(Config.Color player) {
