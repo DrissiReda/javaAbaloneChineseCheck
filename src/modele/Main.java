@@ -1,23 +1,23 @@
 package modele;
+
 import java.*;
+import java.util.concurrent.TimeUnit;
+
 import modele.Config.*;
+import vue.*;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		BoardAbalone board = new BoardAbalone();
-		BoardDC board_dc = new BoardDC();
-
 		/*board.displayBoard();
 		board.printTabPieces();
-
 		Coords piece = new Coords(1,5);
 		Coords piece2 = new Coords(2,8);
 		Coords piece3 = new Coords(2,6);
 		System.out.println("position : ");
 		//board.printPosition(piece);		
-
 		if(board.selectPiece(piece))
 			System.out.println("Pion selectionne");
 		else
@@ -25,40 +25,56 @@ public class Main {
 		
 		board.selectPiece(piece2);
 		board.selectPiece(piece3);
-
 		board.printTabPieces();*/
-		
-		/*
 		System.out.println(board.AvailableMoves(Color.BLACK));
 		System.out.println(board.AvailableMoves(Color.BLACK).length());
+		System.out.println(board.getCase(new Coords(7,7)));
+		switch(board.getCase(new Coords(7,7))){
+			case EMPTY : System.out.print("0");
+			default : System.out.println("1");
+		}
+
+
+		Fenetre fen = new Fenetre(); // adri
+
+
+
+
+
 		int i=200;
 		Color player=Color.BLACK;
 		while(i-->0) {
+
+			//delay adri
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+
 			AlphaBeta a = new AlphaBeta(board);
 			//System.out.println(a.MoveOrdering(board.AvailableMoves(player)));
-			String move=a.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
+			String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
 					player, player);
 			System.out.println(move+" "+player);
 			board.executeMove(board.stringToMove(move.substring(0,16)),player);
 			board.displayBoard();
+
+			fen.setMarbleLeftBlack(a.marble_count(Color.BLACK)); // adri
+			fen.setMarbleLeftWhite(a.marble_count(Color.WHITE)); // adri
+			fen.copyTab(board); // adri
+
 			player=board.switchPlayer(player);
+
+			fen.setPlayer(player); // adri
+
 			if(a.marble_count(player)<=8 || a.marble_count(board.switchPlayer(player))<=8)
 			{
 				System.out.println("============Victory at "+i+" =============");
 				break;
 			}
-		}*/
-		board_dc.initBoard();
-		board_dc.affichePlateau();
-		Coords m1 = new Coords(14, 10);
-		if(board_dc.selectMarble(m1))
-			System.out.println("ok");
-		board_dc.printTabPieces();
-		
-		if(board_dc.move(Direction.UPLEFT)){
-			System.out.println("mouvement ok");
 		}
-			
-		board_dc.affichePlateau();
+
 	}
 }
