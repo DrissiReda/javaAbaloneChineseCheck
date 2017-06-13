@@ -29,11 +29,10 @@ public class BoardDC extends Board{
 		{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)}
 		
 	};
-	
-	private static Coords marble = null;
+	private Coords[] tabPieces=new Coords[2];
 	
 	public BoardDC() {
-		super(19, 27);
+		super(19, 27,8);
 	}
 
 	public void affichePlateau()
@@ -52,8 +51,19 @@ public class BoardDC extends Board{
     		System.out.println("");
 		}
 	}
+	public Color getCase(Coords pos){
+		return GameBoard[pos.x][pos.y].getColor();
+	}
+	public void setCase(Coords pos, Color c){
+		GameBoard[pos.x][pos.y].setColor(c);
+	}
 
-	// Remplissage de pions bleu pour commencer les déplacements
+	@Override
+	public int marble_count(Color player) {
+		return 10;
+	}
+
+	// Remplissage de pions bleu pour commencer les deplacements
 	public void initBoard()
 	{
 		for(int i=14;i<height;i++){
@@ -72,55 +82,71 @@ public class BoardDC extends Board{
 		// faire la condition, si le pion appartient bien au joueur alors
 		System.out.println(GameBoard[pos.x][pos.y].getColor());
 		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL && GameBoard[pos.x][pos.y].getColor() != Color.EMPTY){
-			marble = pos;
+			tabPieces[0] = pos;
 			return true;
 		}
 		return false;
 	}
 	
 	public void printTabPieces(){
-		if(marble != null)
-			System.out.println("Selection : ["+marble.x+","+marble.y+"]");
+		if(tabPieces[0] != null)
+			System.out.println("Selection : ["+tabPieces[0].x+","+tabPieces[0].y+"]");
 		else
 			System.out.println("Pas de selection");
 	}
 	
-	public boolean move(Direction dir)
+	public boolean executeMove(Coords[] tabPieces,Color player)
 	{
-		if(free_next(marble, dir)){
-			simple_move(dir);
+		if(free_next(tabPieces[0], toDir(tabPieces[1].x%10))){
+			simple_move(tabPieces,player);
 			return true;
 		}
 		else{
-			if(free_next(next_coord(marble, dir), dir)){
-				jump_move(dir);
+			if(free_next(next_coord(tabPieces[0], toDir(tabPieces[1].x%10)), toDir(tabPieces[1].x%10))){
+				jump_move(tabPieces,player);
 				return true;
 			}
 		}
 		return false;	
 	}
 	
-	public void simple_move(Direction dir){
-		Color player = Color.BLUE; // A modifier pour adapter à chaque joueur
-		Coords newMarble = next_coord(marble, dir);
-    	GameBoard[marble.x][marble.y].setColor(Color.EMPTY);
-    	GameBoard[newMarble.x][newMarble.y].setColor(player);
+	public void simple_move(Coords[] tabPieces,Color player){
+		Coords newMarble = next_coord(tabPieces[0], toDir(tabPieces[1].x%10));
+    	setCase(tabPieces[0],Color.EMPTY);
+    	setCase(newMarble,player);
     	cancelSelection();
 	}
 	
-	public void jump_move(Direction dir){
-		Color player = Color.BLUE; // A modifier pour adapter à chaque joueur
-		Coords newMarble = next_coord(next_coord(marble, dir), dir);
-    	GameBoard[marble.x][marble.y].setColor(Color.EMPTY);
-    	GameBoard[newMarble.x][newMarble.y].setColor(player);
+	public void jump_move(Coords[] tabPieces,Color player){
+		Coords newMarble = next_coord(next_coord(tabPieces[0], toDir(tabPieces[1].x%10)), toDir(tabPieces[1].x%10));
+    	setCase(tabPieces[0],Color.EMPTY);
+    	setCase(newMarble,player);
     	cancelSelection();
 	}
-	
 	public void cancelSelection(){
-		marble = null;
+		tabPieces[0] = null;
 	}
-	
-    /**
+
+	@Override
+	public String AvailableMoves(Color player) {
+		String Av_Moves="";
+		for(int i=0;i<getHeight();i++)
+			for(int j=0;j<getWidth();j++)
+				for(Direction k : Direction.values()){
+					tabPieces[0].setCoords(i,j);
+					if(free_next(new Coords(i,j),k)) {
+						tabPieces[1].setCoords(10 + k.ordinal(), 88);
+						Av_Moves=Av_Moves+MoveToString(tabPieces);
+					}
+					if(ally_next(new Coords(i,j),k,player)==1 && free_next(next_coord(new Coords(i,j),k),k))
+						tabPieces[1].setCoords(20+k.ordinal(),88);{
+						Av_Moves=Av_Moves+MoveToString(tabPieces);
+					}
+				}
+		return Av_Moves;
+	}
+
+	/**
      * Verifies if the given position is in the board
      * @param pos (Coords)
      * @return boolean
@@ -132,7 +158,51 @@ public class BoardDC extends Board{
     			return true;
     	return false;
     }
-	
+
+	@Override
+	public int ally_next(Coords marble, Direction k, Color player) {
+		return 0;
+	}
+
+	@Override
+	public boolean undo(Coords[] tabPieces, Color player) {
+		return false;
+	}
+
+	@Override
+	public Coords[] stringToMove(String str) {
+		Coords tab[]= {
+				new Coords(Integer.parseInt(str.substring(0, 2)), Integer.parseInt(str.substring(2, 4))),
+				new Coords(Integer.parseInt(str.substring(4, 6)), Integer.parseInt(str.substring(6, 8))),
+		};
+		return tab;
+	}
+
+	@Override
+	public String MoveToString(Coords[] tab) {
+		String ret = "";
+		for(int i=0;i<2;i++)
+		{
+			if(tab[i].x<10)
+				ret=ret+"0";
+			ret=ret+tab[i].x;
+			if(tab[i].y<10)
+				ret=ret+"0";
+			ret=ret+tab[i].y;
+		}
+		return ret;
+	}
+
+	@Override
+	public Color switchPlayer(Color player) {
+		return null;
+	}
+
+	@Override
+	public String MoveOrdering(Color player) {
+		return null;
+	}
+
 	public boolean free_next(Coords pos,Direction dir)
 	{
 		if(inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)

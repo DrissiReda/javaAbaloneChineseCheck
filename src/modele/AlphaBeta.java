@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class AlphaBeta {
 
-    BoardAbalone b;
+    Board b;
     Map<Integer,Integer> zobristTableW;
     Map<Integer,Integer> zobristTableB;
     Map<Integer,String> score;
@@ -30,7 +30,7 @@ public class AlphaBeta {
         {0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0}
 
     };
-    public AlphaBeta(BoardAbalone b){
+    public AlphaBeta(Board b){
         this.b=b;
         zobristTableB=new HashMap<>();
         zobristTableW=new HashMap<>();
@@ -74,9 +74,9 @@ public class AlphaBeta {
     public long eval_board(Color player)
     {
         long res=0;
-        if(marble_count(Color.WHITE)<=8)
+        if(b.marble_count(Color.WHITE)<=8)
             return Integer.MIN_VALUE;  //losing case avoid at all costs
-        if(marble_count(Color.BLACK)<=8)
+        if(b.marble_count(Color.BLACK)<=8)
             return  Integer.MAX_VALUE;  //winning case attain at all costs
         for(int i=0;i<b.getHeight();i++)
         {
@@ -87,81 +87,10 @@ public class AlphaBeta {
                     res+=getPlayerVal(b.getCase(marble))*ABweight[i][j];
             }
         }
-        return getPlayerVal(player)*(res +eval_adjacency(player) + (marble_count(Color.WHITE)-marble_count(Color.BLACK))*2000);
+        return getPlayerVal(player)*(res +eval_adjacency(player) + (b.marble_count(Color.WHITE)-b.marble_count(Color.BLACK))*2000);
     }
-    public int marble_count(Color player)
-    {
-        int count=0;
-        for(int i=0;i<b.getHeight();i++)
-            for(int j=0;j<b.getWidth();j++)
-                if(b.getCase(new Coords(i,j)) == player)
-                    count++;
-        return count;
-    }
-    public String MoveOrdering(String moves)
-    {
-        String  sumito32A="";
-        String  sumito32C="";
-        String  sumito31A="";
-        String  sumito31C="";
-        String  sumito21A="";
-        String  sumito21C="";
-        String  broadside2="";
-        String  broadside3="";
-        String  simplemove1="";
-        String  simplemove2="";
-        String  simplemove3="";
-        int type;
-        for(int i=0;i<moves.length();i+=16)
-        {
-            type=Integer.parseInt(moves.substring(i+12,i+13));
-            switch(type)
-            {
-                case 3 : {
-                    if(Integer.parseInt(moves.substring(i+4,i+6))!=22)
-                    {
-                        if(Integer.parseInt(moves.substring(i+8,i+10))!=22)
-                            simplemove3=simplemove3+moves.substring(i,i+16);
-                        else
-                            simplemove2=simplemove2+moves.substring(i,i+16);
-                    }
-                    else
-                        simplemove1=simplemove1+moves.substring(i,i+16);
-                    break;
-                }
-                case 4 : {
-                    /*if(moves.substring(i+16,i+17),"A"))
-                        sumito21A=concat(sumito21A,substr(moves,i,17));
-                    else*/
-                        sumito21C=sumito21C+moves.substring(i,i+16);
-                    break;
-                }
-                case 5 : {
-                    /*if(!strcmp(substr(moves,i+16,1),"A"))
-                        sumito31A=concat(sumito31A,substr(moves,i,17));
-                    else*/
-                        sumito31C=sumito31C+moves.substring(i,i+16);
-                    break;
-                }
-                case 6 : {
-                    /*if(!strcmp(substr(moves,i+16,1),"A"))
-                        sumito32A=concat(sumito32A,substr(moves,i,17));
-                    else*/
-                        sumito32C=sumito32C+moves.substring(i,i+16);
-                    break;
-                }
-                case 7 : {
-                    if(Integer.parseInt(moves.substring(i+8,i+10))!=22)
-                        broadside3=broadside3+moves.substring(i,i+16);
-                    else
-                        broadside2=broadside2+moves.substring(i,i+16);
-                    break;
-                }
-            }
-        }
-        return sumito32C+sumito31C+sumito21C+sumito32A+sumito31A+sumito21A
-                +simplemove3+simplemove2+broadside3+broadside2+simplemove1;
-    }
+
+ 
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -222,15 +151,15 @@ public class AlphaBeta {
     public String alphaBeta(int deptG,int dept, int alpha, int beta,String current,Color player,Color main)
     {
         long eval=eval_board(main);
-        String moves= MoveOrdering(b.AvailableMoves(player));
+        String moves= b.MoveOrdering(player);
         //String moves=b.AvailableMoves(player);
-        if(b.AvailableMoves(player).length()%16 != 0) {
+        if(b.AvailableMoves(player).length()%b.moveSize != 0) {
             System.out.println(b.AvailableMoves(player));
             System.out.println(b.AvailableMoves(player).length());
         }
-        int hash_id = hashZobrist() %900000;
+        int hash_id = hashZobristAB();
 
-        if(score.containsKey(hash_id) && current.substring(0,16).equals(score.get(hash_id).substring(0,16)))
+        if(score.containsKey(hash_id) && current.substring(0,b.moveSize).equals(score.get(hash_id).substring(0,b.moveSize)))
         {
             return score.get(hash_id);
         }
@@ -240,20 +169,20 @@ public class AlphaBeta {
             return score.get(hash_id);
             //return current+eval;
         }
-        for(int i=0;i<moves.length();i+=16)
+        for(int i=0;i<moves.length();i+=b.moveSize)
         {
-            //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+16));
-            b.executeMove(b.stringToMove(moves.substring(i,i+16)),player);
-            String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+16), b.switchPlayer(player),main);
-            int value = Integer.parseInt(returnString.substring(16));
-            b.undo(b.stringToMove(moves.substring(i,i+16)),player);
+            //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+b.moveSize));
+            b.executeMove(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
+            String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+b.moveSize), b.switchPlayer(player),main);
+            int value = Integer.parseInt(returnString.substring(b.moveSize));
+            b.undo(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
             if (player==b.switchPlayer(main)){
                 if (value<=beta)
                 {
                     beta=value;
                     if (dept==deptG)
                     {
-                        current=returnString.substring(0,16);
+                        current=returnString.substring(0,b.moveSize);
                     }
                 }
             }
@@ -264,7 +193,7 @@ public class AlphaBeta {
                     alpha=value;
                     if(dept==deptG)
                     {
-                        current=returnString.substring(0,16);
+                        current=returnString.substring(0,b.moveSize);
                     }
                 }
             }
@@ -294,7 +223,7 @@ public class AlphaBeta {
         }
     }
 
-    public int hashZobrist()
+    public int hashZobristAB()
     {
         int hash=0;
         for(int i=0;i<b.getHeight();i++)

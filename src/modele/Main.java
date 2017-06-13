@@ -58,18 +58,18 @@ public class Main {
 			String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
 					player, player);
 			System.out.println(move+" "+player);
-			board.executeMove(board.stringToMove(move.substring(0,16)),player);
+			board.executeMove(board.stringToMove(move.substring(0,board.moveSize)),player);
 			board.displayBoard();
 
-			fen.setMarbleLeftBlack(a.marble_count(Color.BLACK)); // adri
-			fen.setMarbleLeftWhite(a.marble_count(Color.WHITE)); // adri
+			fen.setMarbleLeftBlack(board.marble_count(Color.BLACK)); // adri
+			fen.setMarbleLeftWhite(board.marble_count(Color.WHITE)); // adri
 			fen.copyTab(board); // adri
 
 			player=board.switchPlayer(player);
 
 			fen.setPlayer(player); // adri
 
-			if(a.marble_count(player)<=8 || a.marble_count(board.switchPlayer(player))<=8)
+			if(board.marble_count(player)<=8 || board.marble_count(board.switchPlayer(player))<=8)
 			{
 				System.out.println("============Victory at "+i+" =============");
 				break;

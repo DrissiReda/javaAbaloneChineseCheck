@@ -4,8 +4,8 @@ import modele.Config.Direction;
 
 public class BoardAbalone extends Board{
 	
-	public static Coords[] tabPieces = new Coords[4];
-	public static Color player = Color.BLACK;
+	public Coords[] tabPieces = new Coords[4];
+	public Color player = Color.BLACK;
 
 											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
 	private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
@@ -22,26 +22,21 @@ public class BoardAbalone extends Board{
                                 };
     
 
-    public int getHeight(){return height;}
-    public int getWidth() {return width;}
-    public Color getCase(Coords pos){
-        return GameBoard[pos.x][pos.y].getColor();
-    }
-    
-    public void setCase(Coords pos, Color c){
-        GameBoard[pos.x][pos.y].setColor(c);
-    }
-    
     public BoardAbalone() {
-		super(11, 19);
+		super(11, 19,16);
 		initTabPieces();
 	}
     
-    public BoardAbalone(int h, int w) {
-    	super(h, w);
+    public BoardAbalone(int h, int w,int m) {
+    	super(h, w, m);
 		initTabPieces();
     }
-    
+	public Color getCase(Coords pos){
+		return GameBoard[pos.x][pos.y].getColor();
+	}
+	public void setCase(Coords pos, Color c){
+		GameBoard[pos.x][pos.y].setColor(c);
+	}
     public void printPosition(Coords pos)
     {
     	System.out.println(GameBoard[pos.x][pos.y].getColor());
@@ -79,7 +74,7 @@ public class BoardAbalone extends Board{
     }
     public void printTabPieces()
     {
-    	System.out.print("Pièces sélectionnées : ");
+    	System.out.print("Pi?ces s?lectionn?es : ");
     	for (int i = 0; i < 3; i++){
     		if(tabPieces[i].x != 22)
     			System.out.print("["+tabPieces[i].x+";"+tabPieces[i].y+"]");
@@ -95,13 +90,13 @@ public class BoardAbalone extends Board{
     	if (tabPieces[3].x != 88)
     		System.out.println(toDir(tabPieces[3].x));
     	else
-    		System.out.println("Non définie");
+    		System.out.println("Non d?finie");
     }
     
     public int nbPiece()
     {
     	int nb = 0;
-    	for(int i = 0; i < 2; i++){ // Parcours des cases pour les pions (les 3 premières)
+    	for(int i = 0; i < 2; i++){ // Parcours des cases pour les pions (les 3 premi?res)
     		if(tabPieces[i].x != 22)
     			nb++;
     		else
@@ -112,7 +107,7 @@ public class BoardAbalone extends Board{
     
     public boolean selectMarble(Coords pos)
     {
-    	// Vérifie que le pion n'est pas déjà sélectionné et est valide
+    	// V?rifie que le pion n'est pas d?j? s?lectionn? et est valide
     	if(checkSelected(pos) && isMarble(pos) && isValid(pos)){
     		// Recherche une place disponible dans le tableau
     		for (int i = 0; i < 3; i++){
@@ -124,7 +119,7 @@ public class BoardAbalone extends Board{
     			}
     		}
     	}
-    	return false; //Pas de place disponible ou pion déjà sélectionné
+    	return false; //Pas de place disponible ou pion d?j? s?lectionn?
     }
     
     // Ici il faut voir si on doit reset aussi le mouvement ecrit ou pas
@@ -194,8 +189,8 @@ public class BoardAbalone extends Board{
     		}
     	}
     	
-    	/* Dans le cas où deux pions ont déjà été sélectionnés il faut
-    	 * s'assurer que le troisième soit placé dans la continuité */ 
+    	/* Dans le cas o? deux pions ont d?j? ?t? s?lectionn?s il faut
+    	 * s'assurer que le troisi?me soit plac? dans la continuit? */ 
     	
 		if (twoMarbles){
 			if (tabPieces[0].x == tabPieces[1].x){
@@ -257,23 +252,7 @@ public class BoardAbalone extends Board{
     }
 
     
-    /**
-     * Converts integer to Direction
-     * @param value (int)
-     * @return Direction
-     */
-    public Direction toDir(int value)
-    {
-    	switch(value){
-    		case 0 : return Direction.LEFT;
-	    	case 1 : return Direction.RIGHT;
-	    	case 2 : return Direction.UPLEFT;
-	    	case 3 : return Direction.DOWNRIGHT;
-	    	case 4 : return Direction.UPRIGHT;
-	    	case 5 : return Direction.DOWNLEFT;
-	    	default : return Direction.LEFT;
-    	}
-    }
+
 
     /**
      * Converts integer to Color
@@ -411,19 +390,19 @@ public class BoardAbalone extends Board{
     	}
     }
     
-    public void executeMove(Coords tabPieces[], Color player){
+    public boolean executeMove(Coords tabPieces[], Color player){
     	int type = tabPieces[3].x/10;
     	
     	switch(type){
-    		case 3 : simple_move(tabPieces, player); break;
-    		case 4 : sumito_2_1(tabPieces, player); break;
-    		case 5 : sumito_3_1(tabPieces, player); break;
-    		case 6 : sumito_3_2(tabPieces, player); break;
-    		case 7 : broadside(tabPieces, player); break;
-    		default : break;
+    		case 3 : simple_move(tabPieces, player); return true;
+    		case 4 : sumito_2_1(tabPieces, player); return true;
+    		case 5 : sumito_3_1(tabPieces, player); return true;
+    		case 6 : sumito_3_2(tabPieces, player); return true;
+    		case 7 : broadside(tabPieces, player); return true;
+    		default : return false;
     	}
     }
-    public void undo(Coords tabPieces[],Color player)
+    public boolean undo(Coords tabPieces[],Color player)
 	{
 		int i=2;
 		Direction k     = toDir(tabPieces[3].x %10); // find the direction to invert
@@ -443,7 +422,7 @@ public class BoardAbalone extends Board{
 					j--;
 				}
 				setCase(next_coord(tabPieces[i],k),Color.EMPTY);
-				break;
+				return true;
 			}
 			case 4 :   {    // sumito_2_1
 				Coords marble        = next_coord(tabPieces[1],k);
@@ -452,7 +431,7 @@ public class BoardAbalone extends Board{
 				if(inTab(marble2))
 					setCase(marble2,Color.EMPTY);
 				setCase(tabPieces[0],player);
-				break;
+				return true;
 			}
 			case 5 :   {  //  sumito_3_1
 				// only difference between 4 and 5 is here j is going to be bigger by one
@@ -462,7 +441,7 @@ public class BoardAbalone extends Board{
 				if(inTab(marble2))
 					setCase(marble2,Color.EMPTY);
 				setCase(tabPieces[0],player);
-				break;
+				return true;
 			}
 			case 6 :   {  // sumito_3_2
 				// same thing but we go marbles deeper (1 step)
@@ -472,7 +451,7 @@ public class BoardAbalone extends Board{
 				if(inTab(marble3))
 					setCase(marble3,Color.EMPTY);
 				setCase(tabPieces[0],player);
-				break;
+				return true;
 			}
 			case 7 :   {           // broadside same as simple_move
 				while(j>=0)
@@ -482,9 +461,10 @@ public class BoardAbalone extends Board{
 					setCase(marble,Color.EMPTY);
 					j--;
 				}
-				break;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public String AvailableMoves(Color player)
@@ -633,6 +613,82 @@ String BroadsideMoves(Coords[] tabPieces){
 			}
 		}
 		return Bs_Moves;
+	}
+
+	public String MoveOrdering(Color player)
+	{
+		String moves=AvailableMoves(player);
+		String  sumito32A="";
+		String  sumito32C="";
+		String  sumito31A="";
+		String  sumito31C="";
+		String  sumito21A="";
+		String  sumito21C="";
+		String  broadside2="";
+		String  broadside3="";
+		String  simplemove1="";
+		String  simplemove2="";
+		String  simplemove3="";
+		int type;
+		for(int i=0;i<moves.length();i+=16)
+		{
+			type=Integer.parseInt(moves.substring(i+12,i+13));
+			switch(type)
+			{
+				case 3 : {
+					if(Integer.parseInt(moves.substring(i+4,i+6))!=22)
+					{
+						if(Integer.parseInt(moves.substring(i+8,i+10))!=22)
+							simplemove3=simplemove3+moves.substring(i,i+16);
+						else
+							simplemove2=simplemove2+moves.substring(i,i+16);
+					}
+					else
+						simplemove1=simplemove1+moves.substring(i,i+16);
+					break;
+				}
+				case 4 : {
+                    /*if(moves.substring(i+16,i+17),"A"))
+                        sumito21A=concat(sumito21A,substr(moves,i,17));
+                    else*/
+					sumito21C=sumito21C+moves.substring(i,i+16);
+					break;
+				}
+				case 5 : {
+                    /*if(!strcmp(substr(moves,i+16,1),"A"))
+                        sumito31A=concat(sumito31A,substr(moves,i,17));
+                    else*/
+					sumito31C=sumito31C+moves.substring(i,i+16);
+					break;
+				}
+				case 6 : {
+                    /*if(!strcmp(substr(moves,i+16,1),"A"))
+                        sumito32A=concat(sumito32A,substr(moves,i,17));
+                    else*/
+					sumito32C=sumito32C+moves.substring(i,i+16);
+					break;
+				}
+				case 7 : {
+					if(Integer.parseInt(moves.substring(i+8,i+10))!=22)
+						broadside3=broadside3+moves.substring(i,i+16);
+					else
+						broadside2=broadside2+moves.substring(i,i+16);
+					break;
+				}
+			}
+		}
+		return sumito32C+sumito31C+sumito21C+sumito32A+sumito31A+sumito21A
+				+simplemove3+simplemove2+broadside3+broadside2+simplemove1;
+	}
+
+	public int marble_count(Color player)
+	{
+		int count=0;
+		for(int i=0;i<getHeight();i++)
+			for(int j=0;j<getWidth();j++)
+				if(getCase(new Coords(i,j)) == player)
+					count++;
+		return count;
 	}
 
 }
