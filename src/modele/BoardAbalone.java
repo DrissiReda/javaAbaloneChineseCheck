@@ -96,7 +96,7 @@ public class BoardAbalone extends Board{
     public int nbPiece()
     {
     	int nb = 0;
-    	for(int i = 0; i < 2; i++){ // Parcours des cases pour les pions (les 3 premi?res)
+    	for(int i = 0; i < 3; i++){ // Parcours des cases pour les pions (les 3 premi?res)
     		if(tabPieces[i].x != 22)
     			nb++;
     		else
@@ -340,6 +340,15 @@ public class BoardAbalone extends Board{
     {
     	return player == Color.WHITE ? Color.BLACK : Color.WHITE;
     }
+
+    public void switchPlayer(){
+    	if(this.player==Color.BLACK){
+    		this.player=Color.WHITE;
+		}
+		else{
+			this.player=Color.BLACK;
+		}
+	}
     
     /**
      * Function for sumito 2 marbles vs 1

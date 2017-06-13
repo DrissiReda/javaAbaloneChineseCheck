@@ -21,16 +21,12 @@ public class Fenetre extends JFrame {
     }
 
 
-    public void updateTab(){
-        pan.repaint();
+    public void refreshBoard(){
+        pan.refreshBoard();
     }
 
     public void copyTab(Board b){
         pan.copyTab((BoardAbalone)b);
-    }
-
-    public void setPlayer(Config.Color player) {
-        pan.setPlayer(player);
     }
 
     public void setMarbleLeftBlack(int marbleLeftBlack) {
@@ -41,6 +37,12 @@ public class Fenetre extends JFrame {
         pan.setMarbleLeftWhite(marbleLeftWhite);
     }
 
+    public int getConfirmValidation() {
+        return pan.getConfirmValidation();
+    }
 
+    public void reInit(){
+        pan.reInit();
+    }
 
 }
