@@ -1,14 +1,14 @@
 package modele;
+
 import java.*;
 import modele.Config.*;
+import vue.*;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		Board board = new Board();
-		BoardDC board_dc = new BoardDC();
-
 		/*board.displayBoard();
 		board.printTabPieces();
 
@@ -27,29 +27,42 @@ public class Main {
 		board.selectPiece(piece3);
 
 		board.printTabPieces();*/
-		
-		/*
 		System.out.println(board.AvailableMoves(Color.BLACK));
 		System.out.println(board.AvailableMoves(Color.BLACK).length());
+		System.out.println(board.getCase(new Coords(7,7)));
+		switch(board.getCase(new Coords(7,7))){
+			case EMPTY : System.out.print("0");
+			default : System.out.println("1");
+		}
+
+
+		Fenetre fen = new Fenetre();
+
+
+
+
+
 		int i=200;
 		Color player=Color.BLACK;
 		while(i-->0) {
 			AlphaBeta a = new AlphaBeta(board);
 			//System.out.println(a.MoveOrdering(board.AvailableMoves(player)));
-			String move=a.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
+			String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",
 					player, player);
 			System.out.println(move+" "+player);
 			board.executeMove(board.stringToMove(move.substring(0,16)),player);
 			board.displayBoard();
+
+			fen.copyTab(board);
+			fen.updateTab();
+
 			player=board.switchPlayer(player);
 			if(a.marble_count(player)<=8 || a.marble_count(board.switchPlayer(player))<=8)
 			{
 				System.out.println("============Victory at "+i+" =============");
 				break;
 			}
-		}*/
-		board_dc.initBoard();
-		board_dc.affichePlateau();
-		
+		}
+
 	}
 }
