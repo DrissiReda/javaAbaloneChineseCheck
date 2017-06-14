@@ -5,6 +5,8 @@ import modele.Config.Direction;
 
 import java.util.ArrayList;
 
+import static modele.Config.Direction.RIGHT;
+
 public class BoardDC extends Board{
 
 	// 27 * 19
@@ -170,10 +172,23 @@ public class BoardDC extends Board{
 	public int ally_next(Coords marble, Direction k, Color player) {
 		return 0;
 	}
-
+	public Direction invert_dir(Direction k){
+    	switch(k){
+    		case LEFT : return Direction.RIGHT;
+			case RIGHT : return Direction.LEFT;
+			case UPLEFT: return Direction.DOWNRIGHT;
+			case UPRIGHT: return Direction.DOWNLEFT;
+			case DOWNLEFT: return Direction.UPRIGHT;
+			case DOWNRIGHT: return Direction.UPLEFT;
+			default : return null;
+		}
+	}
 	@Override
 	public boolean undo(Coords[] tabPieces, Color player) {
-		return false;
+    	Coords[] ret={tabPieces[0],new Coords(
+    			tabPieces[1].x-tabPieces[1].x%10+invert_dir(toDir(tabPieces[1].x%10)).ordinal(),
+				88)};
+    	return executeMove(ret,player);
 	}
 
 	@Override
