@@ -41,6 +41,7 @@ public class Panneau extends JPanel implements MouseListener {
     JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
     JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
 
+    Config.Direction direction=null;
 
 
     public void paintComponent(Graphics g) {
@@ -74,6 +75,39 @@ public class Panneau extends JPanel implements MouseListener {
             }
 
             initParam=0;
+
+/*
+            JLabel hd = new JLabel("Test");
+            JLabel hg = new JLabel("Test");
+            JLabel d = new JLabel("Test");
+            JLabel gau = new JLabel("Test");
+            JLabel bd = new JLabel("Test");
+            JLabel bg = new JLabel("Test");
+            hd.setBackground(Color.lightGray);
+            hg.setBackground(Color.lightGray);
+            d.setBackground(Color.lightGray);
+            gau.setBackground(Color.lightGray);
+            bd.setBackground(Color.lightGray);
+            bg.setBackground(Color.lightGray);
+            hd.setOpaque(true);
+            hg.setOpaque(true);
+            d.setOpaque(true);
+            gau.setOpaque(true);
+            bd.setOpaque(true);
+            bg.setOpaque(true);
+            hd.setBounds(792, 202, 72, 73);
+            hg.setBounds(721, 202, 72, 73);
+            d.setBounds(821, 278, 86, 65);
+            gau.setBounds(672, 278, 86, 65);
+            bd.setBounds(793, 345, 72, 73);
+            bg.setBounds(722, 345, 72, 73);
+            this.add(hd);
+            this.add(hg);
+            this.add(d);
+            this.add(gau);
+            this.add(bd);
+            this.add(bg);
+*/
         }
 
         //Affiche le fond
@@ -102,6 +136,63 @@ public class Panneau extends JPanel implements MouseListener {
             validButtonDown.setVisible(false);
             validButtonUp.setVisible(true);
         }
+
+        //Mets à jour le pad directionnel
+        if(direction==Config.Direction.UPRIGHT){
+            try {
+                Image img = ImageIO.read(new File("Images/padUpRight.png"));
+                g.drawImage(img, 672, 204, this);
+                this.confirmDirection=1;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(direction==Config.Direction.UPLEFT){
+            try {
+                Image img = ImageIO.read(new File("Images/padUpLeft.png"));
+                g.drawImage(img, 672, 204, this);
+                this.confirmDirection=1;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(direction==Config.Direction.RIGHT){
+            try {
+                Image img = ImageIO.read(new File("Images/padRight.png"));
+                g.drawImage(img, 672, 204, this);
+                this.confirmDirection=1;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(direction==Config.Direction.LEFT){
+            try {
+                Image img = ImageIO.read(new File("Images/padLeft.png"));
+                g.drawImage(img, 672, 204, this);
+                this.confirmDirection=1;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(direction==Config.Direction.DOWNRIGHT){
+            try {
+                Image img = ImageIO.read(new File("Images/padDownRight.png"));
+                g.drawImage(img, 672, 204, this);
+                this.confirmDirection=1;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(direction==Config.Direction.DOWNLEFT){
+            try {
+                Image img = ImageIO.read(new File("Images/padDownLeft.png"));
+                g.drawImage(img, 672, 204, this);
+                this.confirmDirection=1;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         //Mets à jour les "Boules restants
         scoreB.setText("restants : "+marbleLeftBlack);
@@ -163,6 +254,10 @@ public class Panneau extends JPanel implements MouseListener {
         return confirmValidation;
     }
 
+    public int getConfirmDirection() {
+        return confirmDirection;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
@@ -172,28 +267,48 @@ public class Panneau extends JPanel implements MouseListener {
         int heightOffset = 153;
         int limX;
 
+        //clic on directions
+        if((e.getX()>792) && (e.getX()<792+72) && (e.getY()>202) && (e.getY()<202+73)){
+            this.direction= Config.Direction.UPRIGHT;
+        }
+        else if((e.getX()>721) && (e.getX()<721+72) && (e.getY()>202) && (e.getY()<202+73)){
+            this.direction= Config.Direction.UPLEFT;
+        }
+        else if((e.getX()>821) && (e.getX()<821+86) && (e.getY()>278) && (e.getY()<278+65)){
+            this.direction= Config.Direction.RIGHT;
+        }
+        else if((e.getX()>672) && (e.getX()<672+86) && (e.getY()>278) && (e.getY()<278+65)){
+            this.direction= Config.Direction.LEFT;
+        }
+        else if((e.getX()>793) && (e.getX()<793+72) && (e.getY()>345) && (e.getY()<345+73)){
+            this.direction= Config.Direction.DOWNRIGHT;
+        }
+        else if((e.getX()>722) && (e.getX()<722+72) && (e.getY()>345) && (e.getY()<345+73)){
+            this.direction= Config.Direction.DOWNLEFT;
+        }
+
         //Clic on validation button
         if((e.getX()>530) && (e.getX()<530+170) && (e.getY()>140) && (e.getY()<140+50)){
             this.confirmValidation=1;
             System.out.println("GROSSE");
             this.etatBoutonValidation=0;
         }
-
-        //Clic on balls
-        for (int i = 1; i < 11; i++) {
-            for (int j = 0; j < 19; j++) {
-                limX=103 + (j * 20) - widthOffset;
-                if ((e.getX()>limX) && (e.getX()<limX+20) && (e.getY()>heightOffset) && (e.getY()<heightOffset+40) && (((j%2!=0)&&(i%2!=0))||((j%2==0)&&(i%2==0)))){
-                    if(boardView.selectMarble(new Coords(i,j))){
-                        tabSelec[i][j]=1;
-                        this.etatBoutonValidation=1;
-                        System.out.println("ETAT CHANG2"+this.etatBoutonValidation);
+        else {
+            //Clic on balls
+            for (int i = 1; i < 11; i++) {
+                for (int j = 0; j < 19; j++) {
+                    limX = 103 + (j * 20) - widthOffset;
+                    if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
+                        if (boardView.selectMarble(new Coords(i, j))) {
+                            tabSelec[i][j] = 1;
+                            this.etatBoutonValidation = 1;
+                            System.out.println("ETAT CHANG2" + this.etatBoutonValidation);
+                        }
                     }
                 }
+                heightOffset = heightOffset + 40;
             }
-            heightOffset = heightOffset + 40;
         }
-
     }
 
     @Override
@@ -224,6 +339,7 @@ public class Panneau extends JPanel implements MouseListener {
         this.confirmValidation=0;
         this.confirmDirection=0;
         this.etatBoutonValidation=0;
+        this.direction=null;
         for (int i = 1; i < 11; i++) {
             for (int j = 0; j < 19; j++) {
                 this.tabSelec[i][j]=0;
@@ -231,8 +347,9 @@ public class Panneau extends JPanel implements MouseListener {
         }
     }
 
-   // public  getTabPieces(){
-
-    //}
-
+    /*
+    public void moveIntoTabPiece(){
+        boardView.tabPieces[3].x= type*10+this.direction;
+    }
+*/
 }

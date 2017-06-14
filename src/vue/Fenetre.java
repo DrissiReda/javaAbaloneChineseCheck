@@ -41,6 +41,10 @@ public class Fenetre extends JFrame {
         return pan.getConfirmValidation();
     }
 
+    public int getConfirmDirection() {
+        return pan.getConfirmDirection();
+    }
+
     public void reInit(){
         pan.reInit();
     }

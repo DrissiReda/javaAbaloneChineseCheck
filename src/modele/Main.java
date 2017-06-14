@@ -66,6 +66,10 @@ public class Main {
 			while(fen.getConfirmValidation()==0){
 				fen.refreshBoard();
 			}
+			fen.copyTab(board);
+			while(fen.getConfirmDirection()==0){
+				fen.refreshBoard();
+			}
 
 			System.out.println("SORTIE");
 			fen.copyTab(board); // adri
