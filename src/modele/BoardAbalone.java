@@ -68,12 +68,22 @@ public class BoardAbalone extends Board{
     		tabPieces[i] = i == 3 ? defaultDir : defaultPos;
     	}
     }
-    
-    public void addPiece(){
-    	tabPieces[0].setCoords(1, 1);
-    }
+
+    /*
+    public void addPiece(Coords c){
+		for (int i = 0; i < 3; i++) {
+			if(tabPieces[i].x==22){
+				tabPieces[i].x=c.x;
+				tabPieces[i].y=c.y;
+				break;
+			}
+		}
+	}
+	*/
+
     public void printTabPieces()
     {
+    	/*
     	System.out.print("Pi?ces s?lectionn?es : ");
     	for (int i = 0; i < 3; i++){
     		if(tabPieces[i].x != 22)
@@ -91,12 +101,14 @@ public class BoardAbalone extends Board{
     		System.out.println(toDir(tabPieces[3].x));
     	else
     		System.out.println("Non d?finie");
+    	*/
+    	System.out.println(MoveToString(tabPieces));
     }
     
     public int nbPiece()
     {
     	int nb = 0;
-    	for(int i = 0; i < 2; i++){ // Parcours des cases pour les pions (les 3 premi?res)
+    	for(int i = 0; i < 3; i++){ // Parcours des cases pour les pions (les 3 premi?res)
     		if(tabPieces[i].x != 22)
     			nb++;
     		else
@@ -111,7 +123,7 @@ public class BoardAbalone extends Board{
     	if(checkSelected(pos) && isMarble(pos) && isValid(pos)){
     		// Recherche une place disponible dans le tableau
     		for (int i = 0; i < 3; i++){
-    			System.out.println("valeur dans le tab : " + tabPieces[i].x);
+    			//System.out.println("valeur dans le tab : " + tabPieces[i].x);
     			if(tabPieces[i].x == 22){
     				tabPieces[i].x = pos.x;
     				tabPieces[i].y = pos.y;
@@ -340,6 +352,15 @@ public class BoardAbalone extends Board{
     {
     	return player == Color.WHITE ? Color.BLACK : Color.WHITE;
     }
+
+    public void switchPlayer(){
+    	if(this.player==Color.BLACK){
+    		this.player=Color.WHITE;
+		}
+		else{
+			this.player=Color.BLACK;
+		}
+	}
     
     /**
      * Function for sumito 2 marbles vs 1
@@ -471,6 +492,7 @@ public class BoardAbalone extends Board{
 	{
  		String Av_Moves="";
 		Coords marble,marble2,marble3;
+		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(22,22),new Coords(22,22)};
 		for(int i=1;i<height;i++)
 		{
 			for(int j=1;j<width;j++)
@@ -697,14 +719,32 @@ String BroadsideMoves(Coords[] tabPieces){
 			return Color.BLACK;
 		return null;
 	}
+
 	public Coords[] generateMove(Coords[] tabPieces,Color player){
-	    String move=AvailableMoves(player);
+	    String move=MoveOrdering(player);
+	    System.out.println(MoveToString(tabPieces));
+	    System.out.println(MoveToString(this.tabPieces));
+	    System.out.println(player);
 	    for(int i=0;i<move.length();i+=moveSize){
+	    	System.out.println("tabP : "+MoveToString(tabPieces).substring(0,12));
+	    	System.out.println("AvMoves : "+move.substring(i,i+12));
+	    	System.out.println("dirP : "+MoveToString(tabPieces).substring(13,moveSize));
+	    	System.out.println("dirM : "+move.substring(i+13,i+moveSize));
+	    	System.out.println("Tot : "+move.substring(i,i+moveSize));
 	        if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
                 && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
 	            return stringToMove(move.substring(i,i+moveSize));
         }
+		System.out.println("RETOUR NULL");
         return null;
     }
+
+	public Coords[] getTabPieces() {
+		return tabPieces;
+	}
+
+	public void setTabPieces(Coords[] tabPieces) {
+		this.tabPieces = tabPieces;
+	}
 
 }
