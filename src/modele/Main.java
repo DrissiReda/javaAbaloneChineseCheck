@@ -36,7 +36,6 @@ public class Main {
 
             BoardAbalone board = new BoardAbalone();
             Fenetre fen = new Fenetre(); // adri
-            Color player=Color.BLACK;
             int i=100;
 
 
@@ -67,10 +66,10 @@ public class Main {
                     board.printTabPieces();
 
                     //conversion de TabPiece (modele) avec GenerateMove
-                    board.setTabPieces(board.generateMove(board.tabPieces, player));
+                    board.setTabPieces(board.generateMove(board.tabPieces, board.getPlayer()));
 
                     //execute le mouvement
-                    board.executeMove(board.tabPieces, player);
+                    board.executeMove(board.tabPieces, board.getPlayer());
                     board.displayBoard();
 
                     //MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
@@ -88,7 +87,7 @@ public class Main {
                     fen.refreshBoard();
 
 
-                    if (board.marble_count(player) <= 8 || board.marble_count(board.switchPlayer(player)) <= 8) {
+                    if (board.marble_count(board.getPlayer()) <= 8 || board.marble_count(board.switchPlayer(board.getPlayer())) <= 8) {
                         System.out.println("============Victory at " + i + " =============");
                         //break;
                     }

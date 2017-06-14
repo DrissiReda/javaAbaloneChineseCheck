@@ -747,6 +747,7 @@ String BroadsideMoves(Coords[] tabPieces){
 		this.tabPieces = tabPieces;
 	}
 
-
-
+    public Color getPlayer() {
+        return player;
+    }
 }
