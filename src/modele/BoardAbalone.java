@@ -697,5 +697,14 @@ String BroadsideMoves(Coords[] tabPieces){
 			return Color.BLACK;
 		return null;
 	}
+	public Coords[] generateMove(Coords[] tabPieces,Color player){
+	    String move=AvailableMoves(player);
+	    for(int i=0;i<move.length();i+=moveSize){
+	        if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
+                && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
+	            return stringToMove(move.substring(i,i+moveSize));
+        }
+        return null;
+    }
 
 }
