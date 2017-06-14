@@ -270,29 +270,26 @@ public class Panneau extends JPanel implements MouseListener {
         int limX;
 
         //clic on directions
-        if((e.getX()>792) && (e.getX()<792+72) && (e.getY()>202) && (e.getY()<202+73)){
-            this.direction= Config.Direction.UPRIGHT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>721) && (e.getX()<721+72) && (e.getY()>202) && (e.getY()<202+73)){
-            this.direction= Config.Direction.UPLEFT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>821) && (e.getX()<821+86) && (e.getY()>278) && (e.getY()<278+65)){
-            this.direction= Config.Direction.RIGHT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>672) && (e.getX()<672+86) && (e.getY()>278) && (e.getY()<278+65)){
-            this.direction= Config.Direction.LEFT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>793) && (e.getX()<793+72) && (e.getY()>345) && (e.getY()<345+73)){
-            this.direction= Config.Direction.DOWNRIGHT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>722) && (e.getX()<722+72) && (e.getY()>345) && (e.getY()<345+73)){
-            this.direction= Config.Direction.DOWNLEFT;
-            moveIntoTabPieces();
+        if(confirmValidation==1) {
+            if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
+                this.direction = Config.Direction.UPRIGHT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
+                this.direction = Config.Direction.UPLEFT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
+                this.direction = Config.Direction.RIGHT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
+                this.direction = Config.Direction.LEFT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 793) && (e.getX() < 793 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
+                this.direction = Config.Direction.DOWNRIGHT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
+                this.direction = Config.Direction.DOWNLEFT;
+                moveIntoTabPieces();
+            }
         }
 
         //Clic on validation button

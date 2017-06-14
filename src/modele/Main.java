@@ -30,8 +30,8 @@ public class Main {
 		
 		board.selectPiece(piece2);
 		board.selectPiece(piece3);
-		board.printTabPieces();*/
-		/*
+		board.printTabPieces();
+
 		System.out.println(board.AvailableMoves(Color.BLACK));
 		System.out.println(board.AvailableMoves(Color.BLACK).length());
 		System.out.println(board.getCase(new Coords(7,7)));
@@ -39,8 +39,9 @@ public class Main {
 			case EMPTY : System.out.print("0");
 			default : System.out.println("1");
 		}
+		*/
 
-
+		BoardAbalone board = new BoardAbalone();
 		Fenetre fen = new Fenetre(); // adri
 
 
@@ -103,8 +104,9 @@ public class Main {
 				System.out.println("============Victory at "+i+" =============");
 				break;
 			}
-		}*/
-		
+		}
+
+		/*
 		BoardDC board = new BoardDC();
 		
 		board.addPlayer(Color.BLACK);
@@ -116,6 +118,7 @@ public class Main {
 
 		board.initBoard();
 		board.affichePlateau();
+		*/
 
 	
 	}
