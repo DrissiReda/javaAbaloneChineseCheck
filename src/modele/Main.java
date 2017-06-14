@@ -63,13 +63,18 @@ public class Main {
 				//String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",player, player);
 				////System.out.println(move+" "+player);
 				//board.executeMove(board.stringToMove(move.substring(0,board.moveSize)),player);
+
+			//CHOIX DES BOULES
 			while(fen.getConfirmValidation()==0){
 				fen.refreshBoard();
 			}
 			System.out.println("GO DIRECTION");
+
+			//CHOIX DE LA DIRECTION
 			while(fen.getConfirmDirection()==0){
 				fen.refreshBoard();
 			}
+
 			//copie de TabPieces (Vue) dans Tab Pieces (Modele)
 			board.setTabPieces(fen.getTabPieces());
 				System.out.println("TABpieces modele non converti");
