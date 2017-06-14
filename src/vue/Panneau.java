@@ -293,7 +293,7 @@ public class Panneau extends JPanel implements MouseListener {
             for (int i = 1; i < 11; i++) {
                 for (int j = 0; j < 19; j++) {
                     limX = 103 + (j * 20) - widthOffset;
-                    if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
+                    if ((e.getX() > limX) && (e.getX() < limX + 33) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
                         //System.out.println("ENTER if1");
                         if (boardView.selectMarble(new Coords(i,j))) {
                             //System.out.println("ENTER if2");
