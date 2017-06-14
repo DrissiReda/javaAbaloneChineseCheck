@@ -235,7 +235,7 @@ public class AlphaBeta {
                 }
                 if(b.getCase(new Coords(i,j))==Color.BLACK)
                 {
-                    hash=hash^ zobristTableB.get(i*b.getWidth()+j);
+                    hash=hash ^ zobristTableB.get(i*b.getWidth()+j);
                 }
 
             }

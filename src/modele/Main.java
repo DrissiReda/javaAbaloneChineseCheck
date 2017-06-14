@@ -10,8 +10,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		/*
 		BoardAbalone board = new BoardAbalone();
-		/*board.displayBoard();
+		board.displayBoard();
 		board.printTabPieces();
 		Coords piece = new Coords(1,5);
 		Coords piece2 = new Coords(2,8);
@@ -26,6 +27,7 @@ public class Main {
 		board.selectPiece(piece2);
 		board.selectPiece(piece3);
 		board.printTabPieces();*/
+		/*
 		System.out.println(board.AvailableMoves(Color.BLACK));
 		System.out.println(board.AvailableMoves(Color.BLACK).length());
 		System.out.println(board.getCase(new Coords(7,7)));
@@ -74,7 +76,20 @@ public class Main {
 				System.out.println("============Victory at "+i+" =============");
 				break;
 			}
-		}
+		}*/
+		
+		BoardDC board = new BoardDC();
+		
+		board.addPlayer(Color.BLACK);
+		board.addPlayer(Color.RED);
+		board.addPlayer(Color.YELLOW);
+		board.addPlayer(Color.GREEN);
+		board.addPlayer(Color.BLUE);
+		board.addPlayer(Color.WHITE);
 
+		board.initBoard();
+		board.affichePlateau();
+
+	
 	}
 }

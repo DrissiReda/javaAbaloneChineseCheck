@@ -26,4 +26,14 @@ public class Config {
 			this.val = val;
 		}
 	};
+	
+	// Différents coins du plateau de dames chinoises
+	public enum Area {
+		NORTH,
+		NORTHEAST,
+		SOUTHEAST,
+		SOUTH,
+		SOUTHWEST,
+		NORTHWEST
+	}
 }
