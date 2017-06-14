@@ -1,14 +1,7 @@
 package modele;
 
-import java.*;
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
-
-import modele.Config.*;
 import modele.Config.Color;
-import vue.*;
-
-import javax.swing.*;
+import vue.Fenetre;
 
 public class Main {
 
@@ -22,12 +15,12 @@ public class Main {
 		Coords piece2 = new Coords(2,8);
 		Coords piece3 = new Coords(2,6);
 		System.out.println("position : ");
-		//board.printPosition(piece);		
+		//board.printPosition(piece);
 		if(board.selectPiece(piece))
 			System.out.println("Pion selectionne");
 		else
 			System.out.println("Impossible de selectionner le pion");
-		
+
 		board.selectPiece(piece2);
 		board.selectPiece(piece3);
 		board.printTabPieces();
@@ -41,22 +34,13 @@ public class Main {
 		}
 		*/
 
-		BoardAbalone board = new BoardAbalone();
-		Fenetre fen = new Fenetre(); // adri
+            BoardAbalone board = new BoardAbalone();
+            Fenetre fen = new Fenetre(); // adri
+            Color player=Color.BLACK;
+            int i=100;
 
 
 
-		int i=4;
-		Color player=Color.BLACK;
-		while(i-->0) {
-
-			//delay adri
-
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 
 
 				//AlphaBeta a = new AlphaBeta(board);
@@ -65,47 +49,51 @@ public class Main {
 				////System.out.println(move+" "+player);
 				//board.executeMove(board.stringToMove(move.substring(0,board.moveSize)),player);
 
-			//CHOIX DES BOULES
-			while(fen.getConfirmValidation()==0){
-				fen.refreshBoard();
-			}
-			System.out.println("GO DIRECTION");
 
-			//CHOIX DE LA DIRECTION
-			while(fen.getConfirmDirection()==0){
-				fen.refreshBoard();
-			}
+            while(i-->0) {
+                //CHOIX DES BOULES ET DE LA DIRECTION
+                while (fen.getConfirmDirection() == 0) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-			//copie de TabPieces (Vue) dans Tab Pieces (Modele)
-			board.setTabPieces(fen.getTabPieces());
-				System.out.println("TABpieces modele non converti");
-				board.printTabPieces();
+                if (fen.getConfirmDirection() != 0) {
+                    //copie de TabPieces (Vue) dans Tab Pieces (Modele)
+                    board.setTabPieces(fen.getTabPieces());
+                    System.out.println("TABpieces modele non converti");
+                    board.printTabPieces();
 
-			//conversion de TabPiece (modele) avec GenerateMove
-			board.setTabPieces(board.generateMove(board.tabPieces,player));
+                    //conversion de TabPiece (modele) avec GenerateMove
+                    board.setTabPieces(board.generateMove(board.tabPieces, player));
 
-			//execute le mouvement
-			board.executeMove(board.tabPieces,player);
+                    //execute le mouvement
+                    board.executeMove(board.tabPieces, player);
+                    board.displayBoard();
 
-			System.out.println("SORTIE");
-			fen.copyTab(board); // adri
-			board.displayBoard();
+                    //MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
+                    fen.setMarbleLeftBlack(board.marble_count(Color.BLACK));
+                    fen.setMarbleLeftWhite(board.marble_count(Color.WHITE));
 
-			fen.setMarbleLeftBlack(board.marble_count(Color.BLACK)); // adri
-			fen.setMarbleLeftWhite(board.marble_count(Color.WHITE)); // adri
-			board.switchPlayer();
-			fen.copyTab(board); // adri
-			fen.reInit();
-			fen.refreshBoard();
+                    //CHANGEMENT DE JOUEUR
+                    board.switchPlayer();
+
+                    //REINITIALISATION DU PLATEAU (VUE)
+                    fen.copyTab(board);
+                    fen.reInit();
+
+                    //AFFICHAGE DU PLATEAU
+                    fen.refreshBoard();
 
 
-			if(board.marble_count(player)<=8 || board.marble_count(board.switchPlayer(player))<=8)
-			{
-				System.out.println("============Victory at "+i+" =============");
-				break;
-			}
-		}
-
+                    if (board.marble_count(player) <= 8 || board.marble_count(board.switchPlayer(player)) <= 8) {
+                        System.out.println("============Victory at " + i + " =============");
+                        //break;
+                    }
+                }
+            }
 		/*
 		BoardDC board = new BoardDC();
 		
@@ -122,4 +110,6 @@ public class Main {
 
 	
 	}
+
+
 }

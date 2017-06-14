@@ -1,25 +1,15 @@
 package vue;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
+import modele.BoardAbalone;
+import modele.Config;
+import modele.Coords;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import modele.Board;
-import modele.BoardAbalone;
-import modele.Config;
-import modele.Coords;
 
 public class Panneau extends JPanel implements MouseListener {
 
@@ -38,8 +28,8 @@ public class Panneau extends JPanel implements MouseListener {
 
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
-    JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
-    JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
+    private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
+    private JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
 
     private Config.Direction direction=null;
 
@@ -234,27 +224,27 @@ public class Panneau extends JPanel implements MouseListener {
 
     }
 
-    public void copyTab(BoardAbalone b) {
+    void copyTab(BoardAbalone b) {
         this.boardView = b;
     }
 
-    public void refreshBoard(){
+    void refreshBoard(){
         repaint();
     }
 
-    public void setMarbleLeftBlack(int marbleLeftBlack) {
+    void setMarbleLeftBlack(int marbleLeftBlack) {
         this.marbleLeftBlack = marbleLeftBlack;
     }
 
-    public void setMarbleLeftWhite(int marbleLeftWhite) {
+    void setMarbleLeftWhite(int marbleLeftWhite) {
         this.marbleLeftWhite = marbleLeftWhite;
     }
 
-    public int getConfirmValidation() {
+    int getConfirmValidation() {
         return confirmValidation;
     }
 
-    public int getConfirmDirection() {
+    int getConfirmDirection() {
         return confirmDirection;
     }
 
@@ -318,6 +308,7 @@ public class Panneau extends JPanel implements MouseListener {
         }
         System.out.println("TABpieces (vue) Apres");
         boardView.printTabPieces();
+        repaint();
     }
 
     @Override
@@ -344,7 +335,7 @@ public class Panneau extends JPanel implements MouseListener {
 
     }
 
-    public void reInit(){
+    void reInit(){
         boardView.initTabPieces();
         this.confirmValidation=0;
         this.confirmDirection=0;
@@ -357,13 +348,13 @@ public class Panneau extends JPanel implements MouseListener {
         }
     }
 
-    public void moveIntoTabPieces(){
+    void moveIntoTabPieces(){
         boardView.tabPieces[3].x= this.direction.ordinal();
         boardView.tabPieces[3].y= 88;
     }
 
 
-    public Coords[] getTabPieces() {
+    Coords[] getTabPieces() {
         return boardView.getTabPieces();
     }
 }

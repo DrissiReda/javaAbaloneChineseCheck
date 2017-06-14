@@ -83,7 +83,7 @@ public class BoardAbalone extends Board{
 
     public void printTabPieces()
     {
-    	/*
+
     	System.out.print("Pi?ces s?lectionn?es : ");
     	for (int i = 0; i < 3; i++){
     		if(tabPieces[i].x != 22)
@@ -101,8 +101,8 @@ public class BoardAbalone extends Board{
     		System.out.println(toDir(tabPieces[3].x));
     	else
     		System.out.println("Non d?finie");
-    	*/
-    	System.out.println(MoveToString(tabPieces));
+
+    	//System.out.println(MoveToString(tabPieces));
     }
     
     public int nbPiece()
@@ -746,5 +746,7 @@ String BroadsideMoves(Coords[] tabPieces){
 	public void setTabPieces(Coords[] tabPieces) {
 		this.tabPieces = tabPieces;
 	}
+
+
 
 }
