@@ -27,21 +27,21 @@ public class Panneau extends JPanel implements MouseListener {
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
 
-    BoardAbalone boardView = new BoardAbalone();
-    int tabSelec[][] = new int[11][19];
+    private BoardAbalone boardView = new BoardAbalone();
+    private int tabSelec[][] = new int[11][19];
 
-    int initParam=1;
-    int confirmValidation=0;
-    int confirmDirection=0;
+    private int initParam=1;
+    private int confirmValidation=0;
+    private int confirmDirection=0;
 
-    int etatBoutonValidation=0;
+    private int etatBoutonValidation=0;
 
-    JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
-    JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
+    private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
+    private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
     JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
     JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
 
-    Config.Direction direction=null;
+    private Config.Direction direction=null;
 
 
     public void paintComponent(Graphics g) {
@@ -326,6 +326,7 @@ public class Panneau extends JPanel implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stu
+
     }
 
     @Override
