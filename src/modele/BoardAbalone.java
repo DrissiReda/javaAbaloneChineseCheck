@@ -699,5 +699,21 @@ String BroadsideMoves(Coords[] tabPieces){
 					count++;
 		return count;
 	}
+	public Color winner(){
+		if(marble_count(Color.BLACK)<=8)
+			return Color.WHITE;
+		if(marble_count(Color.WHITE)<=8)
+			return Color.BLACK;
+		return null;
+	}
+	public Coords[] generateMove(Coords[] tabPieces,Color player){
+	    String move=AvailableMoves(player);
+	    for(int i=0;i<move.length();i+=moveSize){
+	        if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
+                && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
+	            return stringToMove(move.substring(i,i+moveSize));
+        }
+        return null;
+    }
 
 }

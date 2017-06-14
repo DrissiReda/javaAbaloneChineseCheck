@@ -3,6 +3,10 @@ package modele;
 import modele.Config.Color;
 import modele.Config.Direction;
 
+import java.util.ArrayList;
+
+import static modele.Config.Direction.RIGHT;
+
 public class BoardDC extends Board{
 
 	// 27 * 19
@@ -30,7 +34,7 @@ public class BoardDC extends Board{
 		
 	};
 	private Coords[] tabPieces=new Coords[2];
-	
+	private ArrayList<Color> players=new ArrayList<>();
 	public BoardDC() {
 		super(19, 27,8);
 	}
@@ -57,7 +61,12 @@ public class BoardDC extends Board{
 	public void setCase(Coords pos, Color c){
 		GameBoard[pos.x][pos.y].setColor(c);
 	}
-
+	public boolean addPlayer(Color player){
+		if(players.size()>=6 || players.contains(player))
+			return false;
+		players.add(player);
+		return true;
+	}
 	@Override
 	public int marble_count(Color player) {
 		return 10;
@@ -163,10 +172,23 @@ public class BoardDC extends Board{
 	public int ally_next(Coords marble, Direction k, Color player) {
 		return 0;
 	}
-
+	public Direction invert_dir(Direction k){
+    	switch(k){
+    		case LEFT : return Direction.RIGHT;
+			case RIGHT : return Direction.LEFT;
+			case UPLEFT: return Direction.DOWNRIGHT;
+			case UPRIGHT: return Direction.DOWNLEFT;
+			case DOWNLEFT: return Direction.UPRIGHT;
+			case DOWNRIGHT: return Direction.UPLEFT;
+			default : return null;
+		}
+	}
 	@Override
 	public boolean undo(Coords[] tabPieces, Color player) {
-		return false;
+    	Coords[] ret={tabPieces[0],new Coords(
+    			tabPieces[1].x-tabPieces[1].x%10+invert_dir(toDir(tabPieces[1].x%10)).ordinal(),
+				88)};
+    	return executeMove(ret,player);
 	}
 
 	@Override
@@ -195,7 +217,14 @@ public class BoardDC extends Board{
 
 	@Override
 	public Color switchPlayer(Color player) {
-		return null;
+		int i;
+		//trouve l'index du joueur actuel
+    	for(i=0;i<players.size();i++)
+			if(player==players.get(i))
+				break;
+    	//retourne le suivant, si c'est le dernier
+		//retourne le premier
+		return players.get((i+1)%players.size());
 	}
 
 	@Override
