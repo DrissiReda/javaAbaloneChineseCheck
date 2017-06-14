@@ -49,4 +49,11 @@ public class Fenetre extends JFrame {
         pan.reInit();
     }
 
+    public void moveIntoTabPieces(){
+        pan.moveIntoTabPieces();
+    }
+
+    public Coords[] getTabPieces() {
+        return pan.getTabPieces();
+    }
 }

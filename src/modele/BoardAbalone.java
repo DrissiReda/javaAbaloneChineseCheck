@@ -68,10 +68,19 @@ public class BoardAbalone extends Board{
     		tabPieces[i] = i == 3 ? defaultDir : defaultPos;
     	}
     }
-    
-    public void addPiece(){
-    	tabPieces[0].setCoords(1, 1);
-    }
+
+    /*
+    public void addPiece(Coords c){
+		for (int i = 0; i < 3; i++) {
+			if(tabPieces[i].x==22){
+				tabPieces[i].x=c.x;
+				tabPieces[i].y=c.y;
+				break;
+			}
+		}
+	}
+	*/
+
     public void printTabPieces()
     {
     	System.out.print("Pi?ces s?lectionn?es : ");
@@ -111,7 +120,7 @@ public class BoardAbalone extends Board{
     	if(checkSelected(pos) && isMarble(pos) && isValid(pos)){
     		// Recherche une place disponible dans le tableau
     		for (int i = 0; i < 3; i++){
-    			System.out.println("valeur dans le tab : " + tabPieces[i].x);
+    			//System.out.println("valeur dans le tab : " + tabPieces[i].x);
     			if(tabPieces[i].x == 22){
     				tabPieces[i].x = pos.x;
     				tabPieces[i].y = pos.y;
@@ -706,6 +715,7 @@ String BroadsideMoves(Coords[] tabPieces){
 			return Color.BLACK;
 		return null;
 	}
+
 	public Coords[] generateMove(Coords[] tabPieces,Color player){
 	    String move=AvailableMoves(player);
 	    for(int i=0;i<move.length();i+=moveSize){
@@ -713,7 +723,16 @@ String BroadsideMoves(Coords[] tabPieces){
                 && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
 	            return stringToMove(move.substring(i,i+moveSize));
         }
+		System.out.println("RETOUR NULL");
         return null;
     }
+
+	public Coords[] getTabPieces() {
+		return tabPieces;
+	}
+
+	public void setTabPieces(Coords[] tabPieces) {
+		this.tabPieces = tabPieces;
+	}
 
 }

@@ -66,10 +66,20 @@ public class Main {
 			while(fen.getConfirmValidation()==0){
 				fen.refreshBoard();
 			}
-			fen.copyTab(board);
+			System.out.println("GO DIRECTION");
 			while(fen.getConfirmDirection()==0){
 				fen.refreshBoard();
 			}
+			//copie de TabPieces (Vue) dans Tab Pieces (Modele)
+			board.setTabPieces(fen.getTabPieces());
+				System.out.println("TABpieces modele non converti");
+				board.printTabPieces();
+
+			//conversion de TabPiece (modele) avec GenerateMove
+			board.setTabPieces(board.generateMove(board.tabPieces,player));
+
+			//execute le mouvement
+			board.executeMove(board.tabPieces,player);
 
 			System.out.println("SORTIE");
 			fen.copyTab(board); // adri

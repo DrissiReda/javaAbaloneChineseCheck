@@ -262,6 +262,8 @@ public class Panneau extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
         System.out.println("Click: x= "+e.getX()+" y = "+e.getY());
+        //System.out.println("TABpieces avant");
+        //boardView.printTabPieces();
 
         int widthOffset = 0;
         int heightOffset = 153;
@@ -270,21 +272,27 @@ public class Panneau extends JPanel implements MouseListener {
         //clic on directions
         if((e.getX()>792) && (e.getX()<792+72) && (e.getY()>202) && (e.getY()<202+73)){
             this.direction= Config.Direction.UPRIGHT;
+            moveIntoTabPieces();
         }
         else if((e.getX()>721) && (e.getX()<721+72) && (e.getY()>202) && (e.getY()<202+73)){
             this.direction= Config.Direction.UPLEFT;
+            moveIntoTabPieces();
         }
         else if((e.getX()>821) && (e.getX()<821+86) && (e.getY()>278) && (e.getY()<278+65)){
             this.direction= Config.Direction.RIGHT;
+            moveIntoTabPieces();
         }
         else if((e.getX()>672) && (e.getX()<672+86) && (e.getY()>278) && (e.getY()<278+65)){
             this.direction= Config.Direction.LEFT;
+            moveIntoTabPieces();
         }
         else if((e.getX()>793) && (e.getX()<793+72) && (e.getY()>345) && (e.getY()<345+73)){
             this.direction= Config.Direction.DOWNRIGHT;
+            moveIntoTabPieces();
         }
         else if((e.getX()>722) && (e.getX()<722+72) && (e.getY()>345) && (e.getY()<345+73)){
             this.direction= Config.Direction.DOWNLEFT;
+            moveIntoTabPieces();
         }
 
         //Clic on validation button
@@ -299,7 +307,9 @@ public class Panneau extends JPanel implements MouseListener {
                 for (int j = 0; j < 19; j++) {
                     limX = 103 + (j * 20) - widthOffset;
                     if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
-                        if (boardView.selectMarble(new Coords(i, j))) {
+                        //System.out.println("ENTER if1");
+                        if (boardView.selectMarble(new Coords(i,j))) {
+                            //System.out.println("ENTER if2");
                             tabSelec[i][j] = 1;
                             this.etatBoutonValidation = 1;
                             System.out.println("ETAT CHANG2" + this.etatBoutonValidation);
@@ -309,6 +319,8 @@ public class Panneau extends JPanel implements MouseListener {
                 heightOffset = heightOffset + 40;
             }
         }
+        System.out.println("TABpieces (vue) Apres");
+        boardView.printTabPieces();
     }
 
     @Override
@@ -347,9 +359,13 @@ public class Panneau extends JPanel implements MouseListener {
         }
     }
 
-    /*
-    public void moveIntoTabPiece(){
-        boardView.tabPieces[3].x= type*10+this.direction;
+    public void moveIntoTabPieces(){
+        boardView.tabPieces[3].x= this.direction.ordinal();
+        boardView.tabPieces[3].y= 88;
     }
-*/
+
+
+    public Coords[] getTabPieces() {
+        return boardView.getTabPieces();
+    }
 }
