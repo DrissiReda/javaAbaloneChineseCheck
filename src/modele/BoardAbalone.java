@@ -690,5 +690,12 @@ String BroadsideMoves(Coords[] tabPieces){
 					count++;
 		return count;
 	}
+	public Color winner(){
+		if(marble_count(Color.BLACK)<=8)
+			return Color.WHITE;
+		if(marble_count(Color.WHITE)<=8)
+			return Color.BLACK;
+		return null;
+	}
 
 }
