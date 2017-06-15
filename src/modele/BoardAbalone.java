@@ -71,18 +71,6 @@ public class BoardAbalone extends Board{
     	}
     }
 
-    /*
-    public void addPiece(Coords c){
-		for (int i = 0; i < 3; i++) {
-			if(tabPieces[i].x==22){
-				tabPieces[i].x=c.x;
-				tabPieces[i].y=c.y;
-				break;
-			}
-		}
-	}
-	*/
-
     public void printTabPieces()
     {
 
@@ -102,9 +90,7 @@ public class BoardAbalone extends Board{
     	if (tabPieces[3].x != 88)
     		System.out.println(toDir(tabPieces[3].x));
     	else
-    		System.out.println("Non d?finie");
-
-    	//System.out.println(MoveToString(tabPieces));
+    		System.out.println("Non definie");
     }
     
     public int nbPiece()
@@ -121,11 +107,10 @@ public class BoardAbalone extends Board{
     
     public boolean selectMarble(Coords pos)
     {
-    	// V?rifie que le pion n'est pas d?j? s?lectionn? et est valide
+    	// Verifie que le pion n'est pas deja selectionne et est valide
     	if(checkSelected(pos) && isMarble(pos) && isValid(pos)){
     		// Recherche une place disponible dans le tableau
     		for (int i = 0; i < 3; i++){
-    			//System.out.println("valeur dans le tab : " + tabPieces[i].x);
     			if(tabPieces[i].x == 22){
     				tabPieces[i].x = pos.x;
     				tabPieces[i].y = pos.y;
@@ -139,11 +124,6 @@ public class BoardAbalone extends Board{
     // Ici il faut voir si on doit reset aussi le mouvement ecrit ou pas
     public void cancelSelection()
     {
-    	/*for(int i = 0; i < 3; i++){
-    		tabPieces[i].x = 
-    		
-    	}*/
-    	
     	initTabPieces();
     }
     
@@ -167,9 +147,14 @@ public class BoardAbalone extends Board{
 		return false;
     }
     
+    /**
+     * Retourne true si le pion n'est pas selectionne, false s'il l'est deja.
+     * @param position
+     * @return
+     */
     public boolean checkSelected(Coords position)
     {
-    	for (int i = 0; i < 3; i++){
+    	for (int i = 0; i < 3; i++){ 
     		if(tabPieces[i].x == position.x && tabPieces[i].y == position.y)
     			return false;
     	}
@@ -188,7 +173,7 @@ public class BoardAbalone extends Board{
     			if(i == 1)
     				twoMarbles = true;
 
-    			isEmpty = true;
+    			isEmpty = false;
     			x = tabPieces[i].x - position.x;
     			y = tabPieces[i].y - position.y;
 
