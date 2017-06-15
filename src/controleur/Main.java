@@ -1,42 +1,34 @@
 package controleur;
 
+import java.awt.EventQueue;
+
+import javax.swing.UnsupportedLookAndFeelException;
+
 import modele.BoardAbalone;
 import modele.Config.Color;
+import modele.DatabaseConnect;
 import vue.Fenetre;
+import vue.Panneau;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 
-/*
-		BoardAbalone board = new BoardAbalone();
-		board.displayBoard();
-		board.printTabPieces();
-		Coords piece = new Coords(1,5);
-		Coords piece2 = new Coords(2,8);
-		Coords piece3 = new Coords(2,6);
-		System.out.println("position : ");
-		//board.printPosition(piece);
-		if(board.selectPiece(piece))
-			System.out.println("Pion selectionne");
-		else
-			System.out.println("Impossible de selectionner le pion");
-
-		board.selectPiece(piece2);
-		board.selectPiece(piece3);
-		board.printTabPieces();
-
-		System.out.println(board.AvailableMoves(Color.BLACK));
-		System.out.println(board.AvailableMoves(Color.BLACK).length());
-		System.out.println(board.getCase(new Coords(7,7)));
-		switch(board.getCase(new Coords(7,7))){
-			case EMPTY : System.out.print("0");
-			default : System.out.println("1");
-		}
-		*/
-
+		DatabaseConnect db = new DatabaseConnect();
+		db.getConnection();
+		
             BoardAbalone board = new BoardAbalone();
-            Fenetre fen = new Fenetre(); // adri
+            EventQueue.invokeLater(new Runnable() {
+    			public void run() {
+    				try {
+    					Fenetre fen = new Fenetre();
+    					
+    					Panneau pan = new Panneau();
+    				} catch (Exception e) {
+    					e.printStackTrace();
+    				}
+    			}
+    		});
             int i=100;
 
 
@@ -49,7 +41,7 @@ public class Main {
 				////System.out.println(move+" "+player);
 				//board.executeMove(board.stringToMove(move.substring(0,board.moveSize)),player);
 
-
+/*
             while(i-->0) {
                 //CHOIX DES BOULES ET DE LA DIRECTION
                 while (fen.getConfirmDirection() == 0) {
@@ -93,7 +85,7 @@ public class Main {
                         //break;
                     }
                 }
-            }
+            }*/
 
 	
 	}
