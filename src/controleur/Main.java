@@ -1,5 +1,6 @@
-package modele;
+package controleur;
 
+import modele.BoardAbalone;
 import modele.Config.Color;
 import vue.Fenetre;
 
