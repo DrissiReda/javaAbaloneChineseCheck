@@ -83,7 +83,7 @@ public class BoardAbalone extends Board{
 
     public void printTabPieces()
     {
-    	/*
+
     	System.out.print("Pi?ces s?lectionn?es : ");
     	for (int i = 0; i < 3; i++){
     		if(tabPieces[i].x != 22)
@@ -101,8 +101,8 @@ public class BoardAbalone extends Board{
     		System.out.println(toDir(tabPieces[3].x));
     	else
     		System.out.println("Non d?finie");
-    	*/
-    	System.out.println(MoveToString(tabPieces));
+
+    	//System.out.println(MoveToString(tabPieces));
     }
     
     public int nbPiece()
@@ -492,7 +492,7 @@ public class BoardAbalone extends Board{
 	{
  		String Av_Moves="";
 		Coords marble,marble2,marble3;
-		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(22,22),new Coords(22,22)};
+		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(22,22),new Coords(88,88)};
 		for(int i=1;i<height;i++)
 		{
 			for(int j=1;j<width;j++)
@@ -511,9 +511,12 @@ public class BoardAbalone extends Board{
 							if(ally_next(tabPieces[0],k,player)==1) //groups of 2
 							{
 								tabPieces[1]=marble;
+								Av_Moves=Av_Moves+BroadsideMoves(tabPieces);
 								if(ally_next(marble,k,player)==1)   // groups of 3
 								{
 									marble2=next_coord(marble,k);
+									tabPieces[2]=marble2;
+									Av_Moves=Av_Moves+BroadsideMoves(tabPieces);
 									//if(inTab(marble2))
 									{
 										if(ally_next(marble2,k,switchPlayer(player))==1)
@@ -521,20 +524,21 @@ public class BoardAbalone extends Board{
 											marble3=next_coord(marble2,k);
 											if(ally_next(marble3,k,switchPlayer(player))==1)
 											{
+
 												if(free_next(next_coord(marble3,k),k) || !inTab(next_coord(next_coord(marble3,k),k))) // case of 3v3+ no move in this direction
 												{
-													tabPieces[2]=marble2;//sumito_3_2
+													//sumito_3_2
 													tabPieces[3].x=60+k.ordinal();     tabPieces[3].y=88;   //88 is code name for direction for debugging purposes,
 													/*if(!inTab(next_coord(next_coord(marble3,k),k)))
 													{tabPieces[4].x=1; tabPieces[4].y=0;}
 													else
 													{tabPieces[4].x=0; tabPieces[4].y=0;}*/
-													Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);         //we add the broadside moves
+													Av_Moves=Av_Moves+MoveToString(tabPieces);         //we add the broadside moves
 												}
 											}
 											else if(free_next(marble3,k) || !inTab(next_coord(marble3,k)))
 											{
-												tabPieces[2]=marble2;   //sumito_3_1
+												  //sumito_3_1
 												tabPieces[3].x=50+k.ordinal();          tabPieces[3].y=88;       //88 is code name for direction for debugging purposes,
 												/*
 												if(!inTab(next_coord(marble3,k)))
@@ -542,7 +546,7 @@ public class BoardAbalone extends Board{
 												else
 												{tabPieces[4].x=0;  tabPieces[4].y=0;}
 												*/               //Attack
-												Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);        //we add the broadside moves
+												Av_Moves=Av_Moves+MoveToString(tabPieces);        //we add the broadside moves
 											}
 										}
 										else if(free_next(marble2,k) && inTab(next_coord(marble2,k)))
@@ -567,7 +571,7 @@ public class BoardAbalone extends Board{
 										else
 										{tabPieces[4].x=0;     tabPieces[4].y=0;}              //Attack
 										*/
-										Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
+										Av_Moves=Av_Moves+MoveToString(tabPieces);          //we add the broadside moves
 									}
 								}
 								else if(free_next(marble,k) && inTab(next_coord(marble,k)))
@@ -604,7 +608,7 @@ String BroadsideMoves(Coords[] tabPieces){
 		//tabPieces[4].setCoords(0,0) ;          //no captures
 		for(Direction k : Direction.values())
 		{
-			for(int i=0;i<3;i++)
+			for(int i=0;i<4;i++)
 			{
 
 				if(tabPieces[i].x==22)
@@ -722,15 +726,7 @@ String BroadsideMoves(Coords[] tabPieces){
 
 	public Coords[] generateMove(Coords[] tabPieces,Color player){
 	    String move=MoveOrdering(player);
-	    System.out.println(MoveToString(tabPieces));
-	    System.out.println(MoveToString(this.tabPieces));
-	    System.out.println(player);
 	    for(int i=0;i<move.length();i+=moveSize){
-	    	System.out.println("tabP : "+MoveToString(tabPieces).substring(0,12));
-	    	System.out.println("AvMoves : "+move.substring(i,i+12));
-	    	System.out.println("dirP : "+MoveToString(tabPieces).substring(13,moveSize));
-	    	System.out.println("dirM : "+move.substring(i+13,i+moveSize));
-	    	System.out.println("Tot : "+move.substring(i,i+moveSize));
 	        if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
                 && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
 	            return stringToMove(move.substring(i,i+moveSize));
@@ -747,4 +743,7 @@ String BroadsideMoves(Coords[] tabPieces){
 		this.tabPieces = tabPieces;
 	}
 
+    public Color getPlayer() {
+        return player;
+    }
 }

@@ -1,7 +1,9 @@
 package vue;
+import modele.Board;
+import modele.BoardAbalone;
+import modele.Coords;
+
 import javax.swing.*;
-import modele.*;
-import java.awt.*;
 
 public class Fenetre extends JFrame {
 
@@ -37,20 +39,12 @@ public class Fenetre extends JFrame {
         pan.setMarbleLeftWhite(marbleLeftWhite);
     }
 
-    public int getConfirmValidation() {
-        return pan.getConfirmValidation();
-    }
-
     public int getConfirmDirection() {
         return pan.getConfirmDirection();
     }
 
     public void reInit(){
         pan.reInit();
-    }
-
-    public void moveIntoTabPieces(){
-        pan.moveIntoTabPieces();
     }
 
     public Coords[] getTabPieces() {

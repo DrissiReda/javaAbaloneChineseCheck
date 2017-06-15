@@ -1,25 +1,15 @@
 package vue;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
+import modele.BoardAbalone;
+import modele.Config;
+import modele.Coords;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import modele.Board;
-import modele.BoardAbalone;
-import modele.Config;
-import modele.Coords;
 
 public class Panneau extends JPanel implements MouseListener {
 
@@ -34,12 +24,10 @@ public class Panneau extends JPanel implements MouseListener {
     private int confirmValidation=0;
     private int confirmDirection=0;
 
-    private int etatBoutonValidation=0;
-
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
-    JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
-    JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
+    private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
+    private JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
 
     private Config.Direction direction=null;
 
@@ -122,19 +110,6 @@ public class Panneau extends JPanel implements MouseListener {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-        //affiche boutonValider
-        add(validButtonDown);
-        add(validButtonUp);
-        if(this.etatBoutonValidation==0){
-            validButtonDown.setVisible(true);
-            validButtonUp.setVisible(false);
-        }
-        else{
-            validButtonDown.setVisible(false);
-            validButtonUp.setVisible(true);
         }
 
         //Mets à jour le pad directionnel
@@ -234,27 +209,27 @@ public class Panneau extends JPanel implements MouseListener {
 
     }
 
-    public void copyTab(BoardAbalone b) {
+    void copyTab(BoardAbalone b) {
         this.boardView = b;
     }
 
-    public void refreshBoard(){
+    void refreshBoard(){
         repaint();
     }
 
-    public void setMarbleLeftBlack(int marbleLeftBlack) {
+    void setMarbleLeftBlack(int marbleLeftBlack) {
         this.marbleLeftBlack = marbleLeftBlack;
     }
 
-    public void setMarbleLeftWhite(int marbleLeftWhite) {
+    void setMarbleLeftWhite(int marbleLeftWhite) {
         this.marbleLeftWhite = marbleLeftWhite;
     }
 
-    public int getConfirmValidation() {
+    int getConfirmValidation() {
         return confirmValidation;
     }
 
-    public int getConfirmDirection() {
+    int getConfirmDirection() {
         return confirmDirection;
     }
 
@@ -270,57 +245,50 @@ public class Panneau extends JPanel implements MouseListener {
         int limX;
 
         //clic on directions
-        if((e.getX()>792) && (e.getX()<792+72) && (e.getY()>202) && (e.getY()<202+73)){
-            this.direction= Config.Direction.UPRIGHT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>721) && (e.getX()<721+72) && (e.getY()>202) && (e.getY()<202+73)){
-            this.direction= Config.Direction.UPLEFT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>821) && (e.getX()<821+86) && (e.getY()>278) && (e.getY()<278+65)){
-            this.direction= Config.Direction.RIGHT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>672) && (e.getX()<672+86) && (e.getY()>278) && (e.getY()<278+65)){
-            this.direction= Config.Direction.LEFT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>793) && (e.getX()<793+72) && (e.getY()>345) && (e.getY()<345+73)){
-            this.direction= Config.Direction.DOWNRIGHT;
-            moveIntoTabPieces();
-        }
-        else if((e.getX()>722) && (e.getX()<722+72) && (e.getY()>345) && (e.getY()<345+73)){
-            this.direction= Config.Direction.DOWNLEFT;
-            moveIntoTabPieces();
+        if(confirmValidation==1) {
+            if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
+                this.direction = Config.Direction.UPRIGHT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
+                this.direction = Config.Direction.UPLEFT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
+                this.direction = Config.Direction.RIGHT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
+                this.direction = Config.Direction.LEFT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 793) && (e.getX() < 793 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
+                this.direction = Config.Direction.DOWNRIGHT;
+                moveIntoTabPieces();
+            } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
+                this.direction = Config.Direction.DOWNLEFT;
+                moveIntoTabPieces();
+            }
         }
 
-        //Clic on validation button
-        if((e.getX()>530) && (e.getX()<530+170) && (e.getY()>140) && (e.getY()<140+50)){
-            this.confirmValidation=1;
-            System.out.println("GROSSE");
-            this.etatBoutonValidation=0;
-        }
-        else {
+
+
             //Clic on balls
             for (int i = 1; i < 11; i++) {
                 for (int j = 0; j < 19; j++) {
                     limX = 103 + (j * 20) - widthOffset;
-                    if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
+                    if ((e.getX() > limX) && (e.getX() < limX + 33) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
                         //System.out.println("ENTER if1");
                         if (boardView.selectMarble(new Coords(i,j))) {
                             //System.out.println("ENTER if2");
                             tabSelec[i][j] = 1;
-                            this.etatBoutonValidation = 1;
-                            System.out.println("ETAT CHANG2" + this.etatBoutonValidation);
+                            this.confirmValidation = 1;
+                            System.out.println("ETAT CHANG2");
                         }
                     }
                 }
                 heightOffset = heightOffset + 40;
             }
-        }
+
         System.out.println("TABpieces (vue) Apres");
         boardView.printTabPieces();
+        repaint();
     }
 
     @Override
@@ -347,11 +315,10 @@ public class Panneau extends JPanel implements MouseListener {
 
     }
 
-    public void reInit(){
+    void reInit(){
         boardView.initTabPieces();
         this.confirmValidation=0;
         this.confirmDirection=0;
-        this.etatBoutonValidation=0;
         this.direction=null;
         for (int i = 1; i < 11; i++) {
             for (int j = 0; j < 19; j++) {
@@ -360,13 +327,13 @@ public class Panneau extends JPanel implements MouseListener {
         }
     }
 
-    public void moveIntoTabPieces(){
+    void moveIntoTabPieces(){
         boardView.tabPieces[3].x= this.direction.ordinal();
         boardView.tabPieces[3].y= 88;
     }
 
 
-    public Coords[] getTabPieces() {
+    Coords[] getTabPieces() {
         return boardView.getTabPieces();
     }
 }
