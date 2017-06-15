@@ -7,22 +7,37 @@ import javax.swing.*;
 
 public class Fenetre extends JFrame {
 
-    private Panneau pan = new Panneau();
+    private Panneau pan;
 
 
-    public Fenetre(){
+    public Fenetre() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+    	
+    	UIManager.setLookAndFeel(
+				UIManager.getSystemLookAndFeelClassName());
         this.setTitle("ABALONE");
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        this.setContentPane(pan);
-
-
+       // this.setContentPane(pan);
         this.setVisible(true);
+        
+        
+        launch_interface();
+        
     }
 
-
+    // Fonctions interfaces principales
+    
+    public void launch_interface()
+	{
+    	System.out.println("test");
+		JPanel panel1 = new Start(this);
+		panel1.setBounds(0,0,1000,600);
+		this.getContentPane().add(panel1);		
+	}
+    
+    // Fonctions Abalone
     public void refreshBoard(){
         pan.refreshBoard();
     }

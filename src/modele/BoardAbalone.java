@@ -736,7 +736,7 @@ String BroadsideMoves(Coords[] tabPieces){
 		System.out.println("RETOUR NULL");
         return null;
     }
-	public ArrayList<Direction> generateDir(Coords[] tabPieces,Color Player){
+	public ArrayList<Direction> generateDir(){
 		String move=MoveOrdering(player);
 		ArrayList<Direction> ret=new ArrayList<>();
 		for(int i=0;i<move.length();i+=moveSize){
