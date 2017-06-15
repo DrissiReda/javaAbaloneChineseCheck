@@ -116,7 +116,10 @@ public class Main {
 
 		board.initBoard();
 		board.affichePlateau();
-
+		
+		Coords pos1 = new Coords(5,18); 
+		board.selectMarble(pos1);
+		System.out.println(board.inArea(pos1, Area.NORTHEAST));
 	
 	}
 }
