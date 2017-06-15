@@ -22,8 +22,6 @@ public class Main {
     			public void run() {
     				try {
     					Fenetre fen = new Fenetre();
-    					
-    					Panneau pan = new Panneau();
     				} catch (Exception e) {
     					e.printStackTrace();
     				}
