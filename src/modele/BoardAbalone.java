@@ -736,11 +736,47 @@ String BroadsideMoves(Coords[] tabPieces){
 		System.out.println("RETOUR NULL");
         return null;
     }
+    public void swap(Coords m1,Coords m2){
+		Coords tp=new Coords(0,0);
+		tp.x=m1.x; tp.y=m1.y;
+		m1.x=m2.x; m1.y=m2.y;
+		m2.x=tp.x; m2.y=tp.y;
+
+	}
+    public ArrayList<Coords[]> generateOrder(Coords[] tP){
+		ArrayList<Coords[]> ret= new ArrayList<>();
+		Coords[] tabPieces = tP;
+		System.out.println(MoveToString(tabPieces));
+		ret.add(tabPieces);
+		if(tabPieces[1].x==22){
+			return ret;
+		}
+		swap(tabPieces[1],tabPieces[0]);
+		ret.add(tabPieces);
+		if(tabPieces[2].x==22){
+			System.out.println(MoveToString(tabPieces));
+			return ret;
+		}
+		swap(tabPieces[1],tabPieces[2]);
+		ret.add(tabPieces);
+		swap(tabPieces[0],tabPieces[2]);
+		ret.add(tabPieces);
+		swap(tabPieces[1],tabPieces[0]);
+		ret.add(tabPieces);
+		swap(tabPieces[1],tabPieces[2]);
+		ret.add(tabPieces);
+		swap(tabPieces[0],tabPieces[2]);
+		System.out.println("SS + "+MoveToString(tabPieces));
+		System.out.println("PP + "+MoveToString(tP));
+		return ret;
+	}
 	public ArrayList<Direction> generateDir(){
 		String move=MoveOrdering(player);
 		ArrayList<Direction> ret=new ArrayList<>();
+		ArrayList<Coords[]> ls = generateOrder(tabPieces);
 		for(int i=0;i<move.length();i+=moveSize){
-			if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12)))
+			for(Coords[] tP : ls)
+			if(MoveToString(tP).substring(0,12).equals(move.substring(i,i+12)))
 				ret.add(toDir(Integer.parseInt(move.substring(i+13,i+14))));
 		}
 		return ret;
