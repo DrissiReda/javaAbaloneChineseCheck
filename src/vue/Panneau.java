@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Panneau extends JPanel implements MouseListener {
 
@@ -30,6 +31,8 @@ public class Panneau extends JPanel implements MouseListener {
     private JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
 
     private Config.Direction direction=null;
+
+    public ArrayList<Config.Direction> tabDirections;
 
 
     public void paintComponent(Graphics g) {
@@ -248,29 +251,41 @@ public class Panneau extends JPanel implements MouseListener {
         //clic on directions
         if(confirmValidation==1) {
             if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
-                this.direction = Config.Direction.UPRIGHT;
-                moveIntoTabPieces();
-                flagClic=1;
+                flagClic = 1;
+                if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
+                    this.direction = Config.Direction.UPRIGHT;
+                    moveIntoTabPieces();
+                }
             } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
-                this.direction = Config.Direction.UPLEFT;
-                moveIntoTabPieces();
                 flagClic=1;
+                if(verifMoveTabDirections(Config.Direction.UPLEFT)){
+                    this.direction = Config.Direction.UPLEFT;
+                    moveIntoTabPieces();
+                }
             } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
-                this.direction = Config.Direction.RIGHT;
-                moveIntoTabPieces();
                 flagClic=1;
+                if(verifMoveTabDirections(Config.Direction.RIGHT)){
+                    this.direction = Config.Direction.RIGHT;
+                    moveIntoTabPieces();
+                }
             } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
-                this.direction = Config.Direction.LEFT;
-                moveIntoTabPieces();
                 flagClic=1;
+                if(verifMoveTabDirections(Config.Direction.LEFT)){
+                    this.direction = Config.Direction.LEFT;
+                    moveIntoTabPieces();
+                }
             } else if ((e.getX() > 793) && (e.getX() < 793 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
-                this.direction = Config.Direction.DOWNRIGHT;
-                moveIntoTabPieces();
                 flagClic=1;
+                if(verifMoveTabDirections(Config.Direction.DOWNRIGHT)){
+                    this.direction = Config.Direction.DOWNRIGHT;
+                    moveIntoTabPieces();
+                }
             } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
-                this.direction = Config.Direction.DOWNLEFT;
-                moveIntoTabPieces();
                 flagClic=1;
+                if(verifMoveTabDirections(Config.Direction.DOWNLEFT)){
+                    this.direction = Config.Direction.DOWNLEFT;
+                    moveIntoTabPieces();
+                }
             }
         }
 
@@ -288,6 +303,7 @@ public class Panneau extends JPanel implements MouseListener {
                         this.confirmValidation = 1;
                         System.out.println("ETAT CHANG2");
                         flagClic=1;
+                        tabDirections=boardView.generateDir();
                     }
                 }
             }
@@ -301,6 +317,7 @@ public class Panneau extends JPanel implements MouseListener {
                 }
             }
             boardView.initTabPieces();
+            tabDirections.clear();
         }
 
         System.out.println("TABpieces (vue) Apres");
@@ -342,15 +359,24 @@ public class Panneau extends JPanel implements MouseListener {
                 this.tabSelec[i][j]=0;
             }
         }
+        tabDirections.clear();
     }
 
     private void moveIntoTabPieces(){
         boardView.tabPieces[3].x= this.direction.ordinal();
         boardView.tabPieces[3].y= 88;
     }
-
-
+    
     Coords[] getTabPieces() {
         return boardView.getTabPieces();
+    }
+    
+    public boolean verifMoveTabDirections(Config.Direction dir){
+        for (Config.Direction k: tabDirections) {
+            if(dir==k){
+                return true;
+            }
+        }
+        return false;
     }
 }
