@@ -1,5 +1,6 @@
-package modele;
+package controleur;
 
+import modele.BoardAbalone;
 import modele.Config.Color;
 import vue.Fenetre;
 
@@ -93,19 +94,6 @@ public class Main {
                     }
                 }
             }
-		/*
-		BoardDC board = new BoardDC();
-		
-		board.addPlayer(Color.BLACK);
-		board.addPlayer(Color.RED);
-		board.addPlayer(Color.YELLOW);
-		board.addPlayer(Color.GREEN);
-		board.addPlayer(Color.BLUE);
-		board.addPlayer(Color.WHITE);
-
-		board.initBoard();
-		board.affichePlateau();
-		*/
 
 	
 	}

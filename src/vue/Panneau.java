@@ -24,8 +24,6 @@ public class Panneau extends JPanel implements MouseListener {
     private int confirmValidation=0;
     private int confirmDirection=0;
 
-    private int etatBoutonValidation=0;
-
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
     private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
@@ -112,19 +110,6 @@ public class Panneau extends JPanel implements MouseListener {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-        //affiche boutonValider
-        add(validButtonDown);
-        add(validButtonUp);
-        if(this.etatBoutonValidation==0){
-            validButtonDown.setVisible(true);
-            validButtonUp.setVisible(false);
-        }
-        else{
-            validButtonDown.setVisible(false);
-            validButtonUp.setVisible(true);
         }
 
         //Mets à jour le pad directionnel
@@ -282,13 +267,8 @@ public class Panneau extends JPanel implements MouseListener {
             }
         }
 
-        //Clic on validation button
-        if((e.getX()>530) && (e.getX()<530+170) && (e.getY()>140) && (e.getY()<140+50)){
-            this.confirmValidation=1;
-            System.out.println("GROSSE");
-            this.etatBoutonValidation=0;
-        }
-        else {
+
+
             //Clic on balls
             for (int i = 1; i < 11; i++) {
                 for (int j = 0; j < 19; j++) {
@@ -298,14 +278,14 @@ public class Panneau extends JPanel implements MouseListener {
                         if (boardView.selectMarble(new Coords(i,j))) {
                             //System.out.println("ENTER if2");
                             tabSelec[i][j] = 1;
-                            this.etatBoutonValidation = 1;
-                            System.out.println("ETAT CHANG2" + this.etatBoutonValidation);
+                            this.confirmValidation = 1;
+                            System.out.println("ETAT CHANG2");
                         }
                     }
                 }
                 heightOffset = heightOffset + 40;
             }
-        }
+
         System.out.println("TABpieces (vue) Apres");
         boardView.printTabPieces();
         repaint();
@@ -339,7 +319,6 @@ public class Panneau extends JPanel implements MouseListener {
         boardView.initTabPieces();
         this.confirmValidation=0;
         this.confirmDirection=0;
-        this.etatBoutonValidation=0;
         this.direction=null;
         for (int i = 1; i < 11; i++) {
             for (int j = 0; j < 19; j++) {

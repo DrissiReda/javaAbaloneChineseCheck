@@ -147,8 +147,10 @@ public class BoardDC extends Board{
 	{
 		for(int i = 5; i < 9 ; i++){
 			for(int j = width-1; j > 20 ; j--){
-				if(GameBoard[i][j].getColor() != Color.ILLEGAL)
-					GameBoard[i][j].setColor(color);					
+				if(GameBoard[i][j].getColor() != Color.ILLEGAL){
+					GameBoard[i][j].setColor(color);
+					System.out.println(i+";"+j+" ");
+				}
 			}
 		}
 		GameBoard[5][19].setColor(color);
@@ -176,7 +178,7 @@ public class BoardDC extends Board{
 			}
 		}
 	}
-	
+
 	public void colorSouthEast(Color color)
 	{
 		for(int i = 10; i < 14 ; i++){
@@ -188,7 +190,7 @@ public class BoardDC extends Board{
 		GameBoard[12][20].setColor(color);
 		GameBoard[13][19].setColor(color);
 	}
-	
+
 	public void colorSouthWest(Color color)
 	{
 		for(int i = 10; i < 14 ; i++){
@@ -238,17 +240,17 @@ public class BoardDC extends Board{
 		if(inOppositeArea(tabPieces[0]) && !inOppositeArea(next_coord(tabPieces[0], toDir(tabPieces[1].x%10))))
 			return false;
 
-			if(free_next(tabPieces[0], toDir(tabPieces[1].x%10))){
-				simple_move(tabPieces,player);
+		if(free_next(tabPieces[0], toDir(tabPieces[1].x % 10))){
+			simple_move(tabPieces,player);
+			return true;
+		}
+		else{
+			if(free_next(next_coord(tabPieces[0], toDir(tabPieces[1].x%10)), toDir(tabPieces[1].x%10))){
+				jump_move(tabPieces,player);
 				return true;
 			}
-			else{
-				if(free_next(next_coord(tabPieces[0], toDir(tabPieces[1].x%10)), toDir(tabPieces[1].x%10))){
-					jump_move(tabPieces,player);
-					return true;
-				}
-			}
-		return false;	
+		}
+	return false;	
 	}
 	
 	public void simple_move(Coords[] tabPieces,Color player){
@@ -327,36 +329,40 @@ public class BoardDC extends Board{
     
     public boolean inAreaNorth(Coords pos)
     {
-    	if(pos.x < 5)
-    		return true;
-    	return false;
+    	return (pos.x < 5);
     }
 
     public boolean inAreaNorthEast(Coords pos)
     {
-    	return true;
+    	if((pos.x == 5 && pos.y == 19) || (pos.x == 6 && pos.y == 20))
+    		return true;
+    	return (pos.x >= 5 && pos.x < 9 && pos.y > 20);
     }
 
     public boolean inAreaSouthEast(Coords pos)
     {
-    	return true;
+		if((pos.x == 12 && pos.y == 20) || (pos.x == 13 && pos.y == 19))
+			return true;
+		return (pos.x >= 10 && pos.x < 20 && pos.y > 20);
     }
-    
+
     public boolean inAreaSouth(Coords pos)
     {
-    	if(pos.x > 13)
-    		return true;
-    	return false;
+    	return (pos.x > 13);
     }
     
     public boolean inAreaSouthWest(Coords pos)
     {
-    	return true;
+		if((pos.x == 12 && pos.y == 6) || (pos.x == 13 && pos.y == 7))
+			return true;
+		return (pos.x >= 10 && pos.x < 14 && pos.y < 6);		
     }
     
     public boolean inAreaNorthWest(Coords pos)
     {
-    	return true;
+		if((pos.x == 5 && pos.y == 7) || (pos.x == 6 && pos.y == 6))
+			return true;
+		return (pos.x >= 5 && pos.x < 9 && pos.y < 6);	
     }
 
     /**
@@ -453,7 +459,7 @@ public class BoardDC extends Board{
 				break;
     	//retourne le suivant, si c'est le dernier
 		//retourne le premier
-		return players.get((i+1)%players.size());
+		return players.get((i+1) % players.size());
 	}
 
 	@Override
