@@ -89,22 +89,6 @@ public class GameChoice extends JPanel {
 		labelJoueur.setBounds(22, 0, 366, 59);
 		add(labelJoueur);
 		
-		JButton boutonMdp = new JButton("CHANGER MOT DE PASSE");
-		boutonMdp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				setVisible(false);
-				JPanel panel9 = new PasswordChange(parent, playerName);
-				panel9.setVisible(true);
-				panel9.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel9);
-				
-			}
-		});
-		boutonMdp.setFont(new Font("Arial", Font.BOLD, 15));
-		boutonMdp.setBounds(22, 42, 245, 27);
-		add(boutonMdp);
-		
 		
 		JButton boutonHistorique = new JButton("HISTORIQUE");
 		boutonHistorique.addActionListener(new ActionListener() {

@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
+import modele.DatabaseConnect;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
@@ -48,22 +51,6 @@ public class ColorsChoice extends JPanel {
 		labelJoueur.setBounds(22, 0, 366, 59);
 		add(labelJoueur);
 		
-		JButton boutonMdp = new JButton("CHANGER MOT DE PASSE");
-		boutonMdp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				setVisible(false);
-				JPanel panel9 = new PasswordChange(parent, playerName);
-				panel9.setVisible(true);
-				panel9.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel9);
-				
-			}
-		});
-		boutonMdp.setFont(new Font("Arial", Font.BOLD, 15));
-		boutonMdp.setBounds(22, 42, 245, 27);
-		add(boutonMdp);
-		
 		
 		JButton boutonRetour = new JButton("RETOUR");
 		boutonRetour.addActionListener(new ActionListener() {
@@ -83,11 +70,12 @@ public class ColorsChoice extends JPanel {
 		bouton1couleur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				setVisible(false);
-				JPanel panel = new VariantChoice(parent, playerName,game,number_players,1);
-				panel.setVisible(true);
-				panel.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel);
+				//Début partie.
+				try {
+					DatabaseConnect.saveGame(game, number_players, 9, 13);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 			}
 		});
@@ -100,12 +88,12 @@ public class ColorsChoice extends JPanel {
 		bouton2couleurs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				setVisible(false);
-				JPanel panel = new VariantChoice(parent, playerName,game,number_players,2);
-				panel.setVisible(true);
-				panel.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel);
-				
+				//Début partie.
+				try {
+					DatabaseConnect.saveGame(game, number_players, 9, 13);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		bouton2couleurs.setFont(new Font("Arial", Font.BOLD, 15));
@@ -117,11 +105,12 @@ public class ColorsChoice extends JPanel {
 		bouton3couleurs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				setVisible(false);
-				JPanel panel = new VariantChoice(parent, playerName,game,number_players,3);
-				panel.setVisible(true);
-				panel.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel);
+				//Début partie.
+				try {
+					DatabaseConnect.saveGame(game, number_players, 9, 13);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		bouton3couleurs.setFont(new Font("Arial", Font.BOLD, 15));

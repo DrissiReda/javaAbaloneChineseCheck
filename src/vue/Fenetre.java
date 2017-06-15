@@ -24,14 +24,12 @@ public class Fenetre extends JFrame {
         
         
         launch_interface();
-        
     }
 
     // Fonctions interfaces principales
     
     public void launch_interface()
 	{
-    	System.out.println("test");
 		JPanel panel1 = new Start(this);
 		panel1.setBounds(0,0,1000,600);
 		this.getContentPane().add(panel1);		

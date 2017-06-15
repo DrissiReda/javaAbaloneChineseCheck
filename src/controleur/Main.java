@@ -30,7 +30,11 @@ public class Main {
             int i=100;
 
 
-
+            /*À faire :
+             * -Changement mot de passe.
+             * -Sauvegarde partie.
+             * -Historique.
+             */
 
 
 				//AlphaBeta a = new AlphaBeta(board);
@@ -83,6 +87,4 @@ public class Main {
 
 	
 	}
-
-
 }
