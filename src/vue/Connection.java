@@ -22,7 +22,7 @@ public class Connection extends JPanel {
 	private JTextField textField;
 	private JPasswordField passwordField;
 
-	//Écran de connexion.
+	//?cran de connexion.
 	
 	public Connection(JFrame parent) {
 		
@@ -81,16 +81,11 @@ public class Connection extends JPanel {
 		boutonValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				setVisible(false);
-				JPanel panel5 = new GameChoice(parent,textField.getText());
-				panel5.setVisible(true);
-				panel5.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel5);
 
 				String password = String.valueOf(passwordField.getPassword());
 				try
 				{
-					if (!DatabaseConnect.userLogin(textField.getText(), password))
+					/*if (DatabaseConnect.userLogin(textField.getText(), password))
 					{
 						//message user not found or password not valid
 						labelConnexionFailure.setText("Echec de connexion");
@@ -98,15 +93,15 @@ public class Connection extends JPanel {
 					}
 					
 					else
-					{
-						/*setVisible(false);
+					{*/
+						setVisible(false);
 						JPanel panel5 = new GameChoice(parent,textField.getText());
 						panel5.setVisible(true);
 						panel5.setBounds(0,0,1000,600);
-						parent.getContentPane().add(panel5);*/
-					}
+						parent.getContentPane().add(panel5);
+
 				} 
-				catch (SQLException e) 
+				catch (Exception e)
 				{
 					//error reading user
 					e.printStackTrace();
@@ -122,6 +117,6 @@ public class Connection extends JPanel {
 		label.setIcon(new ImageIcon("Images\\Fond2.png"));
 		label.setBounds(0, 0, 1000, 600);
 		add(label);
-		// test
+		
 	}
 }
