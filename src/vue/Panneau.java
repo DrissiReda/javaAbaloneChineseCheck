@@ -32,7 +32,7 @@ public class Panneau extends JPanel implements MouseListener {
 
     private Config.Direction direction=null;
 
-    public ArrayList<Config.Direction> tabDirections;
+    private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
 
     public void paintComponent(Graphics g) {
@@ -116,58 +116,70 @@ public class Panneau extends JPanel implements MouseListener {
         }
 
         //Mets à jour le pad directionnel
-        if(direction==Config.Direction.UPRIGHT){
+        if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
             try {
                 Image img = ImageIO.read(new File("Images/padUpRight.png"));
                 g.drawImage(img, 672, 204, this);
-                this.confirmDirection=1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if(direction==Config.Direction.UPRIGHT){
+                this.confirmDirection=1;
+            }
         }
-        else if(direction==Config.Direction.UPLEFT){
+        if(verifMoveTabDirections(Config.Direction.UPLEFT)){
             try {
                 Image img = ImageIO.read(new File("Images/padUpLeft.png"));
                 g.drawImage(img, 672, 204, this);
-                this.confirmDirection=1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if(direction==Config.Direction.UPLEFT){
+                this.confirmDirection=1;
+            }
         }
-        else if(direction==Config.Direction.RIGHT){
+        if(verifMoveTabDirections(Config.Direction.RIGHT)){
             try {
                 Image img = ImageIO.read(new File("Images/padRight.png"));
                 g.drawImage(img, 672, 204, this);
-                this.confirmDirection=1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if(direction==Config.Direction.RIGHT){
+                this.confirmDirection=1;
+            }
         }
-        else if(direction==Config.Direction.LEFT){
+        if(verifMoveTabDirections(Config.Direction.LEFT)){
             try {
                 Image img = ImageIO.read(new File("Images/padLeft.png"));
                 g.drawImage(img, 672, 204, this);
-                this.confirmDirection=1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if(direction==Config.Direction.LEFT){
+                this.confirmDirection=1;
+            }
         }
-        else if(direction==Config.Direction.DOWNRIGHT){
+        if(verifMoveTabDirections(Config.Direction.DOWNRIGHT)){
             try {
                 Image img = ImageIO.read(new File("Images/padDownRight.png"));
                 g.drawImage(img, 672, 204, this);
-                this.confirmDirection=1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if(direction==Config.Direction.DOWNRIGHT){
+                this.confirmDirection=1;
+            }
         }
-        else if(direction==Config.Direction.DOWNLEFT){
+        if(verifMoveTabDirections(Config.Direction.DOWNLEFT)){
             try {
                 Image img = ImageIO.read(new File("Images/padDownLeft.png"));
                 g.drawImage(img, 672, 204, this);
-                this.confirmDirection=1;
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            if(direction==Config.Direction.DOWNLEFT){
+                this.confirmDirection=1;
             }
         }
 
