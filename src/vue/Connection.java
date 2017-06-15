@@ -81,6 +81,11 @@ public class Connection extends JPanel {
 		boutonValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				setVisible(false);
+				JPanel panel5 = new GameChoice(parent,textField.getText());
+				panel5.setVisible(true);
+				panel5.setBounds(0,0,1000,600);
+				parent.getContentPane().add(panel5);
 
 				String password = String.valueOf(passwordField.getPassword());
 				try
@@ -94,11 +99,11 @@ public class Connection extends JPanel {
 					
 					else
 					{
-						setVisible(false);
+						/*setVisible(false);
 						JPanel panel5 = new GameChoice(parent,textField.getText());
 						panel5.setVisible(true);
 						panel5.setBounds(0,0,1000,600);
-						parent.getContentPane().add(panel5);
+						parent.getContentPane().add(panel5);*/
 					}
 				} 
 				catch (SQLException e) 
@@ -117,6 +122,6 @@ public class Connection extends JPanel {
 		label.setIcon(new ImageIcon("Images\\Fond2.png"));
 		label.setBounds(0, 0, 1000, 600);
 		add(label);
-		
+		// test
 	}
 }
