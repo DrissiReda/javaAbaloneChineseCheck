@@ -2,6 +2,8 @@ package modele;
 import modele.Config.Color;
 import modele.Config.Direction;
 
+import java.util.ArrayList;
+
 public class BoardAbalone extends Board{
 	
 	public Coords[] tabPieces = new Coords[4];
@@ -734,7 +736,15 @@ String BroadsideMoves(Coords[] tabPieces){
 		System.out.println("RETOUR NULL");
         return null;
     }
-
+	public ArrayList<Direction> generateDir(Coords[] tabPieces,Color Player){
+		String move=MoveOrdering(player);
+		ArrayList<Direction> ret=new ArrayList<>();
+		for(int i=0;i<move.length();i+=moveSize){
+			if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12)))
+				ret.add(toDir(Integer.parseInt(move.substring(i+13,i+14))));
+		}
+		return ret;
+	}
 	public Coords[] getTabPieces() {
 		return tabPieces;
 	}
