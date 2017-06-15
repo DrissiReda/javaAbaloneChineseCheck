@@ -588,7 +588,7 @@ public class BoardAbalone extends Board{
 
 //Implementation of generation of broadside moves
 
-String BroadsideMoves(Coords[] tabPieces){
+public String BroadsideMoves(Coords[] tabPieces){
 
 		String Bs_Moves="";
 		Coords marble;
@@ -758,7 +758,9 @@ String BroadsideMoves(Coords[] tabPieces){
 	public ArrayList<Direction> generateDir(){
 		String move=MoveOrdering(player);
 		ArrayList<Direction> ret=new ArrayList<>();
-		ArrayList<Coords[]> ls = generateOrder(tabPieces);
+		ArrayList<Coords[]> ls=new ArrayList<>();
+		ls.add(tabPieces);
+		//generateOrder(tabPieces);
 		for(int i=0;i<move.length();i+=moveSize){
 			for(Coords[] tP : ls)
 			if(MoveToString(tP).substring(0,12).equals(move.substring(i,i+12)))
