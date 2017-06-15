@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by root on 08/06/17.
  */
-public class AlphaBeta {
+public class IA {
 
     Board b;
     Map<Integer,Integer> zobristTableW;
@@ -30,7 +30,7 @@ public class AlphaBeta {
         {0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0}
 
     };
-    public AlphaBeta(Board b){
+    public IA(Board b){
         this.b=b;
         zobristTableB=new HashMap<>();
         zobristTableW=new HashMap<>();
