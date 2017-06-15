@@ -29,7 +29,7 @@ public class BoardAbalone extends Board{
 		initTabPieces();
 	}
     
-    public BoardAbalone(int h, int w,int m) {
+    public BoardAbalone(int h, int w, int m) {
     	super(h, w, m);
 		initTabPieces();
     }
