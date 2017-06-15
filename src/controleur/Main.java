@@ -53,11 +53,7 @@ public class Main {
             while(i-->0) {
                 //CHOIX DES BOULES ET DE LA DIRECTION
                 while (fen.getConfirmDirection() == 0) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                	fen.refreshBoard();
                 }
 
                 if (fen.getConfirmDirection() != 0) {
