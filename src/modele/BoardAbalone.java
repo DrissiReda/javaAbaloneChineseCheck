@@ -604,7 +604,7 @@ String BroadsideMoves(Coords[] tabPieces){
 		//tabPieces[4].setCoords(0,0) ;          //no captures
 		for(Direction k : Direction.values())
 		{
-			for(int i=0;i<3;i++)
+			for(int i=0;i<4;i++)
 			{
 
 				if(tabPieces[i].x==22)
