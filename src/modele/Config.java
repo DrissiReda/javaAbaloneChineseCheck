@@ -25,9 +25,9 @@ public class Config {
 		Direction(int val){
 			this.val = val;
 		}
-	};
+	}
 	
-	// Différents coins du plateau de dames chinoises
+	// Diff?rents coins du plateau de dames chinoises
 	public enum Area {
 		NORTH,
 		NORTHEAST,
