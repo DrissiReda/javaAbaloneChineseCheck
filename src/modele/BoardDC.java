@@ -205,7 +205,14 @@ public class BoardDC extends Board{
 	
 	@Override
 	public int marble_count(Color player) {
-		return 10;
+		int res=0;
+		for(int i=0;i<height;i++)
+			for(int j=0;j<width;j++){
+			if(getCase(new Coords(i,j))==player &&
+				inArea(new Coords(i,j),getEndArea(new Coords(i,j))))
+				res++;
+			}
+			return res;
 	}
 
 	// Remplissage de pions bleu pour commencer les deplacements
@@ -236,7 +243,7 @@ public class BoardDC extends Board{
 	
 	public boolean executeMove(Coords[] tabPieces, Color player)
 	{
-		// Si le pion est dans une zone d'arrivée et que son mouvement va le faire sortir de cette zone
+		// Si le pion est dans une zone d'arriv?e et que son mouvement va le faire sortir de cette zone
 		if(inOppositeArea(tabPieces[0]) && !inOppositeArea(next_coord(tabPieces[0], toDir(tabPieces[1].x%10))))
 			return false;
 
@@ -303,9 +310,9 @@ public class BoardDC extends Board{
     }
     
     /**
-     * Permet de savoir si un pion est dans la zone opposée à sa zone de départ
+     * Permet de savoir si un pion est dans la zone oppos?e ? sa zone de d?part
      * @param pos
-     * @return boolean Vrai si le pion est dans la zone opposée, faux sinon
+     * @return boolean Vrai si le pion est dans la zone oppos?e, faux sinon
      */
     public boolean inOppositeArea(Coords pos)
     {
@@ -366,7 +373,7 @@ public class BoardDC extends Board{
     }
 
     /**
-     * Retourne la zone de départ d'une couleur
+     * Retourne la zone de d?part d'une couleur
      * @return
      */
     public Area getStartArea(Coords pos){
@@ -377,7 +384,7 @@ public class BoardDC extends Board{
     }
     
     /**
-     * Retourne la zone d'arrivée d'un pion passé en paramètre
+     * Retourne la zone d'arriv?e d'un pion pass? en param?tre
      * @param pos
      * @return
      */
@@ -387,7 +394,7 @@ public class BoardDC extends Board{
     }
     
     /**
-     * Retourne la zone opposée de la zone passée en paramètre
+     * Retourne la zone oppos?e de la zone pass?e en param?tre
      * @param area
      * @return
      */
@@ -474,7 +481,9 @@ public class BoardDC extends Board{
 		else
 			return false;
 	}
-
+    public Coords[] generateMove(Coords[] tabPieces,Color player){
+        return null;
+    }
 }
 
 
