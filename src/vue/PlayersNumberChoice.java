@@ -1,24 +1,18 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 import java.awt.Color;
+import modele.*;
 import java.awt.EventQueue;
 
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 
+import modele.BoardAbalone;
 import modele.DatabaseConnect;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
 
 public class PlayersNumberChoice extends JPanel {
 
@@ -28,7 +22,7 @@ public class PlayersNumberChoice extends JPanel {
 	public PlayersNumberChoice(JFrame parent, String playerName, String game) {
 		
 		setLayout(null);
-		setBackground(new Color(245, 245, 245));
+		setBackground(new java.awt.Color(245, 245, 245));
 		
 		
 		JLabel labelMenu = new JLabel("MENU");
@@ -50,24 +44,78 @@ public class PlayersNumberChoice extends JPanel {
 		bouton1Joueur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Début partie.
+				//D?but partie.
 				
 				try {
 					DatabaseConnect.saveGame(game, 1, 9, 13);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
-				
-				
+
+
+
 				setVisible(false);
+					Fenetre fen;
+				try {
+					fen= new Fenetre();
+
 				Panneau pan = new Panneau();
+				BoardAbalone board=new BoardAbalone();
+				int i=0;
 	    		pan.setVisible(true);
-	    		parent.getContentPane().add(pan);
-	    		
-				
-				
-			}
+				while(i-->0) {
+					//CHOIX DES BOULES ET DE LA DIRECTION
+					while (fen.getConfirmDirection() == 0) {
+						fen.refreshBoard();
+					}
+
+					if (fen.getConfirmDirection() != 0) {
+						//copie de TabPieces (Vue) dans Tab Pieces (Modele)
+						board.setTabPieces(fen.getTabPieces());
+						System.out.println("TABpieces modele non converti");
+						board.printTabPieces();
+
+						//conversion de TabPiece (modele) avec GenerateMove
+						board.setTabPieces(board.generateMove(board.tabPieces, board.getPlayer()));
+
+						//execute le mouvement
+						board.executeMove(board.tabPieces, board.getPlayer());
+						board.displayBoard();
+
+						//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
+						fen.setMarbleLeftBlack(board.marble_count(modele.Config.Color.BLACK));
+						fen.setMarbleLeftWhite(board.marble_count(Config.Color.WHITE));
+
+						//CHANGEMENT DE JOUEUR
+						board.switchPlayer();
+
+						//REINITIALISATION DU PLATEAU (VUE)
+						fen.copyTab(board);
+						fen.reInit();
+
+						//AFFICHAGE DU PLATEAU
+						fen.refreshBoard();
+
+
+						if (board.marble_count(board.getPlayer()) <= 8 || board.marble_count(board.switchPlayer(board.getPlayer())) <= 8) {
+							System.out.println("============Victory at " + i + " =============");
+							//break;
+						}
+					}
+					parent.getContentPane().add(pan);
+
+				}
+
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+				}
+				}
 		});
 		bouton1Joueur.setBackground(UIManager.getColor("Button.background"));
 		bouton1Joueur.setFont(new Font("Arial", Font.BOLD, 15));
@@ -81,7 +129,7 @@ public class PlayersNumberChoice extends JPanel {
 				
 				if(game=="Abalone")
 				{
-					//Début partie.
+					//D?but partie.
 					
 					try {
 						DatabaseConnect.saveGame(game, 2, 9, 13);
@@ -157,7 +205,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton4Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					//Début partie.
+					//D?but partie.
 					
 					try {
 						DatabaseConnect.saveGame(game, 4, 9, 13);
@@ -177,7 +225,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton5Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//Début partie.
+					//D?but partie.
 					
 					try {
 						DatabaseConnect.saveGame(game, 5, 9, 13);
@@ -197,7 +245,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton6Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//Début partie.
+					//D?but partie.
 					
 					try {
 						DatabaseConnect.saveGame(game, 6, 9, 13);

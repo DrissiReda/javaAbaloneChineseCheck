@@ -7,6 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import modele.BoardAbalone;
 import modele.Config.Color;
 import modele.DatabaseConnect;
+import modele.Root;
 import vue.Fenetre;
 import vue.Panneau;
 
@@ -21,7 +22,7 @@ public class Main {
             EventQueue.invokeLater(new Runnable() {
     			public void run() {
     				try {
-    					Fenetre fen = new Fenetre();
+    					Root root = new Root();
     				} catch (Exception e) {
     					e.printStackTrace();
     				}
@@ -30,7 +31,7 @@ public class Main {
             int i=100;
 
 
-            /*À faire :
+            /*? faire :
              * -Changement mot de passe.
              * -Sauvegarde partie.
              * -Historique.
