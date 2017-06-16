@@ -81,7 +81,7 @@ public class PlayersNumberChoice extends JPanel {
 
 						// Quand on clique sur un bouton de mouvement
 						if(pan.getConfirmDirection() != 0){
-
+							
 							board.setTabPieces(pan.getTabPieces());
 							System.out.println("TABpieces modele non converti");
 							board.printTabPieces();

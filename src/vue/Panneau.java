@@ -256,52 +256,57 @@ public class Panneau extends JPanel{
         //boardView.printTabPieces();
 
         int widthOffset = 0;
-        int heightOffset = 153;
+        int heightOffset = 183;
         int limX;
         int flagClic=0;
 
         //clic on directions
         if(confirmValidation==1) {
+        	//
             if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
                 flagClic = 1;
                 if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
                     this.direction = Config.Direction.UPRIGHT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.UPLEFT)){
                     this.direction = Config.Direction.UPLEFT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.RIGHT)){
                     this.direction = Config.Direction.RIGHT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.LEFT)){
                     this.direction = Config.Direction.LEFT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 793) && (e.getX() < 793 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.DOWNRIGHT)){
                     this.direction = Config.Direction.DOWNRIGHT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.DOWNLEFT)){
                     this.direction = Config.Direction.DOWNLEFT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             }
         }
-
-
 
         //Clic on balls
         for (int i = 1; i < 11; i++) {
@@ -335,11 +340,6 @@ public class Panneau extends JPanel{
         System.out.println("TABpieces (vue) Apres");
         boardView.printTabPieces();
         repaint();
-    }
-
-
-    public void move(){
-        boardView.executeMove(boardView.getTabPieces(), boardView.player);
     }
 
     void reInit(){
