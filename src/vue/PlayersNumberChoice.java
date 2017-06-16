@@ -78,7 +78,9 @@ public class PlayersNumberChoice extends JPanel {
 
 					// Quand on clique sur le Panel
 					public void mouseClicked(MouseEvent e) {
+
 						playAbalone(true, e);
+
 					}
 				});
 			}

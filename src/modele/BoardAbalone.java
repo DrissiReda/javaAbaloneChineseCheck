@@ -715,12 +715,14 @@ public String BroadsideMoves(Coords[] tabPieces){
 		return null;
 	}
 
-	public Coords[] generateMove(Coords[] tabPieces,Color player){
+	public Coords[] generateMove(Coords[] tP,Color player){
 	    String move=MoveOrdering(player);
+	    ArrayList<Coords[]> ls=generateOrder(tP);
 	    for(int i=0;i<move.length();i+=moveSize){
-	        if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
-                && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
-	            return stringToMove(move.substring(i,i+moveSize));
+	    	for(Coords [] tabPieces : ls)
+	        	if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
+                	&& MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
+	            		return stringToMove(move.substring(i,i+moveSize));
         }
 		System.out.println("RETOUR NULL");
         return null;
