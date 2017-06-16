@@ -101,7 +101,7 @@ public class PasswordChange extends JPanel {
 				
 				try
 				{
-					if ( password2.length()<=4 || !DatabaseConnect.changePassword(playerName, password1, password2) )
+					if ( password2.length()<=4 /*|| !DatabaseConnect.changePassword(playerName, password1, password2)*/ )
 					{
 						//message user not found or password not valid
 						labelConnexionFailure.setText("Mot de passe invalide");
@@ -116,7 +116,7 @@ public class PasswordChange extends JPanel {
 						parent.getContentPane().add(panel5);
 					}
 				} 
-				catch (SQLException e) 
+				catch (Exception e)
 				{
 					//error reading user
 					e.printStackTrace();
