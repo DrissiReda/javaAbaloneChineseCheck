@@ -3,6 +3,7 @@ package vue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -19,9 +20,19 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.TableColumn;
+
+import com.sun.jmx.snmp.Timestamp;
+
+import modele.DatabaseConnect;
 
 
-public class History extends JPanel {
+
+public class History extends JPanel{
+	private JTable table;
 
 	//Historique.
 	
@@ -44,67 +55,28 @@ public class History extends JPanel {
 		labelJoueur.setBounds(22, 0, 366, 59);
 		add(labelJoueur);
 		
-		/*
+		String[] columnNames = {"Jeu",
+                "Nombre joueurs",
+                "Score joueur 1",
+                "Score joueur 2",
+                "Date"};
+		try
+		{
+			Object[][] data = DatabaseConnect.getHistory();
+			
+			table = new JTable(data, columnNames);
+			table.setEnabled(false);
+			JScrollPane scroller = new JScrollPane(table);
+			scroller.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			scroller.setBackground(new Color(245, 245, 245));
+			scroller.setBounds(254, 157, 496, 284);
+			add(scroller);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 		
-	    Object[][] data = {
-	    	      {"Abalone", "1", "10"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "2", "14"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "2", "14"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "2", "14"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "2", "14"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "9"},
-	    	      {"Dames chinoises", "0", "12"},
-	    	      {"Dames chinoises", "0", "12"}
-	    	    };
-
-	    
-	    
-	    //Les titres des colonnes
-	    String  title[] = {"Jeu", "Type", "Score"};
-	    JTable tableau = new JTable(data, title);
-	    //Nous ajoutons notre tableau à notre contentPane dans un scroll
-	    //Sinon les titres des colonnes ne s'afficheront pas !
-	    parent.getContentPane().add(new JScrollPane(tableau));
-	    tableau.setBounds(280, 160, 420, 250);
-		tableau.setBackground(new Color(240, 240, 240));
-	    add(tableau);
-	    
-	    */
-	    
 		
 		JButton boutonRetour = new JButton("RETOUR");
 		boutonRetour.addActionListener(new ActionListener() {
@@ -121,12 +93,10 @@ public class History extends JPanel {
 		add(boutonRetour);
 		
 		
-		
 		JLabel label = new JLabel("");
+		label.setBackground(new Color(0, 0, 0));
 		label.setIcon(new ImageIcon("Images\\Fond2.png"));
 		label.setBounds(0, 0, 1000, 600);
 		add(label);
-		
-
 	}
 }

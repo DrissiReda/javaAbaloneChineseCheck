@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
+import modele.DatabaseConnect;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
@@ -47,21 +50,21 @@ public class PlayersNumberChoice extends JPanel {
 		bouton1Joueur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				//Début partie.
+				
+				try {
+					DatabaseConnect.saveGame(game, 1, 9, 13);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
 				
 				setVisible(false);
-				
 				Panneau pan = new Panneau();
 	    		pan.setVisible(true);
-	    		
 	    		parent.getContentPane().add(pan);
 	    		
-	    		
-				/*
-				JPanel panel8 = new VariantChoice(parent,playerName,game,1,1);
-				
-				panel8.setVisible(true);
-				panel8.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel8);*/
 				
 				
 			}
@@ -78,11 +81,15 @@ public class PlayersNumberChoice extends JPanel {
 				
 				if(game=="Abalone")
 				{
-					setVisible(false);
-					JPanel panel8 = new VariantChoice(parent,playerName,game,2,1);
-					panel8.setVisible(true);
-					panel8.setBounds(0,0,1000,600);
-					parent.getContentPane().add(panel8);
+					//Début partie.
+					
+					try {
+						DatabaseConnect.saveGame(game, 2, 9, 13);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+
 				}
 				
 				if(game=="Dames chinoises")
@@ -93,6 +100,7 @@ public class PlayersNumberChoice extends JPanel {
 					colorschoice.setVisible(true);
 					colorschoice.setBounds(0,0,1000,600);
 					parent.getContentPane().add(colorschoice);
+					
 					
 				}
 			}
@@ -107,22 +115,6 @@ public class PlayersNumberChoice extends JPanel {
 		labelJoueur.setFont(new Font("Arial", Font.PLAIN, 17));
 		labelJoueur.setBounds(22, 0, 366, 59);
 		add(labelJoueur);
-		
-		JButton boutonMdp = new JButton("CHANGER MOT DE PASSE");
-		boutonMdp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				setVisible(false);
-				JPanel panel9 = new PasswordChange(parent, playerName);
-				panel9.setVisible(true);
-				panel9.setBounds(0,0,1000,600);
-				parent.getContentPane().add(panel9);
-				
-			}
-		});
-		boutonMdp.setFont(new Font("Arial", Font.BOLD, 15));
-		boutonMdp.setBounds(22, 42, 245, 27);
-		add(boutonMdp);
 		
 		
 		if(game=="Abalone")
@@ -153,6 +145,7 @@ public class PlayersNumberChoice extends JPanel {
 					colorschoice.setVisible(true);
 					colorschoice.setBounds(0,0,1000,600);
 					parent.getContentPane().add(colorschoice);
+
 				}
 			});
 			bouton3Joueurs.setBackground(UIManager.getColor("Button.background"));
@@ -163,11 +156,16 @@ public class PlayersNumberChoice extends JPanel {
 			JButton bouton4Joueurs = new JButton("4 JOUEURS");
 			bouton4Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-					JPanel panel8 = new VariantChoice(parent,playerName,game,4,1);
-					panel8.setVisible(true);
-					panel8.setBounds(0,0,1000,600);
-					parent.getContentPane().add(panel8);
+					
+					//Début partie.
+					
+					try {
+						DatabaseConnect.saveGame(game, 4, 9, 13);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					
 				}
 			});
 			bouton4Joueurs.setBackground(UIManager.getColor("Button.background"));
@@ -178,11 +176,15 @@ public class PlayersNumberChoice extends JPanel {
 			JButton bouton5Joueurs = new JButton("5 JOUEURS");
 			bouton5Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-					JPanel panel8 = new VariantChoice(parent,playerName,game,5,1);
-					panel8.setVisible(true);
-					panel8.setBounds(0,0,1000,600);
-					parent.getContentPane().add(panel8);
+
+					//Début partie.
+					
+					try {
+						DatabaseConnect.saveGame(game, 5, 9, 13);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 				}
 			});
 			bouton5Joueurs.setBackground(UIManager.getColor("Button.background"));
@@ -194,11 +196,15 @@ public class PlayersNumberChoice extends JPanel {
 			JButton bouton6Joueurs = new JButton("6 JOUEURS");
 			bouton6Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					setVisible(false);
-					JPanel panel8 = new VariantChoice(parent,playerName,game,6,1);
-					panel8.setVisible(true);
-					panel8.setBounds(0,0,1000,600);
-					parent.getContentPane().add(panel8);
+
+					//Début partie.
+					
+					try {
+						DatabaseConnect.saveGame(game, 6, 9, 13);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 				}
 			});
 			bouton6Joueurs.setBackground(UIManager.getColor("Button.background"));
