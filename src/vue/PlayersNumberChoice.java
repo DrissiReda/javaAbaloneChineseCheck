@@ -57,6 +57,7 @@ public class PlayersNumberChoice extends JPanel {
 				setVisible(false);
 					Fenetre fen;
 				try {
+					// MAIN
 					fen= new Fenetre();
 
 				Panneau pan = new Panneau();
@@ -102,6 +103,7 @@ public class PlayersNumberChoice extends JPanel {
 							//break;
 						}
 					}
+					//END MAIN
 					parent.getContentPane().add(pan);
 
 				}
