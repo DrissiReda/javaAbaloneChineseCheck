@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class BoardAbalone extends Board{
 	
 	public Coords[] tabPieces = new Coords[4];
-	public Color player = Color.BLACK;
+	public Color player = Color.WHITE;
 
 											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
 	private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
@@ -32,6 +32,10 @@ public class BoardAbalone extends Board{
     public BoardAbalone(int h, int w, int m) {
     	super(h, w, m);
 		initTabPieces();
+    }
+    
+    public int getMoveSize(){
+    	return moveSize;
     }
 	public Color getCase(Coords pos){
 		return GameBoard[pos.x][pos.y].getColor();

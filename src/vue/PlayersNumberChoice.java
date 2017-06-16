@@ -12,7 +12,10 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import modele.BoardAbalone;
+import modele.BoardDC;
+import modele.Config;
 import modele.DatabaseConnect;
+import modele.IA;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,8 +30,11 @@ import modele.Config.*;
 
 public class PlayersNumberChoice extends JPanel {
 
-	//Choix du nombre de joueurs.
-
+	private BoardAbalone boardAB;
+	private BoardDC boardDC;
+	
+	// Panel Abalone et Dames chinoises
+	private Panneau pan;
 
 	public PlayersNumberChoice(JFrame parent, String playerName, String game) {
 
@@ -48,9 +54,6 @@ public class PlayersNumberChoice extends JPanel {
 		label.setBounds(469, 105, 33, 34);
 		add(label);
 
-
-
-
 		JButton bouton1Joueur = new JButton("1 JOUEUR");
 		bouton1Joueur.addActionListener(new ActionListener() {
 
@@ -64,53 +67,18 @@ public class PlayersNumberChoice extends JPanel {
 				}
 
 				setVisible(false);
-				Panneau pan = new Panneau();
+				pan = new Panneau();
 				pan.setVisible(true);
 				parent.getContentPane().add(pan);
 
-				int i = 0;
-				BoardAbalone board = new BoardAbalone();
-				System.out.println("suite");
+				boardAB = new BoardAbalone();
 
 				parent.addMouseListener(new MouseAdapter() {
 					@Override
 
 					// Quand on clique sur le Panel
 					public void mouseClicked(MouseEvent e) {
-						pan.click(e);
-
-						// Quand on clique sur un bouton de mouvement
-						if(pan.getConfirmDirection() != 0){
-							
-							board.setTabPieces(pan.getTabPieces());
-							System.out.println("TABpieces modele non converti");
-							board.printTabPieces();
-
-							//conversion de TabPiece (modele) avec GenerateMove
-							if(board.generateMove(board.tabPieces,board.getPlayer())==null)
-								System.out.println(board.MoveToString(board.tabPieces));
-							else
-								board.setTabPieces(board.generateMove(board.tabPieces, board.getPlayer()));
-
-							//execute le mouvement
-
-							board.executeMove(board.tabPieces, board.getPlayer());
-							board.displayBoard();
-
-							//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
-							//pan.setMarbleLeftBlack(board.marble_count(Color.BLACK));
-							//pan.setMarbleLeftWhite(board.marble_count(Color.WHITE));
-
-							//CHANGEMENT DE JOUEUR
-							board.switchPlayer();
-
-							//REINITIALISATION DU PLATEAU (VUE)
-							pan.copyTab(board);
-							pan.reInit();
-
-							//AFFICHAGE DU PLATEAU
-							pan.refreshBoard();
-						}
+						playAbalone(true, e);
 					}
 				});
 			}
@@ -284,5 +252,49 @@ public class PlayersNumberChoice extends JPanel {
 
 
 
+	}
+	
+	public void playAbalone(boolean IA, MouseEvent e){
+		pan.click(e);
+		// Quand on clique sur un bouton de mouvement
+		if(pan.getConfirmDirection() != 0){
+			
+			boardAB.setTabPieces(pan.getTabPieces());
+
+			//conversion de TabPiece (modele) avec GenerateMove
+			if(boardAB.generateMove(boardAB.tabPieces,boardAB.getPlayer())==null)
+				System.out.println(boardAB.MoveToString(boardAB.tabPieces));
+			else
+				boardAB.setTabPieces(boardAB.generateMove(boardAB.tabPieces, boardAB.getPlayer()));
+
+			//execute le mouvement
+			boardAB.executeMove(boardAB.tabPieces, boardAB.getPlayer());
+			boardAB.displayBoard();
+
+			//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
+			pan.setMarbleLeftBlack(boardAB.marble_count(Config.Color.BLACK));
+			pan.setMarbleLeftWhite(boardAB.marble_count(Config.Color.WHITE));
+
+			//CHANGEMENT DE JOUEUR
+			boardAB.switchPlayer();				
+
+			//REINITIALISATION DU PLATEAU (VUE)
+			pan.copyTab(boardAB);
+			pan.reInit();
+
+			//AFFICHAGE DU PLATEAU
+			pan.refreshBoard();
+			
+			if(IA){
+				IA computeur = new IA(boardAB);
+				String move = computeur.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player);
+				boardAB.executeMove(boardAB.stringToMove(move.substring(0,boardAB.getMoveSize())),boardAB.player);
+				
+				boardAB.switchPlayer();
+				pan.copyTab(boardAB);
+				pan.reInit();
+				pan.refreshBoard();
+			}
+		}
 	}
 }
