@@ -88,7 +88,7 @@ public class PlayersNumberChoice extends JPanel {
 
 							//conversion de TabPiece (modele) avec GenerateMove
 							if(board.generateMove(board.tabPieces,board.getPlayer())==null)
-								System.out.println(board.MoveToString(board.tabPieces));
+								System.out.println("HH"+board.MoveToString(board.tabPieces));
 							else
 								board.setTabPieces(board.generateMove(board.tabPieces, board.getPlayer()));
 
