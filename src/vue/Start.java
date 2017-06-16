@@ -18,7 +18,7 @@ import java.awt.event.MouseEvent;
 
 public class Start extends JPanel {
 
-	//Premier écran : cliquez pour continuer.
+	//Premier ?cran : cliquez pour continuer.
 	
 	public Start(JFrame parent){
 		addMouseListener(new MouseAdapter() {

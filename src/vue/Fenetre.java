@@ -30,7 +30,7 @@ public class Fenetre extends JFrame {
     
     public void launch_interface()
 	{
-		JPanel panel1 = new Start(this);
+		Panneau panel1 = new Panneau();
 		panel1.setBounds(0,0,1000,600);
 		this.getContentPane().add(panel1);		
 	}
