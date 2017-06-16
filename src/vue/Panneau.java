@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Panneau extends JPanel implements MouseListener {
+public class Panneau extends JPanel{
 
 
     private int marbleLeftBlack = 14;
@@ -40,7 +40,7 @@ public class Panneau extends JPanel implements MouseListener {
         //Initialisation
         if(initParam==1){
             //souris
-            this.addMouseListener(this);
+
 
 
             setLayout(null);
@@ -248,8 +248,8 @@ public class Panneau extends JPanel implements MouseListener {
         return confirmDirection;
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
+
+    public void click(MouseEvent e) {
         // TODO Auto-generated method stub
         System.out.println("Click: x= "+e.getX()+" y = "+e.getY());
         //System.out.println("TABpieces avant");
@@ -313,7 +313,7 @@ public class Panneau extends JPanel implements MouseListener {
                         //System.out.println("ENTER if2");
                         tabSelec[i][j] = 1;
                         this.confirmValidation = 1;
-                        System.out.println("ETAT CHANG2");
+                        System.out.println("ETAT CHANGE");
                         flagClic=1;
                         tabDirections=boardView.generateDir();
                     }
@@ -337,28 +337,9 @@ public class Panneau extends JPanel implements MouseListener {
         repaint();
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stu
 
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+    public void move(){
+        boardView.executeMove(boardView.getTabPieces(), boardView.player);
     }
 
     void reInit(){
@@ -378,11 +359,11 @@ public class Panneau extends JPanel implements MouseListener {
         boardView.tabPieces[3].x= this.direction.ordinal();
         boardView.tabPieces[3].y= 88;
     }
-    
+
     Coords[] getTabPieces() {
         return boardView.getTabPieces();
     }
-    
+
     public boolean verifMoveTabDirections(Config.Direction dir){
         for (Config.Direction k: tabDirections) {
             if(dir==k){
