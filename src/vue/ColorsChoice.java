@@ -115,24 +115,24 @@ public class ColorsChoice extends JPanel{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ArrayList<Config.Color> listColors = new ArrayList<Config.Color>();
+		/*ArrayList<Config.Color> listColors = new ArrayList<Config.Color>();
 		for (Config.Color color : Config.Color.values()){ 
 			if(color.ordinal() != 0 && color.ordinal() != 1) // On n'ajoute pas ILLEGAL et EMPTY
 				listColors.add(color);
-		}
-
+		}*/
 		setVisible(false);
 		pan = new PanneauDC();
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
-		System.out.println(listColors);
+
 		boardDC = new BoardDC();
 		for (int i = 0; i < nbPlayers*nbColors; i++)
 			boardDC.addPlayer();
-			
+
 		boardDC.initBoard();
+		boardDC.affichePlateau();
 		pan.copyTab(boardDC);
-		System.out.println("ok");
+
 		pan.affichePlateau();
 		parent.addMouseListener(new MouseAdapter() {
 			@Override

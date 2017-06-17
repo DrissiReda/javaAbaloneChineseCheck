@@ -140,11 +140,13 @@ public class PanneauDC extends JPanel{
             for (int j = 0; j < boardView.getWidth(); j++) {
                 limX = 105 + (j * 15) - widthOffset;
                 if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 20) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
-                    if (boardView.selectMarble(new Coords(i,j))) {
+                    if (boardView.selectMarble(new Coords(i,j), "sss")) {
                         marble = new Coords(i, j);
                         System.out.println("click sur la bille "+i + ";"+j);
                         System.out.println(marble.x + ";"+marble.y);
                         listTargets = boardView.generateTarget(marble);
+                    }else{
+                    	System.out.println("return false");
                     }
                 }
             }

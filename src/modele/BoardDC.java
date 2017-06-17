@@ -87,14 +87,20 @@ public class BoardDC extends Board{
 			players.add(players.get(players.size()-1).getNext());
 		return true;
 	}
+	public ArrayList<Color> getColors(){
+		return players;
+	}
 	public Boolean Owns(Color c,String name){
 		if(!pseudos.contains(name))
 			return null; // joueur inexistant
 		int i=0;
-		while(i<6)
+		while(i<6){
 			if(pseudos.get(i).equals(name) && i==c.ordinal()-2)
 				return true;
+			i++;
+		}
 		return false;
+
 	}
 	public void colorBoard()
 	{
@@ -192,7 +198,7 @@ public class BoardDC extends Board{
 		for(int i = 14; i < height; i++){
 			for(int j = 0; j < width; j++){
 				if(GameBoard[i][j].getColor() != Color.ILLEGAL)
-					GameBoard[i][j].setColor(Color.BLACK);
+					GameBoard[i][j].setColor(color);
 			}
 		}
 	}
@@ -266,6 +272,10 @@ public class BoardDC extends Board{
 
 	@Override
 	public boolean selectMarble(Coords pos) {
+		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL && GameBoard[pos.x][pos.y].getColor() != Color.EMPTY){
+			tabPieces[0] = pos;
+			return true;
+		}
 		return false;
 	}
 
