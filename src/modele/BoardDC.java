@@ -505,6 +505,10 @@ public class BoardDC extends Board{
 	}
 	public ArrayList<Direction> generateDir(Coords[] tP){
 		ArrayList<Direction> ret=new ArrayList<>();
+		// if source = dest it means the user
+		// chose to stop, even if he can still continue
+		if(tP[0].x == tP[1].x && tP[0].y==tP[1].y)
+			return ret;
 		String move=AvailableMoves(currentplayer);
 		for(int i=0;i<move.length();i+=moveSize) {
 			//Test if move exists and is not a long jump
@@ -527,6 +531,7 @@ public class BoardDC extends Board{
  * if(executeMove()== true ) #initiate jump sequence#{
  * 	int flag=1;
  * 	while(flag==1){
+ *
  * 		if(generateDir().size()==0)
  * 			break;
  * 		if(executeMove==false) # move was a simple, illegal, revert
@@ -538,8 +543,8 @@ public class BoardDC extends Board{
 ////////////////////////////////////////////////////////////////////////////////
 /*
  * the graphic has to do so :
- * tabPieces[0] = Selected
- * tabPieces[1] = (22,22)
+ * tabPieces[0] = Selected source
+ * tabPieces[1] = (22,22) or Selected destination
  * tabPieces[2] = (10+k.ordinal(),88) #of course k being the direction
  * The executeMove() here does not care about the type of movement, nor does
  * anyone else besides the AI
