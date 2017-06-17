@@ -36,13 +36,13 @@ public class PanneauDC extends JPanel{
 	    }
 		 
 	        int widthOffset = 0;
-	        int heightOffset = 154;
+	        int heightOffset = 152;
 	        int limX = 0;
 
 	        for (int i = 1; i < boardView.getHeight(); i++) {
 	            for (int j = 0; j < boardView.getWidth(); j++) {
 	            	
-	            	limX = 103 + j*15;
+	            	limX = 102 + j*15;
 
 	                if (boardView.getCase(new Coords(i, j)) == Config.Color.BLACK) {
 	                    try {
@@ -111,14 +111,14 @@ public class PanneauDC extends JPanel{
     public void click(MouseEvent e) {
     	
     	int widthOffset = 0;
-    	int heightOffset = 188;
+    	int heightOffset = 185;
         int limX;
     	System.out.println("Click: x= "+e.getX()+" y = "+e.getY());
     	//Clic on balls
         for (int i = 1; i < boardView.getHeight(); i++) {
             for (int j = 0; j < boardView.getWidth(); j++) {
-                limX = 106 + (j * 15) - widthOffset;
-                if ((e.getX() > limX) && (e.getX() < limX + 17) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 20) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
+                limX = 105 + (j * 15) - widthOffset;
+                if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 20) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
                     if (boardView.selectMarble(new Coords(i,j))) {
                         tabSelec[i][j] = 1;
                         System.out.println("click sur la bille "+i + ";"+j);
