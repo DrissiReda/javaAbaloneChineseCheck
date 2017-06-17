@@ -17,7 +17,9 @@ public class TestDC {
         p.initBoard();
         p.affichePlateau();
         System.out.println(p.getCase(new Coords(14,16)));
-        System.out.println(p.AvailableMoves(Color.BLACK));
+        for(Color k : Color.values())
+            if(k!=Color.EMPTY && k!=Color.ILLEGAL)
+                System.out.println(p.AvailableMoves(k));
         //Coords[] tP={new Coords(14,14)};
         for(Coords k : p.generateTarget(new Coords(14,10)))
             System.out.println("Th "+k);
