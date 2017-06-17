@@ -29,8 +29,7 @@ public class Main {
     			}
     		});
             int i=100;
-
-
+            
 				//AlphaBeta a = new AlphaBeta(board);
 
 				//String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",player, player);

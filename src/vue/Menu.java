@@ -99,11 +99,11 @@ public class Menu extends JPanel {
 		boutonNouvellePartie.setBounds(373, 222, 235, 75);
 		add(boutonNouvellePartie);
 		
-		JButton boutonPartEnreg = new JButton("PARTIE ENREGISTR\u00C9E");
+		JButton boutonPartEnreg = new JButton("PARTIE ENREGISTR?E");
 		boutonPartEnreg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Lancement d'une partie enregistrée.
+				//Lancement d'une partie enregistr?e.
 				
 				
 				

@@ -21,7 +21,7 @@ public abstract class Board {
 	public abstract String AvailableMoves(Color player);
 	public abstract boolean inTab(Coords marble);
 	public abstract int ally_next(Coords marble,Direction k,Color player);
-	public abstract boolean executeMove(Coords[] tabPieces,Color player);
+	public abstract Boolean executeMove(Coords[] tabPieces,Color player);
 	public abstract boolean undo(Coords[] tabPieces,Color player);
 	public abstract Coords[] stringToMove(String str);
 	public abstract String MoveToString(Coords[] tabPieces);
@@ -67,4 +67,32 @@ public abstract class Board {
 			default : return Direction.LEFT;
 		}
 	}
+	
+	public Direction find_direction(Coords marble1,Coords marble2)
+	{
+		if(marble2.x > marble1.x)
+		{
+			if(marble2.y < marble1.y)
+				return Direction.DOWNLEFT;
+			else if(marble2.y > marble1.y)
+				return Direction.DOWNRIGHT;
+		}
+		else if(marble2.x  <marble1.x)
+		{
+			if(marble2.y<marble1.y)
+				return Direction.UPLEFT;
+			else if (marble2.y> marble1.y)
+				return Direction.UPRIGHT;
+		}
+		else
+		{
+			if(marble2.x == marble1.x)
+				if(marble2.y > marble1.y)
+					return Direction.RIGHT;
+				else if(marble2.y < marble1.y)
+					return Direction.LEFT;
+		}
+		return Direction.LEFT;
+	}
+	public Color switchPlayerIA(Color player){ return (player==Color.WHITE)?Color.BLACK:Color.WHITE;}
 }

@@ -7,13 +7,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Panneau extends JPanel implements MouseListener {
-
+public class Panneau extends JPanel{
 
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
@@ -34,15 +32,11 @@ public class Panneau extends JPanel implements MouseListener {
 
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
-
     public void paintComponent(Graphics g) {
 
         //Initialisation
         if(initParam==1){
             //souris
-            this.addMouseListener(this);
-
-
             setLayout(null);
             scoreB.setFont(new Font("Synchro LET", Font.BOLD, 20));
             scoreW.setFont(new Font("Synchro LET", Font.BOLD, 20));
@@ -248,72 +242,77 @@ public class Panneau extends JPanel implements MouseListener {
         return confirmDirection;
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
+
+    public void click(MouseEvent e) {
         // TODO Auto-generated method stub
         System.out.println("Click: x= "+e.getX()+" y = "+e.getY());
         //System.out.println("TABpieces avant");
         //boardView.printTabPieces();
 
         int widthOffset = 0;
-        int heightOffset = 153;
+        int heightOffset = 183;
         int limX;
         int flagClic=0;
 
         //clic on directions
         if(confirmValidation==1) {
+        	//
             if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
                 flagClic = 1;
                 if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
                     this.direction = Config.Direction.UPRIGHT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.UPLEFT)){
                     this.direction = Config.Direction.UPLEFT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.RIGHT)){
                     this.direction = Config.Direction.RIGHT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.LEFT)){
                     this.direction = Config.Direction.LEFT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 793) && (e.getX() < 793 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.DOWNRIGHT)){
                     this.direction = Config.Direction.DOWNRIGHT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.DOWNLEFT)){
                     this.direction = Config.Direction.DOWNLEFT;
                     moveIntoTabPieces();
+                    confirmDirection = 1;
                 }
             }
         }
 
-
-
         //Clic on balls
         for (int i = 1; i < 11; i++) {
             for (int j = 0; j < 19; j++) {
-                limX = 103 + (j * 20) - widthOffset;
+                limX = 106 + (j * 20) - widthOffset;
                 if ((e.getX() > limX) && (e.getX() < limX + 33) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
                     //System.out.println("ENTER if1");
                     if (boardView.selectMarble(new Coords(i,j))) {
                         //System.out.println("ENTER if2");
                         tabSelec[i][j] = 1;
                         this.confirmValidation = 1;
-                        System.out.println("ETAT CHANG2");
+                        System.out.println("ETAT CHANGE");
                         flagClic=1;
                         tabDirections=boardView.generateDir();
                     }
@@ -337,30 +336,6 @@ public class Panneau extends JPanel implements MouseListener {
         repaint();
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stu
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
     void reInit(){
         boardView.initTabPieces();
         this.confirmValidation=0;
@@ -378,11 +353,11 @@ public class Panneau extends JPanel implements MouseListener {
         boardView.tabPieces[3].x= this.direction.ordinal();
         boardView.tabPieces[3].y= 88;
     }
-    
+
     Coords[] getTabPieces() {
         return boardView.getTabPieces();
     }
-    
+
     public boolean verifMoveTabDirections(Config.Direction dir){
         for (Config.Direction k: tabDirections) {
             if(dir==k){

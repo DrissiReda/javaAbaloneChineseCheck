@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class BoardAbalone extends Board{
 	
 	public Coords[] tabPieces = new Coords[4];
-	public Color player = Color.BLACK;
+	public Color player = Color.WHITE;
 
 											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
 	private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
@@ -32,6 +32,10 @@ public class BoardAbalone extends Board{
     public BoardAbalone(int h, int w, int m) {
     	super(h, w, m);
 		initTabPieces();
+    }
+    
+    public int getMoveSize(){
+    	return moveSize;
     }
 	public Color getCase(Coords pos){
 		return GameBoard[pos.x][pos.y].getColor();
@@ -289,33 +293,6 @@ public class BoardAbalone extends Board{
 		else
 			return false;
 	}
-    
-	Direction find_direction(Coords marble1,Coords marble2)
-	{
-		if(marble2.x > marble1.x)
-		{
-			if(marble2.y < marble1.y)
-				return Direction.DOWNLEFT;
-			else if(marble2.y > marble1.y)
-				return Direction.DOWNRIGHT;
-		}
-		else if(marble2.x  <marble1.x)
-		{
-			if(marble2.y<marble1.y)
-				return Direction.UPLEFT;
-			else if (marble2.y> marble1.y)
-				return Direction.UPRIGHT;
-		}
-		else
-		{
-			if(marble2.x == marble1.x)
-				if(marble2.y > marble1.y)
-					return Direction.RIGHT;
-				else if(marble2.y < marble1.y)
-					return Direction.LEFT;
-		}
-		return Direction.LEFT;
-	}
 	
     /**
      * Verifies if the given position is in the board
@@ -398,7 +375,7 @@ public class BoardAbalone extends Board{
     	}
     }
     
-    public boolean executeMove(Coords tabPieces[], Color player){
+    public Boolean executeMove(Coords tabPieces[], Color player){
     	int type = tabPieces[3].x/10;
     	
     	switch(type){
@@ -711,12 +688,14 @@ public String BroadsideMoves(Coords[] tabPieces){
 		return null;
 	}
 
-	public Coords[] generateMove(Coords[] tabPieces,Color player){
+	public Coords[] generateMove(Coords[] tP,Color player){
 	    String move=MoveOrdering(player);
+	    ArrayList<Coords[]> ls=generateOrder(tP);
 	    for(int i=0;i<move.length();i+=moveSize){
-	        if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
-                && MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
-	            return stringToMove(move.substring(i,i+moveSize));
+	    	for(Coords [] tabPieces : ls)
+	        	if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
+                	&& MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
+	            		return stringToMove(move.substring(i,i+moveSize));
         }
 		System.out.println("RETOUR NULL");
         return null;
@@ -732,11 +711,24 @@ public String BroadsideMoves(Coords[] tabPieces){
 		ArrayList<Coords[]> ret= new ArrayList<>();
 		Coords[] tabPieces = tP;
 		System.out.println(MoveToString(tabPieces));
-		ret.add(tabPieces);
 		if(tabPieces[1].x==22){
+			ret.add(tP);
 			return ret;
 		}
-		swap(tabPieces[1],tabPieces[0]);
+		int i,j,k=0;
+		for(i=0;i<=2;i++){
+			for(j=0;j<=2;j++){
+				if(j==i || j==k)
+					continue;
+				for(k=0;k<=2;k++){
+					if(k==i || k==j)
+						continue;
+					Coords[] tmp={tP[i],tP[j],tP[k],tP[3]};
+					ret.add(tmp);
+				}
+			}
+		}
+		/*swap(tabPieces[1],tabPieces[0]);
 		ret.add(tabPieces);
 		if(tabPieces[2].x==22){
 			System.out.println(MoveToString(tabPieces));
@@ -750,21 +742,18 @@ public String BroadsideMoves(Coords[] tabPieces){
 		ret.add(tabPieces);
 		swap(tabPieces[1],tabPieces[2]);
 		ret.add(tabPieces);
-		swap(tabPieces[0],tabPieces[2]);
-		System.out.println("SS + "+MoveToString(tabPieces));
-		System.out.println("PP + "+MoveToString(tP));
+		swap(tabPieces[0],tabPieces[2]);*/
 		return ret;
 	}
 	public ArrayList<Direction> generateDir(){
 		String move=MoveOrdering(player);
 		ArrayList<Direction> ret=new ArrayList<>();
-		ArrayList<Coords[]> ls=new ArrayList<>();
-		ls.add(tabPieces);
-		//generateOrder(tabPieces);
-		for(int i=0;i<move.length();i+=moveSize){
-			for(Coords[] tP : ls)
-			if(MoveToString(tP).substring(0,12).equals(move.substring(i,i+12)))
-				ret.add(toDir(Integer.parseInt(move.substring(i+13,i+14))));
+		ArrayList<Coords[]> ls=generateOrder(tabPieces);
+		for(int i=0;i<move.length();i+=moveSize) {
+			for (Coords[] tP : ls) {
+				if (MoveToString(tP).substring(0, 12).equals(move.substring(i, i + 12)))
+					ret.add(toDir(Integer.parseInt(move.substring(i + 13, i + 14))));
+			}
 		}
 		return ret;
 	}

@@ -3,14 +3,21 @@ package modele;
 public class Config {
 	
 	public enum Color {
-		ILLEGAL,
-		EMPTY,
-		BLACK,
-		WHITE,
-		RED,
-		GREEN,
-		BLUE,
-		YELLOW
+		ILLEGAL(0),
+		EMPTY(1),
+		BLACK(2),
+		WHITE(3),
+		RED(4),
+		GREEN(5),
+		BLUE(6),
+		YELLOW(7);
+		private int val;
+		Color(int v){val=v;}
+		public Color getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
+					: BLACK;
+		}
 	}
 	
 	public enum Direction {
@@ -25,6 +32,11 @@ public class Config {
 		Direction(int val){
 			this.val = val;
 		}
+		public Direction getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
+					: LEFT;
+		}
 	}
 	
 	// Diff?rents coins du plateau de dames chinoises
@@ -34,6 +46,11 @@ public class Config {
 		SOUTHEAST,
 		SOUTH,
 		SOUTHWEST,
-		NORTHWEST
+		NORTHWEST;
+		public Area getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
+					: NORTH;
+		}
 	}
 }

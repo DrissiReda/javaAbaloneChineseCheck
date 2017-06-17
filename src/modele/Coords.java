@@ -8,9 +8,16 @@ public class Coords {
 		this.x = x;
 		this.y = y;
 	}
+	public void setCoords(Coords a){
+		x=a.x;
+		y=a.y;
+	}
 	public void setCoords(int a, int b)
 	{
 		x = a;
 		y = b;
+	}
+	public String toString(){
+		return " "+x+" "+y+" ";
 	}
 }
