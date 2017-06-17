@@ -125,11 +125,11 @@ public class ColorsChoice extends JPanel{
 		pan = new PanneauDC();
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
-		System.out.println(listColors);
+
 		boardDC = new BoardDC();
 		for (int i = 0; i < nbPlayers*nbColors; i++)
 			boardDC.addPlayer(listColors.get(i));
-			
+		
 		boardDC.initBoard();
 		pan.copyTab(boardDC);
 		
@@ -141,7 +141,6 @@ public class ColorsChoice extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 
 				playDC(true, e);
-				
 
 			}
 		});
@@ -149,6 +148,8 @@ public class ColorsChoice extends JPanel{
 	
 	public void playDC(boolean IA, MouseEvent e){
 		pan.click(e);
+		
+		
 	}
 
 }
