@@ -315,50 +315,51 @@ public class BoardDC extends Board{
 		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(88,88)};
 		String Av_Moves="";
 		for(int i=0;i<getHeight();i++)
-			for(int j=0;j<getWidth();j++)
-				for(Direction k : Direction.values()){
-					tabPieces[0].setCoords(i,j);
-					if(getCase(tabPieces[0])==Color.ILLEGAL || getCase(tabPieces[0])==Color.EMPTY)
-						break;
-					if(free_next(new Coords(i,j),k)) {
+			for(int j=0;j<getWidth();j++) {
+				if (getCase(new Coords(i, j)) == Color.ILLEGAL || getCase(new Coords(i, j)) == Color.EMPTY)
+					continue;
+				for (Direction k : Direction.values()) {
+					tabPieces[0].setCoords(i, j);
+
+					if (free_next(new Coords(i, j), k)) {
 						//normal
-						tabPieces[1].setCoords(next_coord(new Coords(i,j),k));
+						tabPieces[1].setCoords(next_coord(new Coords(i, j), k));
 						tabPieces[2].setCoords(10 + k.ordinal(), 88);
-                        if(!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1])))
-                            Av_Moves=Av_Moves+MoveToString(tabPieces);
-					}
-					else {
-						if (inTab(next_coord(next_coord(new Coords(i,j),k),k)) &&
+						System.out.println(" i "+i+" j "+j+tabPieces[0]+tabPieces[1]);
+						if (!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1])))
+							Av_Moves = Av_Moves + MoveToString(tabPieces);
+					} else {
+						if (inTab(next_coord(next_coord(new Coords(i, j), k), k)) &&
 								free_next(next_coord(new Coords(i, j), k), k)) {
 							//jump
-							tabPieces[1].setCoords(next_coord(next_coord(new Coords(i,j),k),k));
+							tabPieces[1].setCoords(next_coord(next_coord(new Coords(i, j), k), k));
 							tabPieces[2].setCoords(20 + k.ordinal(), 88);
-                            if(!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1]))) {
-                                Av_Moves = Av_Moves + MoveToString(tabPieces);
-                                int flag = 1;
-                                while (flag != 0) {
-                                    for (Direction l : Direction.values()) {
-                                        if (l == invert_dir(k))
-                                            continue;
-                                        if (inTab(next_coord(next_coord(tabPieces[1], k), k))
-												&&free_next(next_coord(tabPieces[1], k), k)) {
-                                            flag = 2;
-                                            //sequence jump
-                                            tabPieces[1].setCoords(next_coord(next_coord(tabPieces[1], k), k));
-                                            tabPieces[2].setCoords(30 + l.ordinal(), 88);
-                                            Av_Moves = Av_Moves + MoveToString(tabPieces);
-                                        }
-                                        else
-                                        	flag=0;
+							if (!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1]))) {
+								Av_Moves = Av_Moves + MoveToString(tabPieces);
+								int flag = 1;
+								while (flag != 0) {
+									for (Direction l : Direction.values()) {
+										if (l == invert_dir(k))
+											continue;
+										if (inTab(next_coord(next_coord(tabPieces[1], k), k))
+												&& free_next(next_coord(tabPieces[1], k), k)) {
+											flag = 2;
+											//sequence jump
+											tabPieces[1].setCoords(next_coord(next_coord(tabPieces[1], k), k));
+											tabPieces[2].setCoords(30 + l.ordinal(), 88);
+											Av_Moves = Av_Moves + MoveToString(tabPieces);
+										} else
+											flag = 0;
 
-                                    }
-                                    if (flag != 2)
-                                        break;
-                                }
-                            }
+									}
+									if (flag != 2)
+										break;
+								}
+							}
 						}
 					}
 				}
+			}
 		return Av_Moves;
 	}
 
@@ -383,7 +384,7 @@ public class BoardDC extends Board{
     public boolean inOppositeArea(Coords pos)
     {
     	Area zone = getEndArea(pos); // on recupere la position d'arrivee du pion
-    	System.out.println(zone);
+    	//System.out.println(zone);
     	return inArea(pos, zone);
     }
     
