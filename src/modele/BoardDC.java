@@ -296,31 +296,34 @@ public class BoardDC extends Board{
 						//normal
 						tabPieces[1].setCoords(next_coord(new Coords(i,j),k));
 						tabPieces[2].setCoords(10 + k.ordinal(), 88);
-						Av_Moves=Av_Moves+MoveToString(tabPieces);
+                        if(!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1])))
+                            Av_Moves=Av_Moves+MoveToString(tabPieces);
 					}
 					else {
 						if (free_next(next_coord(new Coords(i, j), k), k)) {
 							//jump
 							tabPieces[1].setCoords(next_coord(next_coord(new Coords(i,j),k),k));
 							tabPieces[2].setCoords(20 + k.ordinal(), 88);
-							Av_Moves = Av_Moves + MoveToString(tabPieces);
-							int flag=1;
-							while(flag!=0){
-								for(Direction l:Direction.values()){
-									if(l== invert_dir(k))
-										continue;
-									if(free_next(next_coord(tabPieces[1], k), k)){
-										flag=2;
-										//sequence jump
-										tabPieces[1].setCoords(next_coord(next_coord(tabPieces[1],k),k));
-										tabPieces[2].setCoords(30 + l.ordinal(), 88);
-										Av_Moves = Av_Moves + MoveToString(tabPieces);
-									}
+                            if(!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1]))) {
+                                Av_Moves = Av_Moves + MoveToString(tabPieces);
+                                int flag = 1;
+                                while (flag != 0) {
+                                    for (Direction l : Direction.values()) {
+                                        if (l == invert_dir(k))
+                                            continue;
+                                        if (free_next(next_coord(tabPieces[1], k), k)) {
+                                            flag = 2;
+                                            //sequence jump
+                                            tabPieces[1].setCoords(next_coord(next_coord(tabPieces[1], k), k));
+                                            tabPieces[2].setCoords(30 + l.ordinal(), 88);
+                                            Av_Moves = Av_Moves + MoveToString(tabPieces);
+                                        }
 
-								}
-								if(flag!=2)
-									break;
-							}
+                                    }
+                                    if (flag != 2)
+                                        break;
+                                }
+                            }
 						}
 					}
 				}
