@@ -127,7 +127,7 @@ public class ColorsChoice extends JPanel{
 		
 		boardDC.initBoard();
 		pan.copyTab(boardDC);
-		
+		System.out.println("ok");
 		pan.affichePlateau();
 		parent.addMouseListener(new MouseAdapter() {
 			@Override

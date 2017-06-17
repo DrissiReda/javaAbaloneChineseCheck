@@ -19,7 +19,8 @@ import modele.Config.Color;
 public class PanneauDC extends JPanel{
 	
 	private BoardDC boardView = new BoardDC();
-	private int tabSelec[][] = new int[19][27];
+	private ArrayList<Coords> listTargets = new ArrayList<Coords>();
+	private int tabTargets[][] = new int[19][27];
 	private Coords marble = new Coords(0,0);
 	
 	private ArrayList<Color> players = new ArrayList<>();
@@ -92,7 +93,17 @@ public class PanneauDC extends JPanel{
 	                    } catch (IOException e) {
 	                        e.printStackTrace();
 	                    }
-	                }
+	                }/*
+		            else{
+		            	if(listTargets.contains(new Coords(i, j))){
+		            		try {
+		                        Image img = ImageIO.read(new File("Images/dames/BallDameGreen.png"));
+		                        g.drawImage(img, limX, heightOffset, this);
+		                    } catch (IOException e) {
+		                        e.printStackTrace();
+		                    }
+		            	}
+		            }*/
 	                if(marble.x == i && marble.y == j){
 	                	try {
 	                        Image imgSelec = ImageIO.read(new File("Images/dames/BallDameSelec.png"));
@@ -130,9 +141,10 @@ public class PanneauDC extends JPanel{
                 limX = 105 + (j * 15) - widthOffset;
                 if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 20) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
                     if (boardView.selectMarble(new Coords(i,j))) {
-                        tabSelec[i][j] = 1;
                         marble = new Coords(i, j);
                         System.out.println("click sur la bille "+i + ";"+j);
+                        System.out.println(marble.x + ";"+marble.y);
+                        listTargets = boardView.generateTarget(marble);
                     }
                 }
             }
