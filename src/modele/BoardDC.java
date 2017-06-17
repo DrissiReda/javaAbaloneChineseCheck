@@ -316,7 +316,7 @@ public class BoardDC extends Board{
 		String Av_Moves="";
 		for(int i=0;i<getHeight();i++)
 			for(int j=0;j<getWidth();j++) {
-				if (getCase(new Coords(i, j)) == Color.ILLEGAL || getCase(new Coords(i, j)) == Color.EMPTY)
+				if (getCase(new Coords(i, j)) != player)
 					continue;
 				for (Direction k : Direction.values()) {
 					tabPieces[0].setCoords(i, j);
@@ -325,7 +325,7 @@ public class BoardDC extends Board{
 						//normal
 						tabPieces[1].setCoords(next_coord(new Coords(i, j), k));
 						tabPieces[2].setCoords(10 + k.ordinal(), 88);
-						System.out.println(" i "+i+" j "+j+tabPieces[0]+tabPieces[1]);
+						//System.out.println(" i "+i+" j "+j+tabPieces[0]+tabPieces[1]);
 						if (!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1])))
 							Av_Moves = Av_Moves + MoveToString(tabPieces);
 					} else {
