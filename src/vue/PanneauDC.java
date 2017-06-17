@@ -20,7 +20,9 @@ public class PanneauDC extends JPanel{
 	
 	private BoardDC boardView = new BoardDC();
 	private int tabSelec[][] = new int[19][27];
-	private ArrayList<Color> players=new ArrayList<>();
+	private Coords marble = new Coords(0,0);
+	
+	private ArrayList<Color> players = new ArrayList<>();
 	
 	private Config.Direction direction = null;
 	
@@ -91,6 +93,14 @@ public class PanneauDC extends JPanel{
 	                        e.printStackTrace();
 	                    }
 	                }
+	                if(marble.x == i && marble.y == j){
+	                	try {
+	                        Image imgSelec = ImageIO.read(new File("Images/dames/BallDameSelec.png"));
+	                        g.drawImage(imgSelec, limX, heightOffset, this);
+	                    } catch (IOException e) {
+	                        e.printStackTrace();
+	                    }
+	                }
 	                /*if (tabSelec[i][j] == 1) { //Show ring selection
 	                    try {
 	                        Image imgSelec = ImageIO.read(new File("Images/SelectionBall.png"));
@@ -104,7 +114,7 @@ public class PanneauDC extends JPanel{
 	        }
 	}
 	
-    void copyTab(BoardDC b) {
+    public void copyTab(BoardDC b) {
         this.boardView = b;
     }
     
@@ -121,12 +131,15 @@ public class PanneauDC extends JPanel{
                 if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 20) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
                     if (boardView.selectMarble(new Coords(i,j))) {
                         tabSelec[i][j] = 1;
+                        marble = new Coords(i, j);
                         System.out.println("click sur la bille "+i + ";"+j);
                     }
                 }
             }
             heightOffset = heightOffset + 22;
         }
+        
+        repaint();
     }
     
     public void affichePlateau()
