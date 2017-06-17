@@ -25,6 +25,7 @@ public class PanneauDC extends JPanel{
 	
 	private Coords[] tabPieces = new Coords[3];
 	private Coords marble = new Coords(0,0);
+	private Coords target = new Coords(0,0);
 	
 	private ArrayList<Color> players = new ArrayList<>();
 	
@@ -64,23 +65,12 @@ public class PanneauDC extends JPanel{
 	            }
 	            else{ // Affichage des directions possibles
 	    	        for(Coords tar : listTargets){
-	    	        	if(tar.x == i && tar.y == j){
-	    	        		try {
-		                        Image img = ImageIO.read(new File("Images/dames/target.png"));
-		                        g.drawImage(img, limX+2, heightOffset+1, this);
-		                    } catch (IOException e) {
-		                        e.printStackTrace();
-		                    }
-	    	        	}
+	    	        	if(tar.x == i && tar.y == j)
+	    	        		addImage(g, "Images/dames/target.png", limX+2, heightOffset+1, this);
 	    	        }
             	}
                 if(marble.x == i && marble.y == j){
-                	try {
-                        Image imgSelec = ImageIO.read(new File("Images/dames/BallDameSelec.png"));
-                        g.drawImage(imgSelec, limX, heightOffset, this);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                	addImage(g, "Images/dames/BallDameSelec.png", limX, heightOffset, this);
                 }
             }
             heightOffset += 22;
@@ -89,12 +79,6 @@ public class PanneauDC extends JPanel{
 	
     public void copyTab(BoardDC b) {
         this.boardView = b;
-    }
-    
-    public void deselect(){
-    	boardView.cancelSelection();
-    	listTargets.clear();
-    	marble = new Coords(0,0);
     }
     
     Coords[] getTabPieces() {
@@ -116,24 +100,77 @@ public class PanneauDC extends JPanel{
     	int widthOffset = 0;
     	int heightOffset = 185;
         int limX;
-    	System.out.println("Click: x= "+e.getX()+" y = "+e.getY());
+    	System.out.println("Click: x = "+e.getX()+" y = "+e.getY());
     	//Clic on balls
         for (int i = 1; i < boardView.getHeight(); i++) {
             for (int j = 0; j < boardView.getWidth(); j++) {
                 limX = 105 + (j * 15) - widthOffset;
                 if ((e.getX() > limX) && (e.getX() < limX + 20) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 20) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
-                    if (boardView.selectMarble(new Coords(i,j), "sss")) {
-                    	marble = new Coords(i, j);
-                        listTargets = boardView.generateTarget(marble);
-                    }else{
-                    	deselect();
-                    }
+                    if(marble.x == i && marble.y == j)
+                    	reset();
+                    else{
+                    	for(Coords tar : listTargets){
+    	    	        	if(tar.x == i && tar.y == j)
+    	    	        		clickMove(new Coords(i, j));
+    	    	        }
+	                	if (boardView.selectMarble(new Coords(i,j), "sss")) {
+	                    	clickSelec(new Coords(i, j));
+	                    }
+	                	/*else
+	                		reset();*/
+                    } 
                 }
             }
             heightOffset = heightOffset + 22;
         }
         
         repaint();
+    }
+    
+    public boolean moveOk(){
+    	if(direction != null)
+    		return true;
+    	else
+    		return false;
+    }
+
+    public void clickMove(Coords destination)
+    {
+    	target = destination;
+    	direction = boardView.find_direction(marble, destination); // On détecte la direction
+    	System.out.println("Target : "+target);
+    	System.out.println("Direction : "+direction);
+    }
+    
+    public Coords getTarget(){
+    	return this.target;
+    }
+    
+    public Coords getMarble(){
+    	return this.marble;
+    }
+    
+    public Config.Direction getDirection(){
+    	return this.direction;
+    }
+    
+    public void refreshBoard(){
+        repaint();
+    }
+
+    public void clickSelec(Coords marble)
+    {
+    	this.marble = marble;
+    	listTargets = boardView.generateTarget(this.marble);
+    	System.out.println("Click de sélection");
+    }
+    
+    public void reset(){
+    	this.boardView.cancelSelection();
+    	this.listTargets.clear();
+    	this.marble = new Coords(0,0);
+    	this.target = null;
+    	this.direction = null;
     }
     
     public void affichePlateau()

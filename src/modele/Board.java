@@ -67,5 +67,32 @@ public abstract class Board {
 			default : return Direction.LEFT;
 		}
 	}
+	
+	public Direction find_direction(Coords marble1,Coords marble2)
+	{
+		if(marble2.x > marble1.x)
+		{
+			if(marble2.y < marble1.y)
+				return Direction.DOWNLEFT;
+			else if(marble2.y > marble1.y)
+				return Direction.DOWNRIGHT;
+		}
+		else if(marble2.x  <marble1.x)
+		{
+			if(marble2.y<marble1.y)
+				return Direction.UPLEFT;
+			else if (marble2.y> marble1.y)
+				return Direction.UPRIGHT;
+		}
+		else
+		{
+			if(marble2.x == marble1.x)
+				if(marble2.y > marble1.y)
+					return Direction.RIGHT;
+				else if(marble2.y < marble1.y)
+					return Direction.LEFT;
+		}
+		return Direction.LEFT;
+	}
 	public Color switchPlayerIA(Color player){ return (player==Color.WHITE)?Color.BLACK:Color.WHITE;}
 }

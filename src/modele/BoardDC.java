@@ -71,6 +71,9 @@ public class BoardDC extends Board{
 	public Coords[] getTabPieces() {
 		return tabPieces;
 	}
+	public void setTabPieces(Coords[] tabPieces) {
+		this.tabPieces = tabPieces;
+	}
 	public Color getCase(Coords pos){
 		return GameBoard[pos.x][pos.y].getColor();
 	}

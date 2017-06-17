@@ -293,33 +293,6 @@ public class BoardAbalone extends Board{
 		else
 			return false;
 	}
-    
-	Direction find_direction(Coords marble1,Coords marble2)
-	{
-		if(marble2.x > marble1.x)
-		{
-			if(marble2.y < marble1.y)
-				return Direction.DOWNLEFT;
-			else if(marble2.y > marble1.y)
-				return Direction.DOWNRIGHT;
-		}
-		else if(marble2.x  <marble1.x)
-		{
-			if(marble2.y<marble1.y)
-				return Direction.UPLEFT;
-			else if (marble2.y> marble1.y)
-				return Direction.UPRIGHT;
-		}
-		else
-		{
-			if(marble2.x == marble1.x)
-				if(marble2.y > marble1.y)
-					return Direction.RIGHT;
-				else if(marble2.y < marble1.y)
-					return Direction.LEFT;
-		}
-		return Direction.LEFT;
-	}
 	
     /**
      * Verifies if the given position is in the board

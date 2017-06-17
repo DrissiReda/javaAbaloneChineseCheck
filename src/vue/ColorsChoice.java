@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 
 import modele.BoardDC;
 import modele.Config;
+import modele.Config.Direction;
+import modele.Coords;
 import modele.DatabaseConnect;
 
 public class ColorsChoice extends JPanel{
@@ -149,6 +151,23 @@ public class ColorsChoice extends JPanel{
 	
 	public void playDC(boolean IA, MouseEvent e){
 		pan.click(e);
+		
+		if(pan.moveOk()){
+			System.out.println("move");
+			Coords marble = pan.getMarble();
+			Coords target = pan.getTarget();
+			Direction dir = pan.getDirection();
+
+			Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(88,88)};
+			tabPieces[0] = marble;
+			tabPieces[1] = target;
+			tabPieces[2].x = 10+dir.ordinal();
+			
+			boardDC.executeMove(tabPieces, boardDC.getCase(marble));
+			pan.copyTab(boardDC);
+			pan.reset();
+			pan.refreshBoard();
+		}
 	}
 
 }
