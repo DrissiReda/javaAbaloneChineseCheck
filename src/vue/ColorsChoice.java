@@ -128,7 +128,7 @@ public class ColorsChoice extends JPanel{
 		System.out.println(listColors);
 		boardDC = new BoardDC();
 		for (int i = 0; i < nbPlayers*nbColors; i++)
-			boardDC.addPlayer(listColors.get(i));
+			boardDC.addPlayer();
 			
 		boardDC.initBoard();
 		pan.copyTab(boardDC);

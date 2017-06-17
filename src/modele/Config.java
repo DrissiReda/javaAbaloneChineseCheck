@@ -3,14 +3,16 @@ package modele;
 public class Config {
 	
 	public enum Color {
-		ILLEGAL,
-		EMPTY,
-		BLACK,
-		WHITE,
-		RED,
-		GREEN,
-		BLUE,
-		YELLOW;
+		ILLEGAL(0),
+		EMPTY(1),
+		BLACK(2),
+		WHITE(3),
+		RED(4),
+		GREEN(5),
+		BLUE(6),
+		YELLOW(7);
+		private int val;
+		Color(int v){val=v;}
 		public Color getNext(){
 			return this.ordinal()<values().length - 1
 					? values()[this.ordinal()+1]

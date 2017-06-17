@@ -5,6 +5,7 @@ import modele.Config.Color;
 import modele.Config.Direction;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static modele.Config.Direction.RIGHT;
 
@@ -36,6 +37,7 @@ public class BoardDC extends Board{
 	};
 	private Coords[] tabPieces=new Coords[3];
 	private ArrayList<Color> players=new ArrayList<>();
+	private ArrayList<String> pseudos=new ArrayList<>();
 	private Color currentplayer;
 	private boolean jumping=false;
 	public BoardDC() {
@@ -73,15 +75,27 @@ public class BoardDC extends Board{
 		GameBoard[pos.x][pos.y].setColor(c);
 	}
 	public boolean addPlayer(){
+		return addPlayer("sss");
+	}
+	public boolean addPlayer(String name){
 		if(players.size() >= 6)
 			return false;
+		pseudos.add(name);
 		if(players.size()==0)
 			players.add(Color.BLACK);
 		else
-			players.add(players.get(players.size()-2).getNext());
+			players.add(players.get(players.size()-1).getNext());
 		return true;
 	}
-	
+	public Boolean Owns(Color c,String name){
+		if(!pseudos.contains(name))
+			return null; // joueur inexistant
+		int i=0;
+		while(i<6)
+			if(pseudos.get(i).equals(name) && i==c.ordinal()-2)
+				return true;
+		return false;
+	}
 	public void colorBoard()
 	{
 		ArrayList<Area> zones = new ArrayList<Area>();
@@ -89,12 +103,12 @@ public class BoardDC extends Board{
 		int i = 0;
 		for (Area area: zones) {
 		    colorBoard(area, players.get(i));
-		    i++;
+		    ++i;
 		}
 	}
 	
 	public ArrayList<Area> getAreasToColor(int nbColors){
-		ArrayList<Area> zones = new ArrayList<Area>();
+		ArrayList<Area> zones = new ArrayList<>();
 		switch (nbColors){
 			case 2 :
 				zones.add(Area.NORTH);
@@ -229,8 +243,11 @@ public class BoardDC extends Board{
 			System.out.println("Il faut choisir au moins 2 couleurs pour initialiser le plateau");
 	}
 	
-	public boolean selectMarble(Coords pos)
+	public boolean selectMarble(Coords pos,String name)
 	{
+		// pas sa couleur
+		if(!Owns(getCase(pos),name))
+			return false;
 		// faire la condition, si le pion appartient bien au joueur alors
 		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL && GameBoard[pos.x][pos.y].getColor() != Color.EMPTY){
 			tabPieces[0] = pos;
@@ -246,6 +263,12 @@ public class BoardDC extends Board{
 		else
 			System.out.println("Pas de selection");
 	}
+
+	@Override
+	public boolean selectMarble(Coords pos) {
+		return false;
+	}
+
 	@Override
 	public Boolean executeMove(Coords[] tabPieces, Color player)
 	{
@@ -295,6 +318,8 @@ public class BoardDC extends Board{
 			for(int j=0;j<getWidth();j++)
 				for(Direction k : Direction.values()){
 					tabPieces[0].setCoords(i,j);
+					if(getCase(tabPieces[0])==Color.ILLEGAL || getCase(tabPieces[0])==Color.EMPTY)
+						break;
 					if(free_next(new Coords(i,j),k)) {
 						//normal
 						tabPieces[1].setCoords(next_coord(new Coords(i,j),k));
@@ -303,7 +328,8 @@ public class BoardDC extends Board{
                             Av_Moves=Av_Moves+MoveToString(tabPieces);
 					}
 					else {
-						if (free_next(next_coord(new Coords(i, j), k), k)) {
+						if (inTab(next_coord(next_coord(new Coords(i,j),k),k)) &&
+								free_next(next_coord(new Coords(i, j), k), k)) {
 							//jump
 							tabPieces[1].setCoords(next_coord(next_coord(new Coords(i,j),k),k));
 							tabPieces[2].setCoords(20 + k.ordinal(), 88);
@@ -314,13 +340,16 @@ public class BoardDC extends Board{
                                     for (Direction l : Direction.values()) {
                                         if (l == invert_dir(k))
                                             continue;
-                                        if (free_next(next_coord(tabPieces[1], k), k)) {
+                                        if (inTab(next_coord(next_coord(tabPieces[1], k), k))
+												&&free_next(next_coord(tabPieces[1], k), k)) {
                                             flag = 2;
                                             //sequence jump
                                             tabPieces[1].setCoords(next_coord(next_coord(tabPieces[1], k), k));
                                             tabPieces[2].setCoords(30 + l.ordinal(), 88);
                                             Av_Moves = Av_Moves + MoveToString(tabPieces);
                                         }
+                                        else
+                                        	flag=0;
 
                                     }
                                     if (flag != 2)
@@ -414,7 +443,7 @@ public class BoardDC extends Board{
      * @return
      */
     public Area getStartArea(Coords pos){
-    	ArrayList<Area> zones = new ArrayList<Area>();
+    	ArrayList<Area> zones;
     	int index = players.indexOf(getCase(pos));
     	zones = getAreasToColor(players.size());
     	return zones.get(index);
@@ -473,7 +502,7 @@ public class BoardDC extends Board{
 	@Override
 	public String MoveToString(Coords[] tab) {
 		String ret = "";
-		for(int i=0;i<moveSize;i++)
+		for(int i=0;i<moveSize/4;i++)
 		{
 			if(tab[i].x<10)
 				ret=ret+"0";
@@ -502,6 +531,10 @@ public class BoardDC extends Board{
 		else
 			return false;
 	}
+	public ArrayList<Direction> generateDir(Coords tP){
+		Coords[] a={tP,new Coords(22,22),new Coords(88,88)};
+		return generateDir(a);
+	}
 	public ArrayList<Direction> generateDir(Coords[] tP){
 		ArrayList<Direction> ret=new ArrayList<>();
 		// if source = dest it means the user
@@ -518,7 +551,7 @@ public class BoardDC extends Board{
 		return ret;
 	}
 	public ArrayList<Coords> generateTarget(Coords tP){
-	    Coords[] a={tP};
+	    Coords[] a={tP,new Coords(22,22),new Coords(88,88)};
 	    return generateTarget(a);
     }
 	public ArrayList<Coords> generateTarget(Coords[] tP){
