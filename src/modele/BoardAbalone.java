@@ -43,10 +43,6 @@ public class BoardAbalone extends Board{
 	public void setCase(Coords pos, Color c){
 		GameBoard[pos.x][pos.y].setColor(c);
 	}
-    public void printPosition(Coords pos)
-    {
-    	System.out.println(GameBoard[pos.x][pos.y].getColor());
-    }
     
     public void displayBoard()
     {
