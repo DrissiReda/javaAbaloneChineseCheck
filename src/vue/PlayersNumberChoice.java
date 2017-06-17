@@ -297,8 +297,10 @@ public class PlayersNumberChoice extends JPanel {
 			//AFFICHAGE DU PLATEAU
 			pan.refreshBoard();
 			
+			
 			if(IA){
 				IA computeur = new IA(boardAB);
+				pan.refreshBoard();
 				String move = computeur.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player);
 				boardAB.executeMove(boardAB.stringToMove(move.substring(0,boardAB.getMoveSize())),boardAB.player);
 				
