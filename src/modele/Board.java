@@ -67,4 +67,5 @@ public abstract class Board {
 			default : return Direction.LEFT;
 		}
 	}
+	public Color switchPlayerIA(Color player){ return (player==Color.WHITE)?Color.BLACK:Color.WHITE;}
 }

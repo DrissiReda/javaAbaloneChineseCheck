@@ -5,6 +5,7 @@ import modele.Config.Direction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by root on 08/06/17.
@@ -54,13 +55,14 @@ public class IA {
             };
     public IA(Board b){
         this.b=b;
+        Random rand=new Random();
         zobristTableB=new HashMap<>();
         zobristTableW=new HashMap<>();
         score=new HashMap<>();
         for(int i=0;i<b.getHeight();i++)
             for(int j=0;j<b.getWidth();j++){
-                zobristTableW.put(i*b.getWidth()+j,(int)Math.random()*10000000);
-                zobristTableB.put(i*b.getWidth()+j,(int)Math.random()*10000000);
+                zobristTableW.put(i*b.getWidth()+j,rand.nextInt(Integer.MAX_VALUE));
+                zobristTableB.put(i*b.getWidth()+j,rand.nextInt(Integer.MAX_VALUE));
             }
     }
     private int getPlayerVal(Color b){return (b==Color.WHITE)?1:-1;}
@@ -68,10 +70,10 @@ public class IA {
     private int eval_distance(Color player){
         int res=0;
         for(int i=0;i<b.getHeight();i++)
-            for(int j=0;j<b.getWidth();i++)
+            for(int j=0;j<b.getWidth();j++)
                 if(b.getCase(new Coords(i,j))==player)
                     res+=DCdistance[i][j]*50;
-                else if(b.getCase(new Coords(i,j))==b.switchPlayer(player))
+                else if(b.getCase(new Coords(i,j))==b.switchPlayerIA(player))
                     res+=DCdistance[i][j]-17*50;
         return res;
     }
@@ -114,9 +116,9 @@ public class IA {
         long res=0;
         if(b.marble_count(player)>=10)
             return Integer.MAX_VALUE;
-        if(b.marble_count(b.switchPlayer(player))>=10)
+        if(b.marble_count(b.switchPlayerIA(player))>=10)
             return Integer.MIN_VALUE;
-        return eval_distance(player)+(b.marble_count(player)-b.marble_count(b.switchPlayer(player)))*2000;
+        return getPlayerVal(player)*(eval_distance(player)+(b.marble_count(player)-b.marble_count(b.switchPlayerIA(player)))*2000);
     }
 
     public long eval_AB(Color player)
@@ -221,10 +223,10 @@ public class IA {
         {
             //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+b.moveSize));
             b.executeMove(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
-            String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+b.moveSize), b.switchPlayer(player),main);
+            String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+b.moveSize), b.switchPlayerIA(player),main);
             int value = Integer.parseInt(returnString.substring(b.moveSize));
             b.undo(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
-            if (player==b.switchPlayer(main)){
+            if (player==b.switchPlayerIA(main)){
                 if (value<=beta)
                 {
                     beta=value;
@@ -247,7 +249,7 @@ public class IA {
             }
             if (alpha>=beta)
             {
-                if (player==b.switchPlayer(main))
+                if (player==b.switchPlayerIA(main))
                 {
                     current=current+beta;
                     return current;
@@ -259,7 +261,7 @@ public class IA {
                 }
             }
         }
-        if (player==b.switchPlayer(main))
+        if (player==b.switchPlayerIA(main))
         {
             current=current+beta;
             return current;

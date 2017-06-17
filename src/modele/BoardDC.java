@@ -38,7 +38,7 @@ public class BoardDC extends Board{
 	private Coords[] tabPieces=new Coords[3];
 	private ArrayList<Color> players=new ArrayList<>();
 	private ArrayList<String> pseudos=new ArrayList<>();
-	private Color currentplayer;
+	private String currentplayer;
 	private boolean jumping=false;
 	public BoardDC() {
 		super(19, 27,12);
@@ -94,7 +94,7 @@ public class BoardDC extends Board{
 		if(!pseudos.contains(name))
 			return null; // joueur inexistant
 		int i=0;
-		while(i<6){
+		while(i<pseudos.size()){
 			if(pseudos.get(i).equals(name) && i==c.ordinal()-2)
 				return true;
 			i++;
@@ -532,7 +532,7 @@ public class BoardDC extends Board{
 
 	@Override
 	public String MoveOrdering(Color player) {
-		return null;
+		return AvailableMoves(player);
 	}
 
 	public boolean free_next(Coords pos,Direction dir)
@@ -552,7 +552,11 @@ public class BoardDC extends Board{
 		// chose to stop, even if he can still continue
 		//if(tP[0].x == tP[1].x && tP[0].y==tP[1].y)
 		//	return ret;
-		String move=AvailableMoves(currentplayer);
+		String move="";
+		for(Color k : Color.values()) {
+			if(!Owns(k ,currentplayer))
+			move = move + AvailableMoves(k);
+		}
 		for(int i=0;i<move.length();i+=moveSize) {
 			//Test if move exists and is not a long jump
 				if (MoveToString(tP).substring(0, 4).equals(move.substring(i, i + 4))
