@@ -30,6 +30,28 @@ public class IA {
         {0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0}
 
     };
+    int DCdistance[][] =
+            {
+                      //0            //5                  //10                //15                //20                //25
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  9,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  0, 10,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 27,  0, 19,  0, 11,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0, 97,  0, 95,  0, 93,  0, 90,  0, 36,  0, 28,  0, 20,  0, 12,  0,  4,  0, 90,  0, 93,  0, 95,  0, 97,  0},
+                    {  0,  0, 95,  0, 93,  0, 90,  0, 45,  0, 37,  0, 29,  0, 21,  0, 13,  0,  5,  0, 90,  0, 93,  0, 95,  0,  0},
+                    {  0,  0,  0, 93,  0, 90,  0, 54,  0, 46,  0, 38,  0, 30,  0, 22,  0, 14,  0,  6,  0, 90,  0, 93,  0,  0,  0},
+                    {  0,  0,  0,  0, 90,  0, 63,  0, 55,  0, 47,  0, 39,  0, 31,  0, 23,  0, 15,  0,  7,  0, 90,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0, 72,  0, 64,  0, 56,  0, 48,  0, 40,  0, 32,  0, 24,  0, 16,  0,  8,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0, 90,  0, 73,  0, 65,  0, 57,  0, 49,  0, 41,  0, 33,  0, 25,  0, 17,  0, 90,  0,  0,  0,  0},
+                    {  0,  0,  0, 93,  0, 90,  0, 74,  0, 66,  0, 58,  0, 50,  0, 42,  0, 34,  0, 26,  0, 90,  0, 93,  0,  0,  0},
+                    {  0,  0, 95,  0, 93,  0, 90,  0, 75,  0, 67,  0, 59,  0, 51,  0, 43,  0, 35,  0, 90,  0, 93,  0, 95,  0,  0},
+                    {  0, 97,  0, 95,  0, 93,  0, 90,  0, 76,  0, 68,  0, 60,  0, 52,  0, 44,  0, 90,  0, 93,  0, 95,  0, 97,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 77,  0, 69,  0, 61,  0, 53,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 78,  0, 70,  0, 62,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 79,  0, 71,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 80,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}
+            };
     public IA(Board b){
         this.b=b;
         zobristTableB=new HashMap<>();
@@ -41,7 +63,18 @@ public class IA {
                 zobristTableB.put(i*b.getWidth()+j,(int)Math.random()*10000000);
             }
     }
-    private int getPlayerVal(Color b){return b==Color.WHITE?1:-1;}
+    private int getPlayerVal(Color b){return (b==Color.WHITE)?1:-1;}
+
+    private int eval_distance(Color player){
+        int res=0;
+        for(int i=0;i<b.getHeight();i++)
+            for(int j=0;j<b.getWidth();i++)
+                if(b.getCase(new Coords(i,j))==player)
+                    res+=DCdistance[i][j]*50;
+                else if(b.getCase(new Coords(i,j))==b.switchPlayer(player))
+                    res+=DCdistance[i][j]-17*50;
+        return res;
+    }
     private int eval_adjacency(Color player)
     {
         int res=0;
@@ -70,8 +103,23 @@ public class IA {
         }
         return res;
     }
+    public long eval_board(Color player){
+        if(b instanceof BoardAbalone)
+            return eval_AB(player);
+        if(b instanceof BoardDC)
+            return eval_DC(player);
+        return Long.parseLong(null);
+    }
+    public long eval_DC(Color player){
+        long res=0;
+        if(b.marble_count(player)>=10)
+            return Integer.MAX_VALUE;
+        if(b.marble_count(b.switchPlayer(player))>=10)
+            return Integer.MIN_VALUE;
+        return eval_distance(player)+(b.marble_count(player)-b.marble_count(b.switchPlayer(player)))*2000;
+    }
 
-    public long eval_board(Color player)
+    public long eval_AB(Color player)
     {
         long res=0;
         if(b.marble_count(Color.WHITE)<=8)
@@ -87,7 +135,7 @@ public class IA {
                     res+=getPlayerVal(b.getCase(marble))*ABweight[i][j];
             }
         }
-        return getPlayerVal(player)*(res +eval_adjacency(player) + (b.marble_count(Color.WHITE)-b.marble_count(Color.BLACK))*2000);
+        return getPlayerVal(player)*(res +eval_adjacency(player) + (b.marble_count(Color.WHITE)-b.marble_count(Color.BLACK))*50000);
     }
 
  
