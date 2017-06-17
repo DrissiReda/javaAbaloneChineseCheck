@@ -1,5 +1,6 @@
 package modele;
 
+import vue.PanneauDC;
 import vue.Start;
 
 import javax.swing.*;
@@ -13,16 +14,15 @@ public class Root extends JFrame{
 
         UIManager.setLookAndFeel(
                 UIManager.getSystemLookAndFeelClassName());
-        this.setTitle("MENU");
+        this.setTitle("Projet JAVA");
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        // this.setContentPane(pan);
         this.setVisible(true);
 
-
         launch_interface();
+        
     }
     public void launch_interface()
     {

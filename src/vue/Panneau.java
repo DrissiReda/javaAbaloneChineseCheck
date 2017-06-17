@@ -7,13 +7,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Panneau extends JPanel{
-
 
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
@@ -34,15 +32,11 @@ public class Panneau extends JPanel{
 
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
-
     public void paintComponent(Graphics g) {
 
         //Initialisation
         if(initParam==1){
             //souris
-
-
-
             setLayout(null);
             scoreB.setFont(new Font("Synchro LET", Font.BOLD, 20));
             scoreW.setFont(new Font("Synchro LET", Font.BOLD, 20));

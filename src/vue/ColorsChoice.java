@@ -1,34 +1,30 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.Color;
-import java.awt.Desktop;
-
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-
-import modele.DatabaseConnect;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import javax.swing.JComboBox;
+import modele.BoardDC;
+import modele.Config;
+import modele.DatabaseConnect;
 
-public class ColorsChoice extends JPanel {
+public class ColorsChoice extends JPanel{
 
-	//Choix du nombre de joueurs.
+	//Choix du nombre de joueurs et lancement partie
+	private PanneauDC pan;
+	private BoardDC boardDC;
 	
-	
-	public ColorsChoice(JFrame parent, String playerName, String game, int number_players) {
+	public ColorsChoice(JFrame parent, String playerName, String game, int nbPlayers) {
 		
 		setLayout(null);
 		setBackground(new Color(245, 245, 245));
@@ -70,12 +66,7 @@ public class ColorsChoice extends JPanel {
 		bouton1couleur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Début partie.
-				try {
-					DatabaseConnect.saveGame(game, number_players, 9, 13);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				startGame(parent, nbPlayers, 1);
 				
 			}
 		});
@@ -88,12 +79,8 @@ public class ColorsChoice extends JPanel {
 		bouton2couleurs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Début partie.
-				try {
-					DatabaseConnect.saveGame(game, number_players, 9, 13);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				startGame(parent, nbPlayers, 2);
+				
 			}
 		});
 		bouton2couleurs.setFont(new Font("Arial", Font.BOLD, 15));
@@ -105,27 +92,63 @@ public class ColorsChoice extends JPanel {
 		bouton3couleurs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Début partie.
-				try {
-					DatabaseConnect.saveGame(game, number_players, 9, 13);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				startGame(parent, nbPlayers, 3);
+
 			}
 		});
 		bouton3couleurs.setFont(new Font("Arial", Font.BOLD, 15));
 		bouton3couleurs.setBounds(373, 409, 235, 75);
 		
-		if(number_players==2)
-		{
+		if(nbPlayers == 2)
 			add(bouton3couleurs);
-		}
-		
-		
+
 		JLabel label2 = new JLabel("");
 		label2.setIcon(new ImageIcon("Images\\Fond2.png"));
 		label2.setBounds(0, 0, 1000, 600);
 		add(label2);
-		
 	}
+	
+	
+	public void startGame(JFrame parent, int nbPlayers, int nbColors){
+		try {
+			DatabaseConnect.saveGame("Dames chinoises", nbPlayers, 9, 13);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ArrayList<Config.Color> listColors = new ArrayList<Config.Color>();
+		for (Config.Color color : Config.Color.values()){ 
+			if(color.ordinal() != 0 && color.ordinal() != 1) // On n'ajoute pas ILLEGAL et EMPTY
+				listColors.add(color);
+		}
+
+		setVisible(false);
+		pan = new PanneauDC();
+		pan.setVisible(true);
+		parent.getContentPane().add(pan);
+		System.out.println(listColors);
+		boardDC = new BoardDC();
+		for (int i = 0; i < nbPlayers*nbColors; i++)
+			boardDC.addPlayer(listColors.get(i));
+			
+		boardDC.initBoard();
+		pan.copyTab(boardDC);
+		
+		pan.affichePlateau();
+		parent.addMouseListener(new MouseAdapter() {
+			@Override
+
+			// Quand on clique sur le Panel
+			public void mouseClicked(MouseEvent e) {
+
+				playDC(true, e);
+				
+
+			}
+		});
+	}
+	
+	public void playDC(boolean IA, MouseEvent e){
+		pan.click(e);
+	}
+
 }

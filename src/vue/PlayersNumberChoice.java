@@ -31,16 +31,13 @@ import modele.Config.*;
 public class PlayersNumberChoice extends JPanel {
 
 	private BoardAbalone boardAB;
-	private BoardDC boardDC;
-	
-	// Panel Abalone et Dames chinoises
 	private Panneau pan;
+
 
 	public PlayersNumberChoice(JFrame parent, String playerName, String game) {
 
 		setLayout(null);
 		setBackground(new Color(245, 245, 245));
-
 
 		JLabel labelMenu = new JLabel("MENU");
 		labelMenu.setForeground(Color.BLACK);
@@ -269,16 +266,13 @@ public class PlayersNumberChoice extends JPanel {
 		label2.setIcon(new ImageIcon("Images\\Fond2.png"));
 		label2.setBounds(0, 0, 1000, 600);
 		add(label2);
-
-
-
 	}
 	
 	public void playAbalone(boolean IA, MouseEvent e){
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement
 		if(pan.getConfirmDirection() != 0){
-			
+
 			boardAB.setTabPieces(pan.getTabPieces());
 
 			//conversion de TabPiece (modele) avec GenerateMove
