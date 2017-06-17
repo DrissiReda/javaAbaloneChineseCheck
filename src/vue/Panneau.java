@@ -244,60 +244,61 @@ public class Panneau extends JPanel{
 
 
     public void click(MouseEvent e) {
-        // TODO Auto-generated method stub
-        System.out.println("Click: x= "+e.getX()+" y = "+e.getY());
-        //System.out.println("TABpieces avant");
-        //boardView.printTabPieces();
-
         int widthOffset = 0;
         int heightOffset = 183;
         int limX;
         int flagClic=0;
-
+        System.out.println("Click : "+e.getX()+";"+e.getY());
         //clic on directions
         if(confirmValidation==1) {
         	//
-            if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
-                flagClic = 1;
-                if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
+            if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 235) && (e.getY() < 235 + 73)) {
+            	flagClic=1;
+            	if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
                     this.direction = Config.Direction.UPRIGHT;
                     moveIntoTabPieces();
                     confirmDirection = 1;
+                    
                 }
-            } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 202) && (e.getY() < 202 + 73)) {
+            } else if ((e.getX() > 721) && (e.getX() < 721 + 72) && (e.getY() > 235) && (e.getY() < 235 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.UPLEFT)){
                     this.direction = Config.Direction.UPLEFT;
                     moveIntoTabPieces();
                     confirmDirection = 1;
+                    
                 }
-            } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
-                flagClic=1;
+            } else if ((e.getX() > 821) && (e.getX() < 821 + 86) && (e.getY() > 310) && (e.getY() < 310 + 65)) {
+            	flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.RIGHT)){
                     this.direction = Config.Direction.RIGHT;
                     moveIntoTabPieces();
                     confirmDirection = 1;
+                    
                 }
-            } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 278) && (e.getY() < 278 + 65)) {
+            } else if ((e.getX() > 672) && (e.getX() < 672 + 86) && (e.getY() > 310) && (e.getY() < 310 + 65)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.LEFT)){
                     this.direction = Config.Direction.LEFT;
                     moveIntoTabPieces();
                     confirmDirection = 1;
+                    
                 }
-            } else if ((e.getX() > 793) && (e.getX() < 793 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
+            } else if ((e.getX() > 796) && (e.getX() < 805 + 72) && (e.getY() > 375) && (e.getY() < 375 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.DOWNRIGHT)){
                     this.direction = Config.Direction.DOWNRIGHT;
                     moveIntoTabPieces();
                     confirmDirection = 1;
+                    
                 }
-            } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 345) && (e.getY() < 345 + 73)) {
+            } else if ((e.getX() > 722) && (e.getX() < 722 + 72) && (e.getY() > 375) && (e.getY() < 375 + 73)) {
                 flagClic=1;
                 if(verifMoveTabDirections(Config.Direction.DOWNLEFT)){
                     this.direction = Config.Direction.DOWNLEFT;
                     moveIntoTabPieces();
                     confirmDirection = 1;
+                    
                 }
             }
         }
@@ -307,12 +308,9 @@ public class Panneau extends JPanel{
             for (int j = 0; j < 19; j++) {
                 limX = 106 + (j * 20) - widthOffset;
                 if ((e.getX() > limX) && (e.getX() < limX + 33) && (e.getY() > heightOffset) && (e.getY() < heightOffset + 40) && (((j % 2 != 0) && (i % 2 != 0)) || ((j % 2 == 0) && (i % 2 == 0)))) {
-                    //System.out.println("ENTER if1");
                     if (boardView.selectMarble(new Coords(i,j))) {
-                        //System.out.println("ENTER if2");
                         tabSelec[i][j] = 1;
                         this.confirmValidation = 1;
-                        System.out.println("ETAT CHANGE");
                         flagClic=1;
                         tabDirections=boardView.generateDir();
                     }
@@ -330,9 +328,6 @@ public class Panneau extends JPanel{
             boardView.initTabPieces();
             tabDirections.clear();
         }
-
-        System.out.println("TABpieces (vue) Apres");
-        boardView.printTabPieces();
         repaint();
     }
 

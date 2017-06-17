@@ -276,9 +276,7 @@ public class PlayersNumberChoice extends JPanel {
 			boardAB.setTabPieces(pan.getTabPieces());
 
 			//conversion de TabPiece (modele) avec GenerateMove
-			if(boardAB.generateMove(boardAB.tabPieces,boardAB.getPlayer())==null)
-				System.out.println(boardAB.MoveToString(boardAB.tabPieces));
-			else
+			if(boardAB.generateMove(boardAB.tabPieces,boardAB.getPlayer())!=null)
 				boardAB.setTabPieces(boardAB.generateMove(boardAB.tabPieces, boardAB.getPlayer()));
 
 			//execute le mouvement
