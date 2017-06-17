@@ -106,6 +106,24 @@ public class PlayersNumberChoice extends JPanel {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					
+					setVisible(false);
+					pan = new Panneau();
+					pan.setVisible(true);
+					parent.getContentPane().add(pan);
+
+					boardAB = new BoardAbalone();
+
+					parent.addMouseListener(new MouseAdapter() {
+						@Override
+
+						// Quand on clique sur le Panel
+						public void mouseClicked(MouseEvent e) {
+
+							playAbalone(false, e);
+
+						}
+					});
 
 
 				}
