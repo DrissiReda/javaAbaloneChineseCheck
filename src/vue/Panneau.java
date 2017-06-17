@@ -253,6 +253,7 @@ public class Panneau extends JPanel{
         if(confirmValidation==1) {
         	//
             if ((e.getX() > 792) && (e.getX() < 792 + 72) && (e.getY() > 235) && (e.getY() < 235 + 73)) {
+            	flagClic=1;
             	if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
                     this.direction = Config.Direction.UPRIGHT;
                     moveIntoTabPieces();
