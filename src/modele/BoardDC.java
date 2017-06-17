@@ -34,11 +34,12 @@ public class BoardDC extends Board{
 		{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)}
 		
 	};
-	private Coords[] tabPieces=new Coords[2];
+	private Coords[] tabPieces=new Coords[3];
 	private ArrayList<Color> players=new ArrayList<>();
-	
+	private Color currentplayer;
+	private boolean jumping=false;
 	public BoardDC() {
-		super(19, 27,8);
+		super(19, 27,12);
 	}
 
 	public void affichePlateau()
@@ -204,6 +205,7 @@ public class BoardDC extends Board{
 	}
 	
 	@Override
+	//number of pieces that reached the endgoal
 	public int marble_count(Color player) {
 		int res=0;
 		for(int i=0;i<height;i++)
@@ -233,44 +235,49 @@ public class BoardDC extends Board{
 		}
 		return false;
 	}
-	
+
+	@Override
 	public void printTabPieces(){
 		if(tabPieces[0] != null)
 			System.out.println("Selection : ["+tabPieces[0].x+","+tabPieces[0].y+"]");
 		else
 			System.out.println("Pas de selection");
 	}
-	
-	public boolean executeMove(Coords[] tabPieces, Color player)
+	@Override
+	public Boolean executeMove(Coords[] tabPieces, Color player)
 	{
 		// Si le pion est dans une zone d'arriv?e et que son mouvement va le faire sortir de cette zone
-		if(inOppositeArea(tabPieces[0]) && !inOppositeArea(next_coord(tabPieces[0], toDir(tabPieces[1].x%10))))
-			return false;
-
-		if(free_next(tabPieces[0], toDir(tabPieces[1].x % 10))){
+		if(inOppositeArea(tabPieces[0]) && !inOppositeArea(next_coord(tabPieces[0], toDir(tabPieces[2].x%10))))
+			return null;
+		// no ability to jump again, make sure not in a jump sequence
+		if(free_next(tabPieces[0], toDir(tabPieces[2].x % 10)) && jumping==false){
 			simple_move(tabPieces,player);
-			return true;
+			return false;
 		}
 		else{
-			if(free_next(next_coord(tabPieces[0], toDir(tabPieces[1].x%10)), toDir(tabPieces[1].x%10))){
+			if(free_next(next_coord(tabPieces[0], toDir(tabPieces[2].x%10)), toDir(tabPieces[2].x%10))){
 				jump_move(tabPieces,player);
+				jumping=true;
 				return true;
 			}
 		}
 	return false;	
 	}
-	
+	@Override
+	public boolean undo(Coords[] tabPieces, Color player) {
+		setCase(tabPieces[1],Color.EMPTY);
+		setCase(tabPieces[0],player);
+		cancelSelection();
+		return true;
+	}
 	public void simple_move(Coords[] tabPieces,Color player){
-		Coords newMarble = next_coord(tabPieces[0], toDir(tabPieces[1].x%10));
-    	setCase(tabPieces[0],Color.EMPTY);
-    	setCase(newMarble,player);
-    	cancelSelection();
+		jump_move(tabPieces,player);
 	}
 	
 	public void jump_move(Coords[] tabPieces,Color player){
-		Coords newMarble = next_coord(next_coord(tabPieces[0], toDir(tabPieces[1].x%10)), toDir(tabPieces[1].x%10));
+		//coords newmarble = next_coord(next_coord(tabpieces[0], todir(tabpieces[2].x%10)), todir(tabpieces[2].x%10));
     	setCase(tabPieces[0],Color.EMPTY);
-    	setCase(newMarble,player);
+    	setCase(tabPieces[1],player);
     	cancelSelection();
 	}
 	public void cancelSelection(){
@@ -279,18 +286,45 @@ public class BoardDC extends Board{
 
 	@Override
 	public String AvailableMoves(Color player) {
+		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(88,88)};
 		String Av_Moves="";
 		for(int i=0;i<getHeight();i++)
 			for(int j=0;j<getWidth();j++)
 				for(Direction k : Direction.values()){
 					tabPieces[0].setCoords(i,j);
 					if(free_next(new Coords(i,j),k)) {
-						tabPieces[1].setCoords(10 + k.ordinal(), 88);
-						Av_Moves=Av_Moves+MoveToString(tabPieces);
+						//normal
+						tabPieces[1].setCoords(next_coord(new Coords(i,j),k));
+						tabPieces[2].setCoords(10 + k.ordinal(), 88);
+                        if(!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1])))
+                            Av_Moves=Av_Moves+MoveToString(tabPieces);
 					}
-					if(ally_next(new Coords(i,j),k,player)==1 && free_next(next_coord(new Coords(i,j),k),k))
-						tabPieces[1].setCoords(20+k.ordinal(),88);{
-						Av_Moves=Av_Moves+MoveToString(tabPieces);
+					else {
+						if (free_next(next_coord(new Coords(i, j), k), k)) {
+							//jump
+							tabPieces[1].setCoords(next_coord(next_coord(new Coords(i,j),k),k));
+							tabPieces[2].setCoords(20 + k.ordinal(), 88);
+                            if(!(inOppositeArea(tabPieces[0]) && !inOppositeArea(tabPieces[1]))) {
+                                Av_Moves = Av_Moves + MoveToString(tabPieces);
+                                int flag = 1;
+                                while (flag != 0) {
+                                    for (Direction l : Direction.values()) {
+                                        if (l == invert_dir(k))
+                                            continue;
+                                        if (free_next(next_coord(tabPieces[1], k), k)) {
+                                            flag = 2;
+                                            //sequence jump
+                                            tabPieces[1].setCoords(next_coord(next_coord(tabPieces[1], k), k));
+                                            tabPieces[2].setCoords(30 + l.ordinal(), 88);
+                                            Av_Moves = Av_Moves + MoveToString(tabPieces);
+                                        }
+
+                                    }
+                                    if (flag != 2)
+                                        break;
+                                }
+                            }
+						}
 					}
 				}
 		return Av_Moves;
@@ -411,9 +445,7 @@ public class BoardDC extends Board{
     }
 
 	@Override
-	public int ally_next(Coords marble, Direction k, Color player) {
-		return 0;
-	}
+	public int ally_next(Coords marble, Direction k, Color player) {return 0;}
 	public Direction invert_dir(Direction k){
     	switch(k){
     		case LEFT : return Direction.RIGHT;
@@ -426,18 +458,11 @@ public class BoardDC extends Board{
 		}
 	}
 	@Override
-	public boolean undo(Coords[] tabPieces, Color player) {
-    	Coords[] ret={tabPieces[0],new Coords(
-    			tabPieces[1].x-tabPieces[1].x%10+invert_dir(toDir(tabPieces[1].x%10)).ordinal(),
-				88)};
-    	return executeMove(ret,player);
-	}
-
-	@Override
 	public Coords[] stringToMove(String str) {
 		Coords tab[]= {
-				new Coords(Integer.parseInt(str.substring(0, 2)), Integer.parseInt(str.substring(2, 4))),
-				new Coords(Integer.parseInt(str.substring(4, 6)), Integer.parseInt(str.substring(6, 8))),
+				new Coords(Integer.parseInt(str.substring(0,  2)), Integer.parseInt(str.substring( 2,  4))),
+				new Coords(Integer.parseInt(str.substring(4,  6)), Integer.parseInt(str.substring( 6,  8))),
+				new Coords(Integer.parseInt(str.substring(8, 10)), Integer.parseInt(str.substring(10, 12))),
 		};
 		return tab;
 	}
@@ -445,7 +470,7 @@ public class BoardDC extends Board{
 	@Override
 	public String MoveToString(Coords[] tab) {
 		String ret = "";
-		for(int i=0;i<2;i++)
+		for(int i=0;i<moveSize;i++)
 		{
 			if(tab[i].x<10)
 				ret=ret+"0";
@@ -476,14 +501,54 @@ public class BoardDC extends Board{
 
 	public boolean free_next(Coords pos,Direction dir)
 	{
-		if(inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)
+		if(inTab(next_coord(pos,dir)) && getCase(next_coord(pos,dir))==Color.EMPTY)
 			return true;
 		else
 			return false;
+	}
+	public ArrayList<Direction> generateDir(Coords[] tP){
+		ArrayList<Direction> ret=new ArrayList<>();
+		// if source = dest it means the user
+		// chose to stop, even if he can still continue
+		if(tP[0].x == tP[1].x && tP[0].y==tP[1].y)
+			return ret;
+		String move=AvailableMoves(currentplayer);
+		for(int i=0;i<move.length();i+=moveSize) {
+			//Test if move exists and is not a long jump
+				if (MoveToString(tP).substring(0, 4).equals(move.substring(i, i + 4))
+					&& Integer.parseInt(move.substring(i+8,i+9))!=3	)
+					ret.add(toDir(Integer.parseInt(move.substring(i +9, i + 10))));
+		}
+
+
+		return ret;
 	}
     public Coords[] generateMove(Coords[] tabPieces,Color player){
         return null;
     }
 }
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// EXECUTION /////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/*
+ * if(executeMove()== true ) #initiate jump sequence#{
+ * 	int flag=1;
+ * 	while(flag==1){
+ *
+ * 		if(generateDir().size()==0)
+ * 			break;
+ * 		if(executeMove==false) # move was a simple, illegal, revert
+ * 			undo()
+ */
 
-
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// tabPieces  /////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/*
+ * the graphic has to do so :
+ * tabPieces[0] = Selected source
+ * tabPieces[1] = (22,22) or Selected destination
+ * tabPieces[2] = (10+k.ordinal(),88) #of course k being the direction
+ * The executeMove() here does not care about the type of movement, nor does
+ * anyone else besides the AI
+ */

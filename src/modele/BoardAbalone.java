@@ -402,7 +402,7 @@ public class BoardAbalone extends Board{
     	}
     }
     
-    public boolean executeMove(Coords tabPieces[], Color player){
+    public Boolean executeMove(Coords tabPieces[], Color player){
     	int type = tabPieces[3].x/10;
     	
     	switch(type){
