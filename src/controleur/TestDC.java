@@ -19,7 +19,7 @@ public class TestDC {
         System.out.println(p.getCase(new Coords(14,16)));
         System.out.println(p.AvailableMoves(Color.BLACK));
         //Coords[] tP={new Coords(14,14)};
-        for(Coords k : p.generateTarget(new Coords(14,14)))
+        for(Coords k : p.generateTarget(new Coords(14,10)))
             System.out.println("Th "+k);
     }
 
