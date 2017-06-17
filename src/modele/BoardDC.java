@@ -68,6 +68,9 @@ public class BoardDC extends Board{
     		System.out.println("");
 		}
 	}
+	public Coords[] getTabPieces() {
+		return tabPieces;
+	}
 	public Color getCase(Coords pos){
 		return GameBoard[pos.x][pos.y].getColor();
 	}
