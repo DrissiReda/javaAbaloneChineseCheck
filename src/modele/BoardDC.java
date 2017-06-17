@@ -483,15 +483,8 @@ public class BoardDC extends Board{
 	}
 
 	@Override
-	public Color switchPlayer(Color player) {
-		int i;
-		//trouve l'index du joueur actuel
-    	for(i=0;i<players.size();i++)
-			if(player==players.get(i))
-				break;
-    	//retourne le suivant, si c'est le dernier
-		//retourne le premier
-		return players.get((i+1) % players.size());
+	public Color switchPlayer(Color player){
+		return player.getNext();
 	}
 
 	@Override
@@ -510,8 +503,8 @@ public class BoardDC extends Board{
 		ArrayList<Direction> ret=new ArrayList<>();
 		// if source = dest it means the user
 		// chose to stop, even if he can still continue
-		if(tP[0].x == tP[1].x && tP[0].y==tP[1].y)
-			return ret;
+		//if(tP[0].x == tP[1].x && tP[0].y==tP[1].y)
+		//	return ret;
 		String move=AvailableMoves(currentplayer);
 		for(int i=0;i<move.length();i+=moveSize) {
 			//Test if move exists and is not a long jump
@@ -519,8 +512,14 @@ public class BoardDC extends Board{
 					&& Integer.parseInt(move.substring(i+8,i+9))!=3	)
 					ret.add(toDir(Integer.parseInt(move.substring(i +9, i + 10))));
 		}
-
-
+		return ret;
+	}
+	public ArrayList<Coords> generateTarget(Coords[] tP){
+		ArrayList<Direction> dirs=generateDir(tP);
+		ArrayList<Coords> ret=new ArrayList<>();
+		for(Direction k : dirs){
+			ret.add(next_coord(tP[0],k));
+		}
 		return ret;
 	}
     public Coords[] generateMove(Coords[] tabPieces,Color player){

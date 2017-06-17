@@ -11,9 +11,9 @@ public class Config {
 		GREEN,
 		BLUE,
 		YELLOW;
-		public Color getNext(Color k){
-			return k.ordinal()<values().length - 1
-					? values()[k.ordinal()+1]
+		public Color getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
 					: BLACK;
 		}
 	}
@@ -30,9 +30,9 @@ public class Config {
 		Direction(int val){
 			this.val = val;
 		}
-		public Direction getNext(Direction k){
-			return k.ordinal()<values().length - 1
-					? values()[k.ordinal()+1]
+		public Direction getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
 					: LEFT;
 		}
 	}
@@ -45,9 +45,9 @@ public class Config {
 		SOUTH,
 		SOUTHWEST,
 		NORTHWEST;
-		public Area getNext(Area k){
-			return k.ordinal()<values().length - 1
-					? values()[k.ordinal()+1]
+		public Area getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
 					: NORTH;
 		}
 	}
