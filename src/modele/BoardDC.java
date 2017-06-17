@@ -514,6 +514,10 @@ public class BoardDC extends Board{
 		}
 		return ret;
 	}
+	public ArrayList<Coords> generateTarget(Coords tP){
+	    Coords[] a={tP};
+	    return generateTarget(a);
+    }
 	public ArrayList<Coords> generateTarget(Coords[] tP){
 		ArrayList<Direction> dirs=generateDir(tP);
 		ArrayList<Coords> ret=new ArrayList<>();
