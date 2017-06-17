@@ -93,17 +93,28 @@ public class PanneauDC extends JPanel{
 	                    } catch (IOException e) {
 	                        e.printStackTrace();
 	                    }
-	                }/*
-		            else{
+		            }else{/*
 		            	if(listTargets.contains(new Coords(i, j))){
+		            		System.out.println("trouvé");
 		            		try {
 		                        Image img = ImageIO.read(new File("Images/dames/BallDameGreen.png"));
 		                        g.drawImage(img, limX, heightOffset, this);
 		                    } catch (IOException e) {
 		                        e.printStackTrace();
 		                    }
-		            	}
-		            }*/
+		            	}*/
+		    	        
+		    	        for(Coords tar : listTargets){
+		    	        	if(tar.x == i && tar.y == j){
+		    	        		try {
+			                        Image img = ImageIO.read(new File("Images/dames/target.png"));
+			                        g.drawImage(img, limX+2, heightOffset+1, this);
+			                    } catch (IOException e) {
+			                        e.printStackTrace();
+			                    }
+		    	        	}
+		    	        }
+	            	}
 	                if(marble.x == i && marble.y == j){
 	                	try {
 	                        Image imgSelec = ImageIO.read(new File("Images/dames/BallDameSelec.png"));
@@ -123,6 +134,7 @@ public class PanneauDC extends JPanel{
 	            }
 	            heightOffset += 22;
 	        }
+
 	}
 	
     public void copyTab(BoardDC b) {

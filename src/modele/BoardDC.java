@@ -38,7 +38,7 @@ public class BoardDC extends Board{
 	private Coords[] tabPieces=new Coords[3];
 	private ArrayList<Color> players=new ArrayList<>();
 	private ArrayList<String> pseudos=new ArrayList<>();
-	private String currentplayer;
+	private String currentplayer="sss";
 	private boolean jumping=false;
 	public BoardDC() {
 		super(19, 27,12);
@@ -554,8 +554,8 @@ public class BoardDC extends Board{
 		//	return ret;
 		String move="";
 		for(Color k : Color.values()) {
-			if(!Owns(k ,currentplayer))
-			move = move + AvailableMoves(k);
+			if(Owns(k ,currentplayer))
+				move = move + AvailableMoves(k);
 		}
 		for(int i=0;i<move.length();i+=moveSize) {
 			//Test if move exists and is not a long jump
