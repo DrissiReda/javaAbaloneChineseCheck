@@ -72,10 +72,13 @@ public class BoardDC extends Board{
 	public void setCase(Coords pos, Color c){
 		GameBoard[pos.x][pos.y].setColor(c);
 	}
-	public boolean addPlayer(Color player){
-		if(players.size() >= 6 || players.contains(player))
+	public boolean addPlayer(){
+		if(players.size() >= 6)
 			return false;
-		players.add(player);
+		if(players.size()==0)
+			players.add(Color.BLACK);
+		else
+			players.add(players.get(players.size()-2).getNext());
 		return true;
 	}
 	
