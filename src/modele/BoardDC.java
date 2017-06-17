@@ -78,7 +78,7 @@ public class BoardDC extends Board{
 		if(players.size()==0)
 			players.add(Color.BLACK);
 		else
-			players.add(players.get(players.size()-2).getNext());
+			players.add(players.get(players.size()-1).getNext());
 		return true;
 	}
 	
