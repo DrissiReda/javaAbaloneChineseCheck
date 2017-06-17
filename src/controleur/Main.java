@@ -7,6 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import modele.BoardAbalone;
 import modele.Config.Color;
 import modele.DatabaseConnect;
+import modele.Tile;
 import vue.Fenetre;
 import vue.Panneau;
 
@@ -28,13 +29,6 @@ public class Main {
     			}
     		});
             int i=100;
-
-
-            /*À faire :
-             * -Changement mot de passe.
-             * -Sauvegarde partie.
-             * -Historique.
-             */
 
 
 				//AlphaBeta a = new AlphaBeta(board);
@@ -84,7 +78,6 @@ public class Main {
                     }
                 }
             }*/
-
-	
+            
 	}
 }
