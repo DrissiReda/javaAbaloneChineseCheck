@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 
 public class ConnectionSubscriptionChoice extends JPanel {
 
-	//Deuxième écran : affichage choix inscription ou connexion.
+	//DeuxiÃ¨me Ã©cran : affichage choix inscription ou connexion.
 
 	public ConnectionSubscriptionChoice(JFrame parent) {
 		

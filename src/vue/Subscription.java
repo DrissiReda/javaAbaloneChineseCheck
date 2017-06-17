@@ -24,7 +24,7 @@ public class Subscription extends JPanel {
 	private JTextField textField;
 	private JPasswordField passwordField;
 
-	//Écran de connexion.
+	//ï¿½cran de connexion.
 	
 	public Subscription(JFrame parent) {
 		
@@ -97,7 +97,7 @@ public class Subscription extends JPanel {
 					
 					else
 					{
-						labelSubscriptionFailure.setText("<html>Echec d'inscription<br>(Pseudo/mdp > 4 caractères)</html>");
+						labelSubscriptionFailure.setText("<html>Echec d'inscription<br>(Pseudo/mdp > 4 caractÃ¨res)</html>");
 					}
 					
 				} 

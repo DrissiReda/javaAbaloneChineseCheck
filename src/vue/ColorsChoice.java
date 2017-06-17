@@ -142,16 +142,21 @@ public class ColorsChoice extends JPanel{
 			// Quand on clique sur le Panel
 			public void mouseClicked(MouseEvent e) {
 
-				playDC(true, e);
+				if(playDC(true,false, e))
+					while(true){
+						if(!playDC(true,true,e))
+							break;
+					}
+					boardDC.setJumping(false);
 				
 
 			}
 		});
 	}
 	
-	public void playDC(boolean IA, MouseEvent e){
+	public boolean playDC(boolean IA,boolean flag, MouseEvent e){
 		pan.click(e);
-		
+		boolean ret=false;
 		if(pan.moveOk()){
 			System.out.println("move");
 			Coords marble = pan.getMarble();
@@ -162,12 +167,29 @@ public class ColorsChoice extends JPanel{
 			tabPieces[0] = marble;
 			tabPieces[1] = target;
 			tabPieces[2].x = 10+dir.ordinal();
-			
-			boardDC.executeMove(tabPieces, boardDC.getCase(marble));
+			/*
+			 * if(executeMove()== true ) #initiate jump sequence#{
+ 			 * 	int flag=1;
+ 			 * 	while(flag==1){
+ 			 *
+ 			 * 		if(generateDir().size()==0)
+ 			 * 			break;
+ 			 *	 	if(executeMove==false) # move was a simple, illegal, revert
+			 * 			undo()
+ 			 */
+
+			ret=boardDC.executeMove(tabPieces, boardDC.getCase(marble));
+			if(flag && !ret)
+				boardDC.undo(tabPieces,boardDC.getCase(marble));
+			if(flag && boardDC.generateDir(tabPieces).size()==0)
+				return false;
+			/*if(boardDC.executeMove(tabPieces,boardDC.getCase(marble))==false)
+				boardDC.undo(tabPieces,boardDC.getCase(marble));*/
 			pan.copyTab(boardDC);
 			pan.reset();
 			pan.refreshBoard();
 		}
+		return ret;
 	}
 
 }

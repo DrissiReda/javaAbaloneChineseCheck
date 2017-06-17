@@ -85,7 +85,7 @@ public class PanneauDC extends JPanel{
         return boardView.getTabPieces();
     }
     
-    // Pour simplifier l'écriture
+    // Pour simplifier l'Ã©criture
     public void addImage(Graphics g, String path, int x, int y, ImageObserver observer){
     	try {
             Image img = ImageIO.read(new File(path));
@@ -137,7 +137,7 @@ public class PanneauDC extends JPanel{
     public void clickMove(Coords destination)
     {
     	target = destination;
-    	direction = boardView.find_direction(marble, destination); // On détecte la direction
+    	direction = boardView.find_direction(marble, destination); // On dÃ©tecte la direction
     	System.out.println("Target : "+target);
     	System.out.println("Direction : "+direction);
     }
@@ -162,7 +162,7 @@ public class PanneauDC extends JPanel{
     {
     	this.marble = marble;
     	listTargets = boardView.generateTarget(this.marble);
-    	System.out.println("Click de sélection");
+    	System.out.println("Click de sÃ©lection");
     }
     
     public void reset(){

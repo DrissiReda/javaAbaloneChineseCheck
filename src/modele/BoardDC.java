@@ -573,9 +573,15 @@ public class BoardDC extends Board{
 		}
 		for(int i=0;i<move.length();i+=moveSize) {
 			//Test if move exists and is not a long jump
+			if (jumping) {
 				if (MoveToString(tP).substring(0, 4).equals(move.substring(i, i + 4))
-					&& Integer.parseInt(move.substring(i+8,i+9))!=3	)
-					ret.add(toDir(Integer.parseInt(move.substring(i +9, i + 10))));
+						&& Integer.parseInt(move.substring(i + 8, i + 9)) == 2)
+					ret.add(toDir(Integer.parseInt(move.substring(i + 9, i + 10))));
+			} else {
+				if (MoveToString(tP).substring(0, 4).equals(move.substring(i, i + 4))
+						&& Integer.parseInt(move.substring(i + 8, i + 9)) != 3)
+					ret.add(toDir(Integer.parseInt(move.substring(i + 9, i + 10))));
+			}
 		}
 		return ret;
 	}
@@ -597,6 +603,10 @@ public class BoardDC extends Board{
     public Coords[] generateMove(Coords[] tabPieces,Color player){
         return null;
     }
+
+	public void setJumping(boolean jumping) {
+		this.jumping = jumping;
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// EXECUTION /////////////////////////////////
