@@ -10,7 +10,12 @@ public class Config {
 		RED,
 		GREEN,
 		BLUE,
-		YELLOW
+		YELLOW;
+		public Color getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
+					: BLACK;
+		}
 	}
 	
 	public enum Direction {
@@ -25,6 +30,11 @@ public class Config {
 		Direction(int val){
 			this.val = val;
 		}
+		public Direction getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
+					: LEFT;
+		}
 	}
 	
 	// Diff?rents coins du plateau de dames chinoises
@@ -34,6 +44,11 @@ public class Config {
 		SOUTHEAST,
 		SOUTH,
 		SOUTHWEST,
-		NORTHWEST
+		NORTHWEST;
+		public Area getNext(){
+			return this.ordinal()<values().length - 1
+					? values()[this.ordinal()+1]
+					: NORTH;
+		}
 	}
 }
