@@ -32,6 +32,10 @@ public class Panneau extends JPanel{
 
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
+    JSlider slideDif = new JSlider(JSlider.VERTICAL,0,10,0);
+
+    int difficulty=0;
+
     public void paintComponent(Graphics g) {
 
         //Initialisation
@@ -50,6 +54,9 @@ public class Panneau extends JPanel{
 
             validButtonDown.setBounds(530, 140, 170, 50);
             validButtonUp.setBounds(530, 140, 170, 50);
+
+            slideDif.setBounds(583,90,50,208);
+            add(slideDif);
 
             //police
             try {
@@ -328,6 +335,8 @@ public class Panneau extends JPanel{
             boardView.initTabPieces();
             tabDirections.clear();
         }
+        this.difficulty=slideDif.getValue();
+        System.out.println("DIFFICULTE : "+this.difficulty);
         repaint();
     }
 
@@ -360,5 +369,9 @@ public class Panneau extends JPanel{
             }
         }
         return false;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
     }
 } //

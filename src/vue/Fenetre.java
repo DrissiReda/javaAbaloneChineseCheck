@@ -63,4 +63,6 @@ public class Fenetre extends JFrame {
     public Coords[] getTabPieces() {
         return pan.getTabPieces();
     }
+
+    public int getDifficulty() { return pan.getDifficulty(); }
 }
