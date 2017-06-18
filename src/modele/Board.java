@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.ArrayList;
+
 import modele.Config.Color;
 import modele.Config.Direction;
 
@@ -32,6 +34,9 @@ public abstract class Board {
 	public abstract Color getCase(Coords pos);
 	public abstract void setCase(Coords pos, Color col);
 	public abstract int marble_count(Color player);
+	//Modification
+	public abstract ArrayList<Color> getColors();
+	public abstract ArrayList<String> getPseudos();
     /**
      * Returns the next coordinates for a given position
      * @param pos (Coords)

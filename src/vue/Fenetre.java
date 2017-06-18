@@ -1,6 +1,7 @@
 package vue;
 import modele.Board;
 import modele.BoardAbalone;
+import modele.BoardDC;
 import modele.Coords;
 import modele.Config.Color;
 
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Fenetre extends JFrame {
@@ -16,7 +18,7 @@ public class Fenetre extends JFrame {
     private Panneau pan;
 
 
-    public Fenetre() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+    public Fenetre() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, FileNotFoundException, IOException{
     	
     	UIManager.setLookAndFeel(
 				UIManager.getSystemLookAndFeelClassName());
@@ -149,6 +151,25 @@ public class Fenetre extends JFrame {
                     line="";
                 }
             }
+            
+            
+            if(game=="Dames chinoises")
+            {
+            	
+            	line="";
+            	for(int i=0;i<board.getColors().size();i++)
+            	{
+            		line=line+board.getColors().get(i)+";";
+            	}
+            	writer.println(line);
+            	
+            	line="";
+            	for(int i=0;i<board.getPseudos().size();i++)
+            	{
+            		line=line+board.getPseudos().get(i)+";";
+            	}
+            	writer.println(line);
+            }
 
             writer.close();
         }
@@ -249,7 +270,53 @@ public class Fenetre extends JFrame {
                 j++;
             }
         }
+        
+        
+        if(game=="Dames chinoises")
+        {
+            temp="";
+            while(condition==0)
+            {
+                temp=read.next();
 
-
+                switch (temp)
+                {
+                    case "ILLEGAL":
+                    	board.getColors().add(Color.ILLEGAL);
+                        break;
+                    case "EMPTY":
+                    	board.getColors().add(Color.EMPTY);
+                        break;
+                    case "BLACK":
+                    	board.getColors().add(Color.BLACK);
+                        break;
+                    case "WHITE":
+                    	board.getColors().add(Color.WHITE);
+                        break;
+                    case "RED":
+                    	board.getColors().add(Color.RED);
+                        break;
+                    case "GREEN":
+                    	board.getColors().add(Color.GREEN);
+                        break;
+                    case "BLUE":
+                    	board.getColors().add(Color.BLUE);
+                        break;
+                    case "YELLOW":
+                    	board.getColors().add(Color.YELLOW);
+                        break;
+                    default:
+                        condition=1;
+                }
+            }
+            
+            temp="";
+            condition=0;
+            while(!(temp.equals("")))
+            {
+                temp=read.next();
+                board.getPseudos().add(temp);
+            }
+        }
     }
 }

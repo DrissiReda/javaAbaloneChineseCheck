@@ -34,6 +34,16 @@ public class BoardAbalone extends Board{
 		initTabPieces();
     }
     
+    //Modification
+    public ArrayList<Color> getColors()
+    {
+    	return null;
+    }
+    public ArrayList<String> getPseudos()
+    {
+    	return null;
+    }
+    
     public int getMoveSize(){
     	return moveSize;
     }
