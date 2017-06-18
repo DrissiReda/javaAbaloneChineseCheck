@@ -73,7 +73,7 @@ public class Fenetre extends JFrame {
     }
 
     public int getDifficulty() { return pan.getDifficulty(); }
-    public void save(String playerName, int scoreJ1, int scoreJ2, int nbPlayers, int playerRound, Board board)
+    public void save(String playerName, int nbPlayers, int playerRound, Board board)
     {
 
         String game;
@@ -117,8 +117,6 @@ public class Fenetre extends JFrame {
 
             PrintWriter writer = new PrintWriter("C:\\ProgramData\\savegame\\"+playerName+String.valueOf(cpt)+"."+game, "UTF-8");
             writer.println(playerName);
-            writer.println(scoreJ1);
-            writer.println(scoreJ2);
             writer.println(nbPlayers);
             writer.println(playerRound);
             String line="";
@@ -187,8 +185,6 @@ public class Fenetre extends JFrame {
         int condition=0;
 
         String name;
-        int scoreJ1=0;
-        int scoreJ2=0;
         int nbPlayers=0;
         int playerRound=0;
 
@@ -221,8 +217,6 @@ public class Fenetre extends JFrame {
             return;
 
         }
-        scoreJ1=Integer.parseInt(read.nextLine());
-        scoreJ2=Integer.parseInt(read.nextLine());
         nbPlayers=Integer.parseInt(read.nextLine());
         playerRound=Integer.parseInt(read.nextLine());
 
