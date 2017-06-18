@@ -32,7 +32,7 @@ public class Panneau extends JPanel{
 
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
-    JSlider slideDif = new JSlider(JSlider.VERTICAL,0,10,0);
+    JSlider slideDif = new JSlider(JSlider.VERTICAL,1,10,1);
 
     int difficulty=0;
 
