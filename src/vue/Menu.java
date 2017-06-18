@@ -92,14 +92,13 @@ public class Menu extends JPanel {
 				panel7.setVisible(true);
 				panel7.setBounds(0,0,1000,600);
 				parent.getContentPane().add(panel7);
-				
 			}
 		});
 		boutonNouvellePartie.setFont(new Font("Arial", Font.BOLD, 15));
 		boutonNouvellePartie.setBounds(373, 222, 235, 75);
 		add(boutonNouvellePartie);
 		
-		JButton boutonPartEnreg = new JButton("PARTIE ENREGISTR?E");
+		JButton boutonPartEnreg = new JButton("CHARGER PARTIE");
 		boutonPartEnreg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				

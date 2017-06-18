@@ -44,7 +44,7 @@ public class BoardDC extends Board{
 		super(19, 27,12);
 	}
 
-	public void affichePlateau()
+	public void displayBoard()
 	{
 		for (int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){

@@ -132,7 +132,7 @@ public class ColorsChoice extends JPanel{
 			boardDC.addPlayer();
 
 		boardDC.initBoard();
-		boardDC.affichePlateau();
+		boardDC.displayBoard();
 		pan.copyTab(boardDC);
 
 		pan.affichePlateau();
