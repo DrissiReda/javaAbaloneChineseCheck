@@ -96,7 +96,7 @@ public class PlayersNumberChoice extends JPanel {
 
 				if(game=="Abalone")
 				{
-					//Début partie.
+					//Dï¿½but partie.
 
 					try {
 						DatabaseConnect.saveGame(game, 2, 9, 13);
@@ -190,7 +190,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton4Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//Début partie.
+					//Dï¿½but partie.
 
 					try {
 						DatabaseConnect.saveGame(game, 4, 9, 13);
@@ -210,7 +210,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton5Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//Début partie.
+					//Dï¿½but partie.
 
 					try {
 						DatabaseConnect.saveGame(game, 5, 9, 13);
@@ -230,7 +230,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton6Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//Début partie.
+					//Dï¿½but partie.
 
 					try {
 						DatabaseConnect.saveGame(game, 6, 9, 13);
@@ -299,16 +299,28 @@ public class PlayersNumberChoice extends JPanel {
 			
 			
 			if(IA){
-				IA computeur = new IA(boardAB);
-				pan.refreshBoard();
-				String move = computeur.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player);
-				boardAB.executeMove(boardAB.stringToMove(move.substring(0,boardAB.getMoveSize())),boardAB.player);
-				
-				boardAB.switchPlayer();
-				pan.copyTab(boardAB);
-				pan.reInit();
-				pan.refreshBoard();
+				executeAI();
 			}
 		}
+	}
+	public void executeAI(){
+		IA computeur = new IA(boardAB);
+		pan.refreshBoard();
+		int d=pan.getDifficulty();
+		String move;
+		if(d<4)
+			move = computeur.alphaBeta(d, d, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,Integer.MAX_VALUE);
+		else
+			if(d<=9)
+				move = computeur.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,d+10);
+
+			else
+				move = computeur.alphaBeta(5, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,Integer.MAX_VALUE);
+		boardAB.executeMove(boardAB.stringToMove(move.substring(0,boardAB.getMoveSize())),boardAB.player);
+
+		boardAB.switchPlayer();
+		pan.copyTab(boardAB);
+		pan.reInit();
+		pan.refreshBoard();
 	}
 }
