@@ -198,7 +198,7 @@ public class IA {
 //(*)  main keeps track of the player wanting to make the smart move, crucial to differentiate
 //     evaluations, as maximizing/minimizing should be done for the same respective player throughout
 //     the lifetime of the function
-    public String alphaBeta(int deptG,int dept, int alpha, int beta,String current,Color player,Color main)
+    public String alphaBeta(int deptG,int dept, int alpha, int beta,String current,Color player,Color main,int diff)
     {
         long eval=eval_board(main);
         String moves= b.MoveOrdering(player);
@@ -219,11 +219,11 @@ public class IA {
             return score.get(hash_id);
             //return current+eval;
         }
-        for(int i=0;i<(moves.length()>(b.moveSize*17)?b.moveSize*17:moves.length());i+=b.moveSize)
+        for(int i=0;i<(moves.length()>(b.moveSize*diff)?b.moveSize*diff:moves.length());i+=b.moveSize)
         {
             //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+b.moveSize));
             b.executeMove(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
-            String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+b.moveSize), b.switchPlayerIA(player),main);
+            String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+b.moveSize), b.switchPlayerIA(player),main,diff);
             int value = Integer.parseInt(returnString.substring(b.moveSize));
             b.undo(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
             if (player==b.switchPlayerIA(main)){
