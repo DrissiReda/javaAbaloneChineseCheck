@@ -32,7 +32,6 @@ public abstract class Board {
 	public abstract Color getCase(Coords pos);
 	public abstract void setCase(Coords pos, Color col);
 	public abstract int marble_count(Color player);
-	public abstract void displayBoard();
     /**
      * Returns the next coordinates for a given position
      * @param pos (Coords)

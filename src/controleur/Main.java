@@ -7,7 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import modele.BoardAbalone;
 import modele.Config.Color;
 import modele.DatabaseConnect;
-import modele.Tile;
+import modele.Root;
 import vue.Fenetre;
 import vue.Panneau;
 
@@ -22,14 +22,22 @@ public class Main {
             EventQueue.invokeLater(new Runnable() {
     			public void run() {
     				try {
-    					Fenetre fen = new Fenetre();
+    					Root root = new Root();
     				} catch (Exception e) {
     					e.printStackTrace();
     				}
     			}
     		});
             int i=100;
-            
+
+
+            /*? faire :
+             * -Changement mot de passe.
+             * -Sauvegarde partie.
+             * -Historique.
+             */
+
+
 				//AlphaBeta a = new AlphaBeta(board);
 
 				//String move=a.alphaBeta(3, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, "",player, player);
@@ -77,6 +85,7 @@ public class Main {
                     }
                 }
             }*/
-            
+
+	
 	}
 }

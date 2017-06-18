@@ -18,7 +18,7 @@ public class TestDC {
         p.addPlayer();
         p.addPlayer();
         p.initBoard();
-        p.displayBoard();
+        p.affichePlateau();
         System.out.println(p.getCase(new Coords(5,5)));
         for(Color k : Color.values())
             if(k!=Color.EMPTY && k!=Color.ILLEGAL)
