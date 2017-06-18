@@ -5,9 +5,6 @@ import modele.Config.Color;
 import modele.Config.Direction;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import static modele.Config.Direction.RIGHT;
 
 public class BoardDC extends Board{
 
@@ -39,6 +36,7 @@ public class BoardDC extends Board{
 	private ArrayList<Color> players=new ArrayList<>();
 	private ArrayList<String> pseudos=new ArrayList<>();
 	private String currentplayer="sss";
+	private String pseudoPlayer="";
 	private boolean jumping=false;
 	public BoardDC() {
 		super(19, 27,12);
@@ -80,17 +78,29 @@ public class BoardDC extends Board{
 	public void setCase(Coords pos, Color c){
 		GameBoard[pos.x][pos.y].setColor(c);
 	}
-	public boolean addPlayer(){
-		return addPlayer("sss");
+	
+	public ArrayList <String> getPseudos(){
+		return this.pseudos;
 	}
-	public boolean addPlayer(String name){
+	public void setPseudo(String pseudo){
+		this.pseudoPlayer = pseudo;
+	}
+	
+	public String getPseudo(){
+		return this.pseudoPlayer;
+	}
+
+	public boolean addPlayer(){
 		if(players.size() >= 6)
 			return false;
-		pseudos.add(name);
-		if(players.size()==0)
+		if(players.size()==0){
 			players.add(Color.BLACK);
-		else
+			pseudos.add(pseudoPlayer);
+		}
+		else{
 			players.add(players.get(players.size()-1).getNext());
+			pseudos.add("Guest "+pseudos.size());
+		}
 		return true;
 	}
 	public ArrayList<Color> getColors(){

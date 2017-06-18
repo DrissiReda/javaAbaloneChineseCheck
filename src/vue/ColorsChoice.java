@@ -25,11 +25,14 @@ public class ColorsChoice extends JPanel{
 	//Choix du nombre de joueurs et lancement partie
 	private PanneauDC pan;
 	private BoardDC boardDC;
+	private String playerName;
 	
 	public ColorsChoice(JFrame parent, String playerName, String game, int nbPlayers) {
 		
 		setLayout(null);
 		setBackground(new Color(245, 245, 245));
+		
+		this.playerName = playerName;
 		
 		JLabel labelMenu = new JLabel("COULEURS");
 		labelMenu.setForeground(Color.BLACK);
@@ -126,8 +129,10 @@ public class ColorsChoice extends JPanel{
 		pan = new PanneauDC();
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
-
+		playerName="sss";
+		
 		boardDC = new BoardDC();
+		boardDC.setPseudo(playerName);
 		for (int i = 0; i < nbPlayers*nbColors; i++)
 			boardDC.addPlayer();
 
@@ -136,6 +141,7 @@ public class ColorsChoice extends JPanel{
 		pan.copyTab(boardDC);
 
 		pan.affichePlateau();
+		pan.displayPlayers(nbPlayers, boardDC.getPseudos(), boardDC.getColors());
 		parent.addMouseListener(new MouseAdapter() {
 			@Override
 

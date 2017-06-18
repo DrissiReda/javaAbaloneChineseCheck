@@ -1,5 +1,7 @@
 package vue;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -9,13 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import modele.BoardAbalone;
 import modele.BoardDC;
 import modele.Config;
-import modele.Coords;
 import modele.Config.Color;
+import modele.Coords;
 
 public class PanneauDC extends JPanel{
 	
@@ -32,6 +34,9 @@ public class PanneauDC extends JPanel{
 	private Config.Direction direction = null;
 	
 	private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
+	
+	// Elements graphiques
+	private JLabel joueur1;
 	
 	public void paintComponent(Graphics g) {
 		
@@ -173,6 +178,32 @@ public class PanneauDC extends JPanel{
     	this.direction = null;
     }
     
+    public void displayPlayers(int nbPlayers, ArrayList <String> pseudos, ArrayList <Config.Color> colors){
+    	setLayout(null);
+    	ArrayList <JLabel> listPlayers = new ArrayList <JLabel>();
+    	int i = 0;
+    	
+    	for(String pseudo : pseudos)
+    		listPlayers.add(new JLabel(pseudo));
+
+    	int height = 235;
+    	for(JLabel player : listPlayers){
+    		player.setBounds(750, height, 170, 50);
+    		player.setFont(new Font("Arial", Font.BOLD, 20));
+    		add(player);
+    		height += 50;
+    	}
+    }
+    	
+    	
+    	/*
+    	joueur1 = new JLabel("Joueur");
+    	setLayout(null);
+    	joueur1.setBounds(730, 250, 1000, 600);
+    	joueur1.setFont(new Font("Synchro LET", Font.BOLD, 20));
+    	add(joueur1);
+    	*/
+
     public void affichePlateau()
 	{
 		for (int i = 0; i < boardView.getHeight(); i++){
