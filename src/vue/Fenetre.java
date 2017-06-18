@@ -40,8 +40,6 @@ public class Fenetre extends JFrame {
         
         BoardAbalone board1 = new BoardAbalone();
         
-        save("PSEUDO",2,2,2,2,board1);
-        loadGame("PSEUDO",board1);
         
     }
     
