@@ -219,7 +219,7 @@ public class IA {
             return score.get(hash_id);
             //return current+eval;
         }
-        for(int i=0;i<moves.length();i+=b.moveSize)
+        for(int i=0;i<(moves.length()>(b.moveSize*17)?b.moveSize*17:moves.length());i+=b.moveSize)
         {
             //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+b.moveSize));
             b.executeMove(b.stringToMove(moves.substring(i,i+b.moveSize)),player);

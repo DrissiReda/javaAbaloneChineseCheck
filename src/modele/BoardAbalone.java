@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class BoardAbalone extends Board{
 	
-	public Coords[] tabPieces = new Coords[4];
+	public Coords[] tabPieces = new Coords[5];
 	public Color player = Color.WHITE;
 
 											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
@@ -25,7 +25,7 @@ public class BoardAbalone extends Board{
     
 
     public BoardAbalone() {
-		super(11, 19,16);
+		super(11, 19,17);
 		initTabPieces();
 	}
     
@@ -65,7 +65,7 @@ public class BoardAbalone extends Board{
     {
     	Coords defaultPos;
     	Coords defaultDir = new Coords(88, 88);
-    	for (int i = 0; i < 4; i++){
+    	for (int i = 0; i <= 4; i++){
     		defaultPos = new Coords(22, 22);
     		tabPieces[i] = i == 3 ? defaultDir : defaultPos;
     	}
@@ -215,7 +215,7 @@ public class BoardAbalone extends Board{
 				new Coords(Integer.parseInt(str.substring(4,6)),Integer.parseInt(str.substring(6,8))),
 				new Coords(Integer.parseInt(str.substring(8,10)),Integer.parseInt(str.substring(10,12))),
 				new Coords(Integer.parseInt(str.substring(12,14)),Integer.parseInt(str.substring(14,16))),
-					};
+				new Coords(str.substring(16,17).equals("C")?1:0,22)	};
 		return tab;
 	}
     public String MoveToString(Coords[] tab)
@@ -230,6 +230,9 @@ public class BoardAbalone extends Board{
 				ret=ret+"0";
 			ret=ret+tab[i].y;
 		}
+		if(tab[4].x==1)
+			ret=ret+"C";
+		else ret=ret+"A";
 		return ret;
 	}
     /**
@@ -452,7 +455,7 @@ public class BoardAbalone extends Board{
 	{
  		String Av_Moves="";
 		Coords marble,marble2,marble3;
-		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(22,22),new Coords(88,88)};
+		Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(22,22),new Coords(88,88),new Coords(22,22)};
 		for(int i=1;i<height;i++)
 		{
 			for(int j=1;j<width;j++)
@@ -489,10 +492,10 @@ public class BoardAbalone extends Board{
 												{
 													//sumito_3_2
 													tabPieces[3].x=60+k.ordinal();     tabPieces[3].y=88;   //88 is code name for direction for debugging purposes,
-													/*if(!inTab(next_coord(next_coord(marble3,k),k)))
-													{tabPieces[4].x=1; tabPieces[4].y=0;}
+													if(!inTab(next_coord(next_coord(marble3,k),k)))
+													{tabPieces[4].x=1; tabPieces[4].y=0;} //Capture
 													else
-													{tabPieces[4].x=0; tabPieces[4].y=0;}*/
+													{tabPieces[4].x=0; tabPieces[4].y=0;}
 													Av_Moves=Av_Moves+MoveToString(tabPieces);         //we add the broadside moves
 												}
 											}
@@ -500,12 +503,12 @@ public class BoardAbalone extends Board{
 											{
 												  //sumito_3_1
 												tabPieces[3].x=50+k.ordinal();          tabPieces[3].y=88;       //88 is code name for direction for debugging purposes,
-												/*
+
 												if(!inTab(next_coord(marble3,k)))
 												{tabPieces[4].x=1;  tabPieces[4].y=0;}               //Capture
 												else
 												{tabPieces[4].x=0;  tabPieces[4].y=0;}
-												*/               //Attack
+												             //Attack
 												Av_Moves=Av_Moves+MoveToString(tabPieces);        //we add the broadside moves
 											}
 										}
@@ -513,7 +516,7 @@ public class BoardAbalone extends Board{
 										{
 											tabPieces[2]=marble2;    //simple_move
 											tabPieces[3].x=30+k.ordinal();          tabPieces[3].y=88;
-											//tabPieces[4].setCoords(0,0);          //no captures
+											tabPieces[4].setCoords(0,0);          //no captures
 											Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);          //we add the broadside moves
 										}
 									}
@@ -525,12 +528,12 @@ public class BoardAbalone extends Board{
 									{
 										tabPieces[2].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
 										tabPieces[3].setCoords(40+k.ordinal(),88); //sumito_2_1
-										/*
+
 										if(!inTab(next_coord(next_coord(marble,k),k)))
 										{tabPieces[4].x=1;     tabPieces[4].y=0;}              //Capture
 										else
 										{tabPieces[4].x=0;     tabPieces[4].y=0;}              //Attack
-										*/
+
 										Av_Moves=Av_Moves+MoveToString(tabPieces);          //we add the broadside moves
 									}
 								}
@@ -538,7 +541,7 @@ public class BoardAbalone extends Board{
 								{
 									tabPieces[2].setCoords(22,22);
 									tabPieces[3].setCoords(30+k.ordinal(),88);
-									//tabPieces[4].setCoords(0,0);          //no captures
+									tabPieces[4].setCoords(0,0);          //no captures
 									Av_Moves=Av_Moves+MoveToString(tabPieces)+BroadsideMoves(tabPieces);  // we add the broadside moves
 								}
 							}
@@ -548,7 +551,7 @@ public class BoardAbalone extends Board{
 							tabPieces[1].setCoords(22,22); // 22 is the code for irrelevant and other functions will ignore these slots
 							tabPieces[2].setCoords(22,22);
 							tabPieces[3].setCoords(30+k.ordinal(),88);//simple_move
-							//tabPieces[4].setCoords(0,0); //no captures
+							tabPieces[4].setCoords(0,0); //no captures
 							Av_Moves=Av_Moves+MoveToString(tabPieces);//no need for broadsides
 						}
 					}
@@ -565,7 +568,7 @@ public String BroadsideMoves(Coords[] tabPieces){
 
 		String Bs_Moves="";
 		Coords marble;
-		//tabPieces[4].setCoords(0,0) ;          //no captures
+		tabPieces[4].setCoords(0,0) ;          //no captures
 		for(Direction k : Direction.values())
 		{
 			for(int i=0;i<4;i++)
@@ -616,7 +619,7 @@ public String BroadsideMoves(Coords[] tabPieces){
 		String  simplemove2="";
 		String  simplemove3="";
 		int type;
-		for(int i=0;i<moves.length();i+=16)
+		for(int i=0;i<moves.length();i+=moveSize)
 		{
 			type=Integer.parseInt(moves.substring(i+12,i+13));
 			switch(type)
@@ -625,40 +628,40 @@ public String BroadsideMoves(Coords[] tabPieces){
 					if(Integer.parseInt(moves.substring(i+4,i+6))!=22)
 					{
 						if(Integer.parseInt(moves.substring(i+8,i+10))!=22)
-							simplemove3=simplemove3+moves.substring(i,i+16);
+							simplemove3=simplemove3+moves.substring(i,i+moveSize);
 						else
-							simplemove2=simplemove2+moves.substring(i,i+16);
+							simplemove2=simplemove2+moves.substring(i,i+moveSize);
 					}
 					else
-						simplemove1=simplemove1+moves.substring(i,i+16);
+						simplemove1=simplemove1+moves.substring(i,i+moveSize);
 					break;
 				}
 				case 4 : {
-                    /*if(moves.substring(i+16,i+17),"A"))
-                        sumito21A=concat(sumito21A,substr(moves,i,17));
-                    else*/
-					sumito21C=sumito21C+moves.substring(i,i+16);
+                    if(moves.substring(i+16,i+moveSize).equals("A"))
+                        sumito21A=sumito21A+moves.substring(i,i+moveSize);
+                    else
+						sumito21C=sumito21C+moves.substring(i,i+moveSize);
 					break;
 				}
 				case 5 : {
-                    /*if(!strcmp(substr(moves,i+16,1),"A"))
-                        sumito31A=concat(sumito31A,substr(moves,i,17));
-                    else*/
-					sumito31C=sumito31C+moves.substring(i,i+16);
+                    if(moves.substring(i+16,i+moveSize).equals("A"))
+                        sumito31A=sumito31A+moves.substring(i,i+moveSize);
+                    else
+						sumito31C=sumito31C+moves.substring(i,i+moveSize);
 					break;
 				}
 				case 6 : {
-                    /*if(!strcmp(substr(moves,i+16,1),"A"))
-                        sumito32A=concat(sumito32A,substr(moves,i,17));
-                    else*/
-					sumito32C=sumito32C+moves.substring(i,i+16);
+                    if(moves.substring(i+16,i+moveSize).equals("A"))
+                        sumito32A=sumito32A+moves.substring(i,i+moveSize);
+                    else
+						sumito32C=sumito32C+moves.substring(i,i+moveSize);
 					break;
 				}
 				case 7 : {
 					if(Integer.parseInt(moves.substring(i+8,i+10))!=22)
-						broadside3=broadside3+moves.substring(i,i+16);
+						broadside3=broadside3+moves.substring(i,i+moveSize);
 					else
-						broadside2=broadside2+moves.substring(i,i+16);
+						broadside2=broadside2+moves.substring(i,i+moveSize);
 					break;
 				}
 			}
@@ -690,7 +693,7 @@ public String BroadsideMoves(Coords[] tabPieces){
 	    for(int i=0;i<move.length();i+=moveSize){
 	    	for(Coords [] tabPieces : ls)
 	        	if(MoveToString(tabPieces).substring(0,12).equals(move.substring(i,i+12))
-                	&& MoveToString(tabPieces).substring(13,moveSize).equals(move.substring(i+13,i+moveSize)))
+                	&& MoveToString(tabPieces).substring(13,moveSize-1).equals(move.substring(i+13,i+moveSize-1)))
 	            		return stringToMove(move.substring(i,i+moveSize));
         }
 		System.out.println("RETOUR NULL");
@@ -719,26 +722,11 @@ public String BroadsideMoves(Coords[] tabPieces){
 				for(k=0;k<=2;k++){
 					if(k==i || k==j)
 						continue;
-					Coords[] tmp={tP[i],tP[j],tP[k],tP[3]};
+					Coords[] tmp={tP[i],tP[j],tP[k],tP[3],new Coords(0,0)};
 					ret.add(tmp);
 				}
 			}
 		}
-		/*swap(tabPieces[1],tabPieces[0]);
-		ret.add(tabPieces);
-		if(tabPieces[2].x==22){
-			System.out.println(MoveToString(tabPieces));
-			return ret;
-		}
-		swap(tabPieces[1],tabPieces[2]);
-		ret.add(tabPieces);
-		swap(tabPieces[0],tabPieces[2]);
-		ret.add(tabPieces);
-		swap(tabPieces[1],tabPieces[0]);
-		ret.add(tabPieces);
-		swap(tabPieces[1],tabPieces[2]);
-		ret.add(tabPieces);
-		swap(tabPieces[0],tabPieces[2]);*/
 		return ret;
 	}
 	public ArrayList<Direction> generateDir(){
