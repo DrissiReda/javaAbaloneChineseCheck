@@ -85,7 +85,7 @@ public class Connection extends JPanel {
 				String password = String.valueOf(passwordField.getPassword());
 				try
 				{
-					/*if (DatabaseConnect.userLogin(textField.getText(), password))
+					if (!(DatabaseConnect.userLogin(textField.getText(), password)))
 					{
 						//message user not found or password not valid
 						labelConnexionFailure.setText("Echec de connexion");
@@ -93,14 +93,15 @@ public class Connection extends JPanel {
 					}
 					
 					else
-					{*/
+					{
 						setVisible(false);
 						JPanel panel5 = new GameChoice(parent,textField.getText());
 						panel5.setVisible(true);
 						panel5.setBounds(0,0,1000,600);
 						parent.getContentPane().add(panel5);
-
-				} 
+					} 
+				}
+				
 				catch (Exception e)
 				{
 					//error reading user

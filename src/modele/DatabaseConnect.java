@@ -23,7 +23,7 @@ public class DatabaseConnect
 	{
 		try 
 		{
-			connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/projet_java?user=root&password=root");
+			connection = DriverManager.getConnection("jdbc:mysql://www.budbud.ovh:3306/projet_java","iatic3","iatic3");
 			
 			return true;
 		}
