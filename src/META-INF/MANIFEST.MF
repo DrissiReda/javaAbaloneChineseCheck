@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
-Main-Class: modele.Main
+Class-Path: /root/Downloads/mariadb-java-client-2.0.2.jar
+Main-Class: controleur.Main
 
