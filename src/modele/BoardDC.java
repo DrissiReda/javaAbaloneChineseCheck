@@ -90,6 +90,25 @@ public class BoardDC extends Board{
 		return this.pseudoPlayer;
 	}
 
+	public void switchPlayer() {
+		currentplayer = switchPlayer(currentplayer);
+	}
+
+	public String switchPlayer(String n) {
+		int i = 0;
+		while (i < players.size()) {
+			if (n.equals(pseudos.get(i)))
+				break;
+			else
+				i++;
+		}
+		while (Owns(players.get(i), n)) {
+			i++;
+			if (i == players.size())
+				i = 0;
+		}
+		return pseudos.get(i);
+	}
 	public boolean addPlayer(){
 		if(players.size() >= 6)
 			return false;
@@ -106,6 +125,7 @@ public class BoardDC extends Board{
 	public ArrayList<Color> getColors(){
 		return players;
 	}
+
 	public Boolean Owns(Color c,String name){
 		if(!pseudos.contains(name))
 			return null; // joueur inexistant
@@ -561,10 +581,7 @@ public class BoardDC extends Board{
 
 	public boolean free_next(Coords pos,Direction dir)
 	{
-		if(inTab(next_coord(pos,dir)) && getCase(next_coord(pos,dir))==Color.EMPTY)
-			return true;
-		else
-			return false;
+		return inTab(next_coord(pos, dir)) && getCase(next_coord(pos, dir)) == Color.EMPTY;
 	}
 	public ArrayList<Direction> generateDir(Coords tP){
 		Coords[] a={tP,new Coords(22,22),new Coords(88,88)};

@@ -32,6 +32,10 @@ public class Panneau extends JPanel{
 
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
+    JSlider slideDif = new JSlider(JSlider.VERTICAL,1,10,1);
+
+    int difficulty=0;
+
     public void paintComponent(Graphics g) {
 
         //Initialisation
@@ -51,6 +55,9 @@ public class Panneau extends JPanel{
             validButtonDown.setBounds(530, 140, 170, 50);
             validButtonUp.setBounds(530, 140, 170, 50);
 
+            slideDif.setBounds(583,90,50,208);
+            add(slideDif);
+
             //police
             try {
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -62,31 +69,26 @@ public class Panneau extends JPanel{
             initParam=0;
 
 /*
-            JLabel hd = new JLabel("Test");
             JLabel hg = new JLabel("Test");
             JLabel d = new JLabel("Test");
             JLabel gau = new JLabel("Test");
             JLabel bd = new JLabel("Test");
             JLabel bg = new JLabel("Test");
-            hd.setBackground(Color.lightGray);
             hg.setBackground(Color.lightGray);
             d.setBackground(Color.lightGray);
             gau.setBackground(Color.lightGray);
             bd.setBackground(Color.lightGray);
             bg.setBackground(Color.lightGray);
-            hd.setOpaque(true);
             hg.setOpaque(true);
             d.setOpaque(true);
             gau.setOpaque(true);
             bd.setOpaque(true);
             bg.setOpaque(true);
-            hd.setBounds(792, 202, 72, 73);
             hg.setBounds(721, 202, 72, 73);
             d.setBounds(821, 278, 86, 65);
             gau.setBounds(672, 278, 86, 65);
             bd.setBounds(793, 345, 72, 73);
             bg.setBounds(722, 345, 72, 73);
-            this.add(hd);
             this.add(hg);
             this.add(d);
             this.add(gau);
@@ -319,6 +321,21 @@ public class Panneau extends JPanel{
             heightOffset = heightOffset + 40;
         }
 
+        for (int i = 0; i < 4; i++) {
+            if ((e.getX() > 539) && (e.getX() < 539 + 110) && (e.getY() > 387+(i*43)) && (e.getY() < 387+(i*43) + 34)){
+                switch (i){
+                    case 0: //SAUVER
+
+                    case 1: //CHARGER
+
+                    case 2: //MENU
+
+                    case 3: //A PROPOS
+
+                }
+            }
+        }
+
         if(flagClic==0){
             for (int i = 1; i < 11; i++) {
                 for (int j = 0; j < 19; j++) {
@@ -328,6 +345,8 @@ public class Panneau extends JPanel{
             boardView.initTabPieces();
             tabDirections.clear();
         }
+        this.difficulty=slideDif.getValue();
+        //System.out.println("DIFFICULTE : "+this.difficulty);
         repaint();
     }
 
@@ -360,5 +379,9 @@ public class Panneau extends JPanel{
             }
         }
         return false;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
     }
 } //
