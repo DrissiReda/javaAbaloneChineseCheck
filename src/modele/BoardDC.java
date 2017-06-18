@@ -5,9 +5,6 @@ import modele.Config.Color;
 import modele.Config.Direction;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import static modele.Config.Direction.RIGHT;
 
 public class BoardDC extends Board{
 
@@ -82,6 +79,26 @@ public class BoardDC extends Board{
 	}
 	public boolean addPlayer(){
 		return addPlayer("sss");
+	}
+
+	public void switchPlayer() {
+		currentplayer = switchPlayer(currentplayer);
+	}
+
+	public String switchPlayer(String n) {
+		int i = 0;
+		while (i < players.size()) {
+			if (n.equals(pseudos.get(i)))
+				break;
+			else
+				i++;
+		}
+		while (Owns(players.get(i), n)) {
+			i++;
+			if (i == players.size())
+				i = 0;
+		}
+		return pseudos.get(i);
 	}
 	public boolean addPlayer(String name){
 		if(players.size() >= 6)
@@ -555,10 +572,7 @@ public class BoardDC extends Board{
 
 	public boolean free_next(Coords pos,Direction dir)
 	{
-		if(inTab(next_coord(pos,dir)) && getCase(next_coord(pos,dir))==Color.EMPTY)
-			return true;
-		else
-			return false;
+		return inTab(next_coord(pos, dir)) && getCase(next_coord(pos, dir)) == Color.EMPTY;
 	}
 	public ArrayList<Direction> generateDir(Coords tP){
 		Coords[] a={tP,new Coords(22,22),new Coords(88,88)};
