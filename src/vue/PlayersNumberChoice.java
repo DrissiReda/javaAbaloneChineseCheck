@@ -1,32 +1,16 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-
 import modele.BoardAbalone;
-import modele.BoardDC;
 import modele.Config;
 import modele.DatabaseConnect;
 import modele.IA;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.SystemColor;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JComboBox;
-import modele.Config.*;
 
 public class PlayersNumberChoice extends JPanel {
 
@@ -269,6 +253,7 @@ public class PlayersNumberChoice extends JPanel {
 	}
 	
 	public void playAbalone(boolean IA, MouseEvent e){
+		boardAB.setIA(IA);
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement
 		if(pan.getConfirmDirection() != 0){
