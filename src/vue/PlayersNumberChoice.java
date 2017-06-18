@@ -190,7 +190,7 @@ public class PlayersNumberChoice extends JPanel {
 			bouton4Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//D�but partie.
+					//Début partie.
 
 					try {
 						DatabaseConnect.saveGame(game, 4, 9, 13);
@@ -315,7 +315,7 @@ public class PlayersNumberChoice extends JPanel {
 				move = computeur.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,d+10);
 
 			else
-				move = computeur.alphaBeta(5, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,Integer.MAX_VALUE);
+				move = computeur.alphaBeta(5, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,17);
 		boardAB.executeMove(boardAB.stringToMove(move.substring(0,boardAB.getMoveSize())),boardAB.player);
 
 		boardAB.switchPlayer();

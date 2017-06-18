@@ -83,6 +83,9 @@ public class BoardDC extends Board{
 	public boolean addPlayer(){
 		return addPlayer("sss");
 	}
+	public void switchPlayer(){
+
+	}
 	public boolean addPlayer(String name){
 		if(players.size() >= 6)
 			return false;
