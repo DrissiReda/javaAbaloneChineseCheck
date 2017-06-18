@@ -68,11 +68,6 @@ public class Panneau extends JPanel{
 
             initParam=0;
 
-            JLabel hd = new JLabel("Test");
-            hd.setBackground(Color.lightGray);
-            hd.setOpaque(true);
-            hd.setBounds(539, 367, 110, 30);
-            this.add(hd);
 /*
             JLabel hg = new JLabel("Test");
             JLabel d = new JLabel("Test");
