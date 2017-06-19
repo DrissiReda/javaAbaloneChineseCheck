@@ -2,7 +2,6 @@ package vue;
 
 import modele.BoardAbalone;
 import modele.Config;
-import modele.DatabaseConnect;
 import modele.IA;
 
 import javax.swing.*;
@@ -11,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class PlayersNumberChoice extends JPanel {
@@ -56,6 +54,7 @@ public class PlayersNumberChoice extends JPanel {
 				pan.setVisible(true);
 				parent.getContentPane().add(pan);
 				pan.setName(playerName);
+				boardAB.setName(playerName);
 				pan.setIA(true);
 
 				boardAB = new BoardAbalone();
@@ -105,7 +104,7 @@ public class PlayersNumberChoice extends JPanel {
 					pan = new Panneau();
 					pan.setVisible(true);
 					parent.getContentPane().add(pan);
-					pan.setName(playerName);
+					pan.getBoardView().setName(playerName);
 					pan.setIA(false);
 					
 					boardAB = new BoardAbalone();
@@ -276,9 +275,10 @@ public class PlayersNumberChoice extends JPanel {
 		label2.setBounds(0, 0, 1000, 600);
 		add(label2);
 	}
-	
-	public void playAbalone(boolean IA, MouseEvent e) throws FileNotFoundException, IOException{
+
+	public void playAbalone(boolean IA, MouseEvent e) throws IOException {
 		boardAB.setIA(IA);
+		boardAB.setName(pan.getBoardView().getName());
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement
 		if(pan.getConfirmDirection() != 0){

@@ -1,15 +1,13 @@
 package controleur;
 
-import java.awt.EventQueue;
-
-import javax.swing.UnsupportedLookAndFeelException;
-
 import modele.BoardAbalone;
-import modele.Config.Color;
 import modele.DatabaseConnect;
 import modele.Root;
-import vue.Fenetre;
-import vue.Panneau;
+
+import javax.swing.*;
+import java.awt.*;
+
+//import vue.Fenetre;
 
 public class Main {
 

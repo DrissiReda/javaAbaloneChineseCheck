@@ -1,16 +1,15 @@
 package vue;
+
 import modele.Board;
 import modele.BoardAbalone;
 import modele.Config;
 import modele.Coords;
-import modele.Config.Color;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,29 +17,21 @@ import java.util.Scanner;
 
 public class Panneau extends JPanel{
 
+    JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
+    int difficulty = 0;
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
-
     private BoardAbalone boardView = new BoardAbalone();
     private int tabSelec[][] = new int[11][19];
-
     private int initParam=1;
     private int confirmValidation=0;
     private int confirmDirection=0;
-
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
     private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
     private JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
-
     private Config.Direction direction=null;
-
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
-
-    JSlider slideDif = new JSlider(JSlider.VERTICAL,1,10,1);
-
-    int difficulty=0;
-    
     
     public void setName(String s)
     {
@@ -240,7 +231,9 @@ public class Panneau extends JPanel{
     }
 
     void copyTab(BoardAbalone b) {
+        String tmp = boardView.getName();
         this.boardView = b;
+        boardView.setName(tmp);
     }
 
     void refreshBoard(){
@@ -264,7 +257,7 @@ public class Panneau extends JPanel{
     }
 
 
-    public void click(MouseEvent e) throws FileNotFoundException, IOException {
+    public void click(MouseEvent e) throws IOException {
         int widthOffset = 0;
         int heightOffset = 183;
         int limX;
@@ -519,8 +512,8 @@ public class Panneau extends JPanel{
         {
         }
     }
-    
-    public void loadGame(String playerName, Board board) throws IOException, FileNotFoundException {
+
+    public void loadGame(String playerName, Board board) throws IOException {
 
         String path=null;
         String game;
@@ -577,28 +570,28 @@ public class Panneau extends JPanel{
                 {
 
                     case "ILLEGAL":
-                        board.setCase(new Coords(i,j),Color.ILLEGAL);
+                        board.setCase(new Coords(i, j), Config.Color.ILLEGAL);
                         break;
                     case "EMPTY":
-                        board.setCase(new Coords(i,j),Color.EMPTY);
+                        board.setCase(new Coords(i, j), Config.Color.EMPTY);
                         break;
                     case "BLACK":
-                        board.setCase(new Coords(i,j),Color.BLACK);
+                        board.setCase(new Coords(i, j), Config.Color.BLACK);
                         break;
                     case "WHITE":
-                        board.setCase(new Coords(i,j),Color.WHITE);
+                        board.setCase(new Coords(i, j), Config.Color.WHITE);
                         break;
                     case "RED":
-                        board.setCase(new Coords(i,j),Color.RED);
+                        board.setCase(new Coords(i, j), Config.Color.RED);
                         break;
                     case "GREEN":
-                        board.setCase(new Coords(i,j),Color.GREEN);
+                        board.setCase(new Coords(i, j), Config.Color.GREEN);
                         break;
                     case "BLUE":
-                        board.setCase(new Coords(i,j),Color.BLUE);
+                        board.setCase(new Coords(i, j), Config.Color.BLUE);
                         break;
                     case "YELLOW":
-                        board.setCase(new Coords(i,j),Color.YELLOW);
+                        board.setCase(new Coords(i, j), Config.Color.YELLOW);
                         break;
                     default:
                         condition=1;
@@ -619,28 +612,28 @@ public class Panneau extends JPanel{
                 switch (temp)
                 {
                     case "ILLEGAL":
-                    	board.getColors().add(Color.ILLEGAL);
+                        board.getColors().add(Config.Color.ILLEGAL);
                         break;
                     case "EMPTY":
-                    	board.getColors().add(Color.EMPTY);
+                        board.getColors().add(Config.Color.EMPTY);
                         break;
                     case "BLACK":
-                    	board.getColors().add(Color.BLACK);
+                        board.getColors().add(Config.Color.BLACK);
                         break;
                     case "WHITE":
-                    	board.getColors().add(Color.WHITE);
+                        board.getColors().add(Config.Color.WHITE);
                         break;
                     case "RED":
-                    	board.getColors().add(Color.RED);
+                        board.getColors().add(Config.Color.RED);
                         break;
                     case "GREEN":
-                    	board.getColors().add(Color.GREEN);
+                        board.getColors().add(Config.Color.GREEN);
                         break;
                     case "BLUE":
-                    	board.getColors().add(Color.BLUE);
+                        board.getColors().add(Config.Color.BLUE);
                         break;
                     case "YELLOW":
-                    	board.getColors().add(Color.YELLOW);
+                        board.getColors().add(Config.Color.YELLOW);
                         break;
                     default:
                         condition=1;
@@ -655,5 +648,9 @@ public class Panneau extends JPanel{
                 board.getPseudos().add(temp);
             }
         }
+    }
+
+    public BoardAbalone getBoardView() {
+        return boardView;
     }
 } //
