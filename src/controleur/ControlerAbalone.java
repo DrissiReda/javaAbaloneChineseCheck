@@ -15,6 +15,7 @@ public class ControlerAbalone{
 	JFrame parent;
 	BoardAbalone boardAB;
 	Panneau pan;
+	boolean moveOk = false;
 	
 	public ControlerAbalone(JFrame parent, boolean IA) {
 		this.parent = parent;
@@ -32,20 +33,22 @@ public class ControlerAbalone{
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					playAbalone(IA, e);
+					if(moveOk)
+						executeAI();
+					else
+						playAbalone(e);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 	}
 	
-	public void playAbalone(boolean IA, MouseEvent e) throws IOException{
+	public void playAbalone(MouseEvent e) throws IOException{
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement
 		if(pan.getConfirmDirection() != 0){
-
+			moveOk = true;
 			boardAB.setTabPieces(pan.getTabPieces());
 
 			//conversion de TabPiece (modele) avec GenerateMove
@@ -69,16 +72,13 @@ public class ControlerAbalone{
 
 			//AFFICHAGE DU PLATEAU
 			pan.refreshBoard();
-
-			if(IA){
-				executeAI();
-			}
 		}
 	}
 
 	public void executeAI(){
+		moveOk = false;
 		IA computeur = new IA(boardAB);
-		pan.refreshBoard();
+		//pan.refreshBoard();
 		int d=pan.getDifficulty();
 		String move;
 		if(d<4)
@@ -90,6 +90,10 @@ public class ControlerAbalone{
 			else
 				move = computeur.alphaBeta(5, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "", boardAB.player, boardAB.player,17);
 		boardAB.executeMove(boardAB.stringToMove(move.substring(0,boardAB.getMoveSize())),boardAB.player);
+		
+		//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
+		pan.setMarbleLeftBlack(boardAB.marble_count(Config.Color.BLACK));
+		pan.setMarbleLeftWhite(boardAB.marble_count(Config.Color.WHITE));
 
 		boardAB.switchPlayer();
 		pan.copyTab(boardAB);
