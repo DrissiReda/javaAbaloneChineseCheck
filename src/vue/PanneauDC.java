@@ -140,7 +140,7 @@ public class PanneauDC extends JPanel{
         }
 
 		for (int i = 0; i < 4; i++) {
-			if ((e.getX() > 551) && (e.getX() < 551 + 110) && (e.getY() > 385+(i*43)) && (e.getY() < 385+(i*43) + 34)){
+			if ((e.getX() > 561) && (e.getX() < 561 + 110) && (e.getY() > 385+(i*43)) && (e.getY() < 385+(i*43) + 34)){
 				switch (i){
 					case 0: //SAUVER
 
