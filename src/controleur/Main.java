@@ -2,7 +2,7 @@ package controleur;
 
 import modele.BoardAbalone;
 import modele.DatabaseConnect;
-import modele.Root;
+import modele.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +20,8 @@ public class Main {
             EventQueue.invokeLater(new Runnable() {
     			public void run() {
     				try {
-    					Root root = new Root();
-    				} catch (Exception e) {
+						Game game = new Game();
+					} catch (Exception e) {
     					e.printStackTrace();
     				}
     			}

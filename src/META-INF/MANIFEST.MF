@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Class-Path: /root/Downloads/mariadb-java-client-2.0.2.jar
+Class-Path: /game/Downloads/mariadb-java-client-2.0.2.jar
 Main-Class: controleur.Main
 

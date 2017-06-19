@@ -1,6 +1,5 @@
 package modele;
 
-import vue.PanneauDC;
 import vue.Start;
 
 import javax.swing.*;
@@ -8,9 +7,9 @@ import javax.swing.*;
 /**
  * Created by root on 16/06/17.
  */
-public class Root extends JFrame{
+public class Game extends JFrame {
 
-    public Root() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+    public Game() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 
         UIManager.setLookAndFeel(
                 UIManager.getSystemLookAndFeelClassName());
