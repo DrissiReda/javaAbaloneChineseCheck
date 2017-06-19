@@ -1,9 +1,9 @@
 package modele;
 
-import java.util.ArrayList;
-
 import modele.Config.Color;
 import modele.Config.Direction;
+
+import java.util.ArrayList;
 
 public abstract class Board {
 	protected int height, width;
@@ -23,7 +23,8 @@ public abstract class Board {
 	public abstract String AvailableMoves(Color player);
 	public abstract boolean inTab(Coords marble);
 	public abstract int ally_next(Coords marble,Direction k,Color player);
-	public abstract Boolean executeMove(Coords[] tabPieces,Color player);
+
+	public abstract int executeMove(Coords[] tabPieces, Color player);
 	public abstract boolean undo(Coords[] tabPieces,Color player);
 	public abstract Coords[] stringToMove(String str);
 	public abstract String MoveToString(Coords[] tabPieces);

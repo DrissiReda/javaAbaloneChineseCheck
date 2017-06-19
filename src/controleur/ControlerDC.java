@@ -1,12 +1,13 @@
 package controleur;
 
+import modele.BoardDC;
+import modele.Config.Direction;
+import modele.Coords;
+import vue.PanneauDC;
+
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JFrame;
-import modele.BoardDC;
-import modele.Coords;
-import modele.Config.Direction;
-import vue.PanneauDC;
 
 public class ControlerDC {
 	JFrame parent;
@@ -23,11 +24,8 @@ public class ControlerDC {
 		boardDC.setPseudo(playerName);
 		
 		boardDC.setCurrentPlayer(playerName); // changez cette valeur pour changer le joueur qui joue
-		
-		for (int i = 0; i < nbPlayers*nbColors; i++)
-			boardDC.addPlayer();
-
-		boardDC.initBoard();
+        boardDC.initPlayers(nbColors, nbPlayers);
+        boardDC.initBoard();
 		boardDC.affichePlateau();
 		pan.copyTab(boardDC);
 
@@ -38,15 +36,22 @@ public class ControlerDC {
 
 			// Quand on clique sur le Panel
 			public void mouseClicked(MouseEvent e) {
-				
-				if(playDC(true,false, e))
-					while(true){
-						if(!playDC(true,true,e))
-							break;
-					}
-					boardDC.setJumping(false);
-				 
-			}
+                int switcher;
+                //playDC returns true if a movement have been executed
+                switcher = playDC(true, false, e);
+                if (switcher == 2) {
+                    //manages dynamic jump
+                    while (true) {
+                        if (playDC(true, true, e) != 2)
+                            break;
+                    }
+                    boardDC.setJumping(false);
+
+                }
+                if (switcher != 0)
+                    boardDC.switchPlayer();
+
+            }
 		});
 		//clickFunction();
 	}
@@ -54,11 +59,11 @@ public class ControlerDC {
 	public void clickFunction(){ // add boolean IA
 		
 	}
-	
-	public boolean playDC(boolean IA,boolean flag, MouseEvent e){
-		pan.click(e);
-		boolean ret=false;
-		if(pan.moveOk()){
+
+    public int playDC(boolean IA, boolean flag, MouseEvent e) {
+        pan.click(e);
+        int ret = 0;
+        if(pan.moveOk()){
 			
 			Coords marble = pan.getMarble();
 			Coords target = pan.getTarget();
@@ -80,11 +85,11 @@ public class ControlerDC {
  			 */
 
 			ret=boardDC.executeMove(tabPieces, boardDC.getCase(marble));
-			if(flag && !ret)
-				boardDC.undo(tabPieces,boardDC.getCase(marble));
+            if (flag && ret != 2)
+                boardDC.undo(tabPieces,boardDC.getCase(marble));
 			if(flag && boardDC.generateDir(tabPieces).size()==0)
-				return false;
-			/*if(boardDC.executeMove(tabPieces,boardDC.getCase(marble))==false)
+                return 0;
+            /*if(boardDC.executeMove(tabPieces,boardDC.getCase(marble))==false)
 				boardDC.undo(tabPieces,boardDC.getCase(marble));*/
 			pan.copyTab(boardDC);
 			pan.reset();

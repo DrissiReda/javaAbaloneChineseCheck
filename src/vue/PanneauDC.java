@@ -1,23 +1,18 @@
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import modele.BoardDC;
+import modele.Config;
+import modele.Config.Color;
+import modele.Coords;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import modele.BoardDC;
-import modele.Config;
-import modele.Config.Color;
-import modele.Coords;
 
 public class PanneauDC extends JPanel{
 	
@@ -118,8 +113,8 @@ public class PanneauDC extends JPanel{
     	    	        	if(tar.x == i && tar.y == j)
     	    	        		clickMove(new Coords(i, j));
     	    	        }
-	                	if (boardView.selectMarble(new Coords(i,j), boardView.getPseudo())) {
-	                    	clickSelec(new Coords(i, j));
+						if (boardView.selectMarble(new Coords(i, j), boardView.getCurrentplayer())) {
+							clickSelec(new Coords(i, j));
 	                    }
 	                	/*else
 	                		reset();*/
@@ -133,11 +128,8 @@ public class PanneauDC extends JPanel{
     }
     
     public boolean moveOk(){
-    	if(direction != null)
-    		return true;
-    	else
-    		return false;
-    }
+		return direction != null;
+	}
 
     public void clickMove(Coords destination)
     {

@@ -349,11 +349,11 @@ public class BoardDC extends Board{
 		if(!Owns(getCase(pos),name))
 			return false;
 		// faire la condition, si le pion appartient bien au joueur alors
-		if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL && GameBoard[pos.x][pos.y].getColor() != Color.EMPTY){
+		//if(GameBoard[pos.x][pos.y].getColor() != Color.ILLEGAL && GameBoard[pos.x][pos.y].getColor() != Color.EMPTY){
 			tabPieces[0] = pos;
 			return true;
-		}
-		return false;
+
+		//return false;
 	}
 
 	@Override
@@ -374,24 +374,24 @@ public class BoardDC extends Board{
 	}
 
 	@Override
-	public Boolean executeMove(Coords[] tabPieces, Color player)
+	public int executeMove(Coords[] tabPieces, Color player)
 	{
 		// Si le pion est dans une zone d'arriv?e et que son mouvement va le faire sortir de cette zone
 		if(inOppositeArea(tabPieces[0]) && !inOppositeArea(next_coord(tabPieces[0], toDir(tabPieces[2].x%10))))
-			return null;
+			return 0;
 		// no ability to jump again, make sure not in a jump sequence
 		if(free_next(tabPieces[0], toDir(tabPieces[2].x % 10)) && jumping==false){
 			simple_move(tabPieces,player);
-			return false;
+			return 1;
 		}
 		else{
 			if(free_next(next_coord(tabPieces[0], toDir(tabPieces[2].x%10)), toDir(tabPieces[2].x%10))){
 				jump_move(tabPieces,player);
 				jumping=true;
-				return true;
+				return 2;
 			}
 		}
-	return false;	
+		return 1;
 	}
 	@Override
 	public boolean undo(Coords[] tabPieces, Color player) {
@@ -413,9 +413,8 @@ public class BoardDC extends Board{
 	public void cancelSelection(){
 		tabPieces[0] = null;
 	}
-	public String availableCoords(Coords c,Color player){
-		if(getCase(c)!=player)
-			return "";
+
+	public String availableCoords(Coords c) {
 		String Av_Moves="";
 		int i=c.x;
 		int j=c.y;
@@ -470,7 +469,7 @@ public class BoardDC extends Board{
 			for(int j=0;j<getWidth();j++) {
 				if (!inTab(new Coords(i,j)) || getCase(new Coords(i, j)) != player)
 					continue;
-				Av_Moves=Av_Moves+availableCoords(new Coords(i,j),player);
+				Av_Moves = Av_Moves + availableCoords(new Coords(i, j));
 			}
 		return Av_Moves;
 	}
@@ -653,9 +652,12 @@ public class BoardDC extends Board{
 		//	return ret;
 		String move="";
 		for(Color k : Color.values()) {
-			if(Owns(k ,currentplayer))
-				move = move + availableCoords(tP[0],k);
+			if (Owns(k, currentplayer)) {
+				System.out.println(k + " owned by " + currentplayer);
+				move = move + availableCoords(tP[0]);
+			}
 		}
+		System.out.println(move);
 		for(int i=0;i<move.length();i+=moveSize) {
 			//Test if move exists and is not a long jump
 			if (jumping) {
@@ -691,6 +693,10 @@ public class BoardDC extends Board{
 
 	public void setJumping(boolean jumping) {
 		this.jumping = jumping;
+	}
+
+	public String getCurrentplayer() {
+		return currentplayer;
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////

@@ -383,18 +383,29 @@ public class BoardAbalone extends Board{
 			setCase(next_coord(tabPieces[i], dir), player);
     	}
     }
-    
-    public Boolean executeMove(Coords tabPieces[], Color player){
-    	int type = tabPieces[3].x/10;
+
+	public int executeMove(Coords tabPieces[], Color player) {
+		int type = tabPieces[3].x/10;
     	
     	switch(type){
-    		case 3 : simple_move(tabPieces, player); return true;
-    		case 4 : sumito_2_1(tabPieces, player); return true;
-    		case 5 : sumito_3_1(tabPieces, player); return true;
-    		case 6 : sumito_3_2(tabPieces, player); return true;
-    		case 7 : broadside(tabPieces, player); return true;
-    		default : return false;
-    	}
+			case 3:
+				simple_move(tabPieces, player);
+				return 1;
+			case 4:
+				sumito_2_1(tabPieces, player);
+				return 1;
+			case 5:
+				sumito_3_1(tabPieces, player);
+				return 1;
+			case 6:
+				sumito_3_2(tabPieces, player);
+				return 1;
+			case 7:
+				broadside(tabPieces, player);
+				return 1;
+			default:
+				return 0;
+		}
     }
     public boolean undo(Coords tabPieces[],Color player)
 	{
