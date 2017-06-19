@@ -11,12 +11,12 @@ import modele.Config;
 import modele.IA;
 import vue.Panneau;
 
-public class AbaloneControl{
+public class ControlerAbalone{
 	JFrame parent;
 	BoardAbalone boardAB;
 	Panneau pan;
 	
-	public AbaloneControl(JFrame parent, boolean IA) {
+	public ControlerAbalone(JFrame parent, boolean IA) {
 		this.parent = parent;
 		pan = new Panneau();
 		pan.setVisible(true);
