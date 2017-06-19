@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class PanneauAbalone extends JPanel {
 
     JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
-    int difficulty = 0;
+    int difficulty = 1;
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
     private BoardAbalone boardView = new BoardAbalone();

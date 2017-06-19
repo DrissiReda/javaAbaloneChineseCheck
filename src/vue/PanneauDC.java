@@ -39,8 +39,9 @@ public class PanneauDC extends JPanel{
 	private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
 
     JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
-	
-	// Elements graphiques
+    int difficulty = 1;
+
+    // Elements graphiques
 	private JLabel joueur1;
 	
 	public void paintComponent(Graphics g) {
@@ -140,7 +141,7 @@ public class PanneauDC extends JPanel{
         }
 
 		for (int i = 0; i < 4; i++) {
-			if ((e.getX() > 551) && (e.getX() < 551 + 110) && (e.getY() > 385+(i*43)) && (e.getY() < 385+(i*43) + 34)){
+			if ((e.getX() > 561) && (e.getX() < 561 + 110) && (e.getY() > 385+(i*43)) && (e.getY() < 385+(i*43) + 34)){
 				switch (i){
 					case 0: //SAUVER
 
@@ -157,7 +158,8 @@ public class PanneauDC extends JPanel{
 				}
 			}
 		}
-        
+
+        this.difficulty=slideDif.getValue();
         repaint();
     }
     
@@ -273,6 +275,10 @@ public class PanneauDC extends JPanel{
     		System.out.println("");
 		}
 	}
+
+    public int getDifficulty() {
+        return difficulty;
+    }
     
     public ImageIcon generateImage(Color color){
     	switch(color){
