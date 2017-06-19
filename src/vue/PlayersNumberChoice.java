@@ -40,20 +40,24 @@ public class PlayersNumberChoice extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// Lancement Abalone
-
+				
+				/*
 				try {
 					DatabaseConnect.saveGame(game, 1, 9, 13);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
+				*/
+				
 				setVisible(false);
 				pan = new Panneau();
 				pan.setVisible(true);
 				parent.getContentPane().add(pan);
+				pan.setName(playerName);
+				pan.setIA(true);
 
 				boardAB = new BoardAbalone();
-
+				
 				parent.addMouseListener(new MouseAdapter() {
 					@Override
 
@@ -82,17 +86,21 @@ public class PlayersNumberChoice extends JPanel {
 				{
 					//D�but partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 2, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					*/
 					
 					setVisible(false);
 					pan = new Panneau();
 					pan.setVisible(true);
 					parent.getContentPane().add(pan);
-
+					pan.setName(playerName);
+					pan.setIA(false);
+					
 					boardAB = new BoardAbalone();
 
 					parent.addMouseListener(new MouseAdapter() {
@@ -176,12 +184,13 @@ public class PlayersNumberChoice extends JPanel {
 
 					//Début partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 4, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
+					*/
 
 				}
 			});
@@ -196,11 +205,13 @@ public class PlayersNumberChoice extends JPanel {
 
 					//D�but partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 5, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					*/
 
 				}
 			});
@@ -216,11 +227,13 @@ public class PlayersNumberChoice extends JPanel {
 
 					//D�but partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 6, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					*/
 
 				}
 			});

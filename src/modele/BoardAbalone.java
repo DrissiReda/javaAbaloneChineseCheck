@@ -9,8 +9,7 @@ public class BoardAbalone extends Board{
 	public Coords[] tabPieces = new Coords[5];
 	public Color player = Color.WHITE;
     private boolean IA = false;
-    private String black;
-    private String white;
+    private String name;
     //0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
 	private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
                                 {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
@@ -46,21 +45,14 @@ public class BoardAbalone extends Board{
     	return null;
     }
 
-    public String getBlack() {
-        return black;
+    public String getName() {
+        return name;
     }
 
-    public void setBlack(String s) {
-        black = s;
+    public void setName(String s) {
+        name = s;
     }
 
-    public String getWhite() {
-        return white;
-    }
-
-    public void setWhite(String s) {
-        white = s;
-    }
     public int getMoveSize(){
     	return moveSize;
     }
