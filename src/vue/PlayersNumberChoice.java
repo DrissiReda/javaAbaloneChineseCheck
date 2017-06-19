@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class PlayersNumberChoice extends JPanel {
 
@@ -64,7 +66,12 @@ public class PlayersNumberChoice extends JPanel {
 					// Quand on clique sur le Panel
 					public void mouseClicked(MouseEvent e) {
 
-						playAbalone(true, e);
+						try {
+							playAbalone(true, e);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
 					}
 				});
@@ -109,7 +116,12 @@ public class PlayersNumberChoice extends JPanel {
 						// Quand on clique sur le Panel
 						public void mouseClicked(MouseEvent e) {
 
-							playAbalone(false, e);
+							try {
+								playAbalone(false, e);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 
 						}
 					});
@@ -265,7 +277,7 @@ public class PlayersNumberChoice extends JPanel {
 		add(label2);
 	}
 	
-	public void playAbalone(boolean IA, MouseEvent e){
+	public void playAbalone(boolean IA, MouseEvent e) throws FileNotFoundException, IOException{
 		boardAB.setIA(IA);
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement

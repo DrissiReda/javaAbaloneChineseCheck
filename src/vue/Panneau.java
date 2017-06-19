@@ -60,9 +60,12 @@ public class Panneau extends JPanel{
             setLayout(null);
             scoreB.setFont(new Font("Synchro LET", Font.BOLD, 20));
             scoreW.setFont(new Font("Synchro LET", Font.BOLD, 20));
+            
+            /*
             scoreB.setForeground(new Color(0xE97628));
             scoreW.setForeground(new Color(0x5ABEB1));
-
+			*/
+            
             scoreB.setBounds(730, 450, 170, 50);
             scoreW.setBounds(730, 487, 170, 50);
             add(scoreB);
@@ -261,7 +264,7 @@ public class Panneau extends JPanel{
     }
 
 
-    public void click(MouseEvent e) {
+    public void click(MouseEvent e) throws FileNotFoundException, IOException {
         int widthOffset = 0;
         int heightOffset = 183;
         int limX;
@@ -350,13 +353,16 @@ public class Panneau extends JPanel{
                     	{
                     		save(boardView.getName(),2,boardView.player.ordinal(),boardView);
                     	}
+                    	break;
                     	
                     case 1: //CHARGER
 
+                    	System.out.println("TEST");
+                    	break;
                     case 2: //MENU
-
+                    	break;
                     case 3: //A PROPOS
-
+                    	break;
                 }
             }
         }
