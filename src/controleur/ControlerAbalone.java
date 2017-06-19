@@ -1,25 +1,24 @@
 package controleur;
 
+import modele.BoardAbalone;
+import modele.Config;
+import modele.IA;
+import vue.PanneauAbalone;
+
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-import javax.swing.JFrame;
-
-import modele.BoardAbalone;
-import modele.Config;
-import modele.IA;
-import vue.Panneau;
-
 public class ControlerAbalone{
 	JFrame parent;
 	BoardAbalone boardAB;
-	Panneau pan;
+	PanneauAbalone pan;
 	boolean moveOk = false;
 	
 	public ControlerAbalone(JFrame parent, boolean IA) {
 		this.parent = parent;
-		pan = new Panneau();
+		pan = new PanneauAbalone();
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
 		boardAB = new BoardAbalone();

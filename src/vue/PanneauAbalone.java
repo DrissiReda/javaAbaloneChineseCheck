@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Panneau extends JPanel{
+public class PanneauAbalone extends JPanel {
 
     JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
     int difficulty = 0;

@@ -1,29 +1,17 @@
 package vue;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-
 import controleur.ControlerAbalone;
 import modele.BoardAbalone;
-import modele.Config;
-import modele.IA;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PlayersNumberChoice extends JPanel {
 
 	private BoardAbalone boardAB;
-	private Panneau pan;
+	private PanneauAbalone pan;
 
 
 	public PlayersNumberChoice(JFrame parent, String playerName, String game) {
