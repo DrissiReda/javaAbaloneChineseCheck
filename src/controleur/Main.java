@@ -2,7 +2,7 @@ package controleur;
 
 import modele.BoardAbalone;
 import modele.DatabaseConnect;
-import modele.Game;
+import vue.Game;
 
 import javax.swing.*;
 import java.awt.*;

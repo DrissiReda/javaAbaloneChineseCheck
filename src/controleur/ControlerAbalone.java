@@ -3,6 +3,7 @@ package controleur;
 import modele.BoardAbalone;
 import modele.Config;
 import modele.IA;
+import vue.Endgame;
 import vue.PanneauAbalone;
 
 import javax.swing.*;
@@ -22,7 +23,6 @@ public class ControlerAbalone{
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
 		boardAB = new BoardAbalone();
-		
 		clickFunction(IA);
 	}
 	
@@ -32,11 +32,16 @@ public class ControlerAbalone{
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					if(moveOk)
-						executeAI();
-					else
-						playAbalone(e);
-				} catch (IOException e1) {
+                    if (IA)
+                        if (moveOk) {
+                            executeAI();
+                        } else {
+                            playAbalone(e);
+                        }
+                    else {
+                        playAbalone(e);
+                    }
+                } catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -61,6 +66,8 @@ public class ControlerAbalone{
 			//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
 			pan.setMarbleLeftBlack(boardAB.marble_count(Config.Color.BLACK));
 			pan.setMarbleLeftWhite(boardAB.marble_count(Config.Color.WHITE));
+            if (boardAB.winner() == null)
+                EndWhite();
 
 			//CHANGEMENT DE JOUEUR
 			boardAB.switchPlayer();				
@@ -74,7 +81,17 @@ public class ControlerAbalone{
 		}
 	}
 
-	public void executeAI(){
+    public void EndWhite() {
+        System.out.println("WINNING");
+        //Endgame end=new Endgame(boardAB.marble_count(Config.Color.WHITE),boardAB.marble_count(Config.Color.BLACK),true,boardAB.getName());
+        Endgame end = new Endgame();
+        end.affiche(boardAB.marble_count(Config.Color.WHITE), boardAB.marble_count(Config.Color.BLACK), true, boardAB.getName());
+        end.setVisible(true);
+        end.setBounds(0, 0, 1000, 600);
+        parent.getContentPane().add(end);
+    }
+
+    public void executeAI(){
 		moveOk = false;
 		IA computeur = new IA(boardAB);
 		//pan.refreshBoard();

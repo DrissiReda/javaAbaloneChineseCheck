@@ -191,6 +191,13 @@ public class BoardDC extends Board{
 		return players;
 	}
 
+	public ArrayList<Color> getColors(String p) {
+		ArrayList<Color> ret = new ArrayList<>();
+		for (Color k : players)
+			if (Owns(k, p))
+				ret.add(k);
+		return ret;
+	}
 	public Boolean Owns(Color c,String name){
 		if(!pseudos.contains(name))
 			return null; // joueur inexistant
