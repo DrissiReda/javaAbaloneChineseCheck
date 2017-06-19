@@ -78,33 +78,6 @@ public class PanneauAbalone extends JPanel {
 
             initParam=0;
 
-/*
-            JLabel hg = new JLabel("Test");
-            JLabel d = new JLabel("Test");
-            JLabel gau = new JLabel("Test");
-            JLabel bd = new JLabel("Test");
-            JLabel bg = new JLabel("Test");
-            hg.setBackground(Color.lightGray);
-            d.setBackground(Color.lightGray);
-            gau.setBackground(Color.lightGray);
-            bd.setBackground(Color.lightGray);
-            bg.setBackground(Color.lightGray);
-            hg.setOpaque(true);
-            d.setOpaque(true);
-            gau.setOpaque(true);
-            bd.setOpaque(true);
-            bg.setOpaque(true);
-            hg.setBounds(721, 202, 72, 73);
-            d.setBounds(821, 278, 86, 65);
-            gau.setBounds(672, 278, 86, 65);
-            bd.setBounds(793, 345, 72, 73);
-            bg.setBounds(722, 345, 72, 73);
-            this.add(hg);
-            this.add(d);
-            this.add(gau);
-            this.add(bd);
-            this.add(bg);
-*/
         }
 
         //Affiche le fond
