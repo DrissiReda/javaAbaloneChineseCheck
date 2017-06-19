@@ -1,6 +1,4 @@
-package modele;
-
-import vue.Start;
+package vue;
 
 import javax.swing.*;
 
