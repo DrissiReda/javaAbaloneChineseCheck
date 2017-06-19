@@ -81,7 +81,7 @@ public class PlayersNumberChoice extends JPanel {
 					
 					setVisible(false);
 					/******************* Lancement jeu **********************/
-					ControlerAbalone abalone = new ControlerAbalone(parent, true);
+					ControlerAbalone abalone = new ControlerAbalone(parent, false);
 					/********************************************************/
 				}
 
