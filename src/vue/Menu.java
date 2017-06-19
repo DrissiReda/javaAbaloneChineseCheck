@@ -99,7 +99,7 @@ public class Menu extends JPanel {
 		boutonNouvellePartie.setBounds(373, 222, 235, 75);
 		add(boutonNouvellePartie);
 		
-		JButton boutonPartEnreg = new JButton("PARTIE ENREGISTR?E");
+		JButton boutonPartEnreg = new JButton("CHARGER PARTIE");
 		boutonPartEnreg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
