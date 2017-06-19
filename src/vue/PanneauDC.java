@@ -13,9 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import modele.BoardDC;
 import modele.Config;
@@ -27,6 +25,8 @@ public class PanneauDC extends JPanel{
 	private BoardDC boardView = new BoardDC();
 	private ArrayList<Coords> listTargets = new ArrayList<Coords>();
 	private int tabTargets[][] = new int[19][27];
+
+    private int initParam=1;
 	
 	private Coords[] tabPieces = new Coords[3];
 	private Coords marble = new Coords(0,0);
@@ -37,11 +37,18 @@ public class PanneauDC extends JPanel{
 	private Config.Direction direction = null;
 	
 	private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
+
+    JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
 	
 	// Elements graphiques
 	private JLabel joueur1;
 	
 	public void paintComponent(Graphics g) {
+
+        if(initParam==1){
+            slideDif.setBounds(600,140,50,208);
+            add(slideDif);
+        }
 		
 		addImage(g, "Images/dames/Board.png", 0, 0, this);
 		 
@@ -131,6 +138,25 @@ public class PanneauDC extends JPanel{
             }
             heightOffset = heightOffset + 22;
         }
+
+		for (int i = 0; i < 4; i++) {
+			if ((e.getX() > 551) && (e.getX() < 551 + 110) && (e.getY() > 385+(i*43)) && (e.getY() < 385+(i*43) + 34)){
+				switch (i){
+					case 0: //SAUVER
+
+
+						break;
+					case 1: //CHARGER
+
+
+						break;
+					case 2: //MENU
+						break;
+					case 3: //A PROPOS
+						break;
+				}
+			}
+		}
         
         repaint();
     }
