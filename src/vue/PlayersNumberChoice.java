@@ -53,12 +53,11 @@ public class PlayersNumberChoice extends JPanel {
 				pan = new Panneau();
 				pan.setVisible(true);
 				parent.getContentPane().add(pan);
-				pan.setName(playerName);
-				boardAB.setName(playerName);
+				pan.getBoardView().setName(playerName);
 				pan.setIA(true);
-
-				boardAB = new BoardAbalone();
 				
+				boardAB = new BoardAbalone();
+
 				parent.addMouseListener(new MouseAdapter() {
 					@Override
 
