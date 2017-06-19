@@ -65,7 +65,7 @@ public class PanneauAbalone extends JPanel {
             validButtonDown.setBounds(530, 140, 170, 50);
             validButtonUp.setBounds(530, 140, 170, 50);
 
-            slideDif.setBounds(583,90,50,208);
+            slideDif.setBounds(600,90,50,208);
             add(slideDif);
 
             //police
