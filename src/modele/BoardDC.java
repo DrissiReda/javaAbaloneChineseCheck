@@ -35,7 +35,7 @@ public class BoardDC extends Board{
 	private Coords[] tabPieces=new Coords[3];
 	private ArrayList<Color> players=new ArrayList<>();
 	private ArrayList<String> pseudos=new ArrayList<>();
-	private String currentplayer="sss";
+	private String currentplayer="";
 	private String pseudoPlayer="";
 	private boolean jumping=false;
 	public BoardDC() {
@@ -77,6 +77,10 @@ public class BoardDC extends Board{
 	}
 	public void setCase(Coords pos, Color c){
 		GameBoard[pos.x][pos.y].setColor(c);
+	}
+	
+	public void setCurrentPlayer(String name){
+		this.currentplayer = name;
 	}
 	
 	public ArrayList <String> getPseudos(){

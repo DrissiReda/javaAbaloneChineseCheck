@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controleur.ControlerDC;
 import modele.BoardDC;
 import modele.Config;
 import modele.Config.Direction;
@@ -120,82 +121,8 @@ public class ColorsChoice extends JPanel{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*ArrayList<Config.Color> listColors = new ArrayList<Config.Color>();
-		for (Config.Color color : Config.Color.values()){ 
-			if(color.ordinal() != 0 && color.ordinal() != 1) // On n'ajoute pas ILLEGAL et EMPTY
-				listColors.add(color);
-		}*/
 		setVisible(false);
-		pan = new PanneauDC();
-		pan.setVisible(true);
-		parent.getContentPane().add(pan);
-		playerName="sss";
-		
-		boardDC = new BoardDC();
-		boardDC.setPseudo(playerName);
-		for (int i = 0; i < nbPlayers*nbColors; i++)
-			boardDC.addPlayer();
-
-		boardDC.initBoard();
-		boardDC.affichePlateau();
-		pan.copyTab(boardDC);
-
-		pan.affichePlateau();
-		pan.displayPlayers(nbPlayers, boardDC.getPseudos(), boardDC.getColors());
-		parent.addMouseListener(new MouseAdapter() {
-			@Override
-
-			// Quand on clique sur le Panel
-			public void mouseClicked(MouseEvent e) {
-
-				if(playDC(true,false, e))
-					while(true){
-						if(!playDC(true,true,e))
-							break;
-					}
-					boardDC.setJumping(false);
-				
-
-			}
-		});
-	}
-	
-	public boolean playDC(boolean IA,boolean flag, MouseEvent e){
-		pan.click(e);
-		boolean ret=false;
-		if(pan.moveOk()){
-			System.out.println("move");
-			Coords marble = pan.getMarble();
-			Coords target = pan.getTarget();
-			Direction dir = pan.getDirection();
-
-			Coords[] tabPieces={new Coords(22,22),new Coords(22,22),new Coords(88,88)};
-			tabPieces[0] = marble;
-			tabPieces[1] = target;
-			tabPieces[2].x = 10+dir.ordinal();
-			/*
-			 * if(executeMove()== true ) #initiate jump sequence#{
- 			 * 	int flag=1;
- 			 * 	while(flag==1){
- 			 *
- 			 * 		if(generateDir().size()==0)
- 			 * 			break;
- 			 *	 	if(executeMove==false) # move was a simple, illegal, revert
-			 * 			undo()
- 			 */
-
-			ret=boardDC.executeMove(tabPieces, boardDC.getCase(marble));
-			if(flag && !ret)
-				boardDC.undo(tabPieces,boardDC.getCase(marble));
-			if(flag && boardDC.generateDir(tabPieces).size()==0)
-				return false;
-			/*if(boardDC.executeMove(tabPieces,boardDC.getCase(marble))==false)
-				boardDC.undo(tabPieces,boardDC.getCase(marble));*/
-			pan.copyTab(boardDC);
-			pan.reset();
-			pan.refreshBoard();
-		}
-		return ret;
+		ControlerDC controler = new ControlerDC(parent, playerName, nbPlayers, nbColors, false);
 	}
 
 }

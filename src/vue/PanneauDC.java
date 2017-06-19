@@ -118,7 +118,7 @@ public class PanneauDC extends JPanel{
     	    	        	if(tar.x == i && tar.y == j)
     	    	        		clickMove(new Coords(i, j));
     	    	        }
-	                	if (boardView.selectMarble(new Coords(i,j), "sss")) {
+	                	if (boardView.selectMarble(new Coords(i,j), boardView.getPseudo())) {
 	                    	clickSelec(new Coords(i, j));
 	                    }
 	                	/*else
@@ -167,7 +167,6 @@ public class PanneauDC extends JPanel{
     {
     	this.marble = marble;
     	listTargets = boardView.generateTarget(this.marble);
-    	System.out.println("Click de sélection");
     }
     
     public void reset(){

@@ -58,8 +58,5 @@ public class Start extends JPanel {
 		lblCliquezPourContinuer.setFont(new Font("Synchro LET", Font.PLAIN, 30));
 		lblCliquezPourContinuer.setBounds(295, 503, 384, 71);
 		add(lblCliquezPourContinuer);
-
-		
-		
 	}
 }

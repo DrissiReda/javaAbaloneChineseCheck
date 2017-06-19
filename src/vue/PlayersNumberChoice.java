@@ -122,7 +122,7 @@ public class PlayersNumberChoice extends JPanel {
 		add(labelJoueur);
 
 
-		if(game=="Abalone")
+		if(game == "Abalone")
 		{
 			JLabel labelAbalone = new JLabel("ABALONE");
 			labelAbalone.setForeground(Color.BLACK);
@@ -132,7 +132,7 @@ public class PlayersNumberChoice extends JPanel {
 
 		}
 
-		else if(game=="Dames chinoises")
+		else if(game == "Dames chinoises")
 		{
 			JLabel labelDamesChinoises = new JLabel("DAMES CHINOISES");
 			labelDamesChinoises.setForeground(Color.BLACK);
