@@ -2,6 +2,7 @@ package controleur;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -30,13 +31,17 @@ public class AbaloneControl{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				playAbalone(IA, e);
+				try {
+					playAbalone(IA, e);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				
 			}
 		});
 	}
 	
-	public void playAbalone(boolean IA, MouseEvent e){
+	public void playAbalone(boolean IA, MouseEvent e) throws IOException{
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement
 		if(pan.getConfirmDirection() != 0){

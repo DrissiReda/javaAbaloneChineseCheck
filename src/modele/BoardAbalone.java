@@ -8,8 +8,9 @@ public class BoardAbalone extends Board{
 	
 	public Coords[] tabPieces = new Coords[5];
 	public Color player = Color.WHITE;
-
-											//0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
+    private boolean IA = false;
+    private String name;
+    //0                         1                       2                      3                       4                       5                       6                       7                        8                      9                          10                    11                        12                   13                      14                      15                       16                     17                        18
 	private Tile GameBoard[][]={{new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
                                 {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
                                 {new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.BLACK  ),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL),new Tile(Color.ILLEGAL)},
@@ -43,7 +44,15 @@ public class BoardAbalone extends Board{
     {
     	return null;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String s) {
+        name = s;
+    }
+
     public int getMoveSize(){
     	return moveSize;
     }
@@ -142,17 +151,11 @@ public class BoardAbalone extends Board{
     	switch(selected.getColor()){
     		case ILLEGAL : return false;
     		case EMPTY : return false;
-    		case WHITE : 
-    			if(player == Color.WHITE)
-    				return true;
-    			else
-    				return false;
-    		case BLACK :
-    			if(player == Color.BLACK)
-    				return true;
-    			else
-    				return false;
-    		default : break;
+            case WHITE:
+                return player == Color.WHITE;
+            case BLACK :
+                return player == Color.BLACK;
+            default : break;
     	}
 		return false;
     }
@@ -297,11 +300,8 @@ public class BoardAbalone extends Board{
     
     public boolean free_next(Coords pos,Direction dir)
 	{
-		if(!inTab(next_coord(pos,dir)) || getCase(next_coord(pos,dir))==Color.EMPTY)
-			return true;
-		else
-			return false;
-	}
+        return !inTab(next_coord(pos, dir)) || getCase(next_coord(pos, dir)) == Color.EMPTY;
+    }
 	
     /**
      * Verifies if the given position is in the board
@@ -761,5 +761,13 @@ public String BroadsideMoves(Coords[] tabPieces){
 
     public Color getPlayer() {
         return player;
+    }
+
+    public boolean getIA() {
+        return IA;
+    }
+
+    public void setIA(boolean IA) {
+        this.IA = IA;
     }
 }

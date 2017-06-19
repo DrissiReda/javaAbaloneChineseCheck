@@ -1,33 +1,24 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-
-import controleur.AbaloneControl;
-import modele.BoardAbalone;
-import modele.BoardDC;
-import modele.Config;
-import modele.DatabaseConnect;
-import modele.IA;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
-import javax.swing.JComboBox;
-import modele.Config.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+
+import controleur.AbaloneControl;
+import modele.BoardAbalone;
+import modele.Config;
+import modele.IA;
 
 public class PlayersNumberChoice extends JPanel {
 
@@ -57,18 +48,23 @@ public class PlayersNumberChoice extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// Lancement Abalone
-
+				
+				/*
 				try {
 					DatabaseConnect.saveGame(game, 1, 9, 13);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-				setVisible(false);
+				*/
 				
-				/******************* DEBUT PARTIE *******************/
-				AbaloneControl controler = new AbaloneControl(parent, true);
-				/****************************************************/
+				setVisible(false);
+				if (game == "Abalone"){
+					/******************* Lancement jeu **********************/
+					AbaloneControl abalone = new AbaloneControl(parent, true);
+					/********************************************************/
+				}else{
+					// Appel controleur Dames (vs ia)
+				}
 			}
 		});
 
@@ -85,21 +81,23 @@ public class PlayersNumberChoice extends JPanel {
 
 				if(game=="Abalone")
 				{
+					//D�but partie.
+
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 2, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					*/
 					
 					setVisible(false);
-					
-					/******************* DEBUT PARTIE *******************/
-					AbaloneControl controler = new AbaloneControl(parent, false);
-					/****************************************************/
-
+					/******************* Lancement jeu **********************/
+					AbaloneControl abalone = new AbaloneControl(parent, true);
+					/********************************************************/
 				}
 
-				if(game=="Dames chinoises")
+				if(game == "Dames chinoises")
 				{
 					//Choix 1 ou 2 ou 3 couleurs.
 					setVisible(false);
@@ -166,12 +164,13 @@ public class PlayersNumberChoice extends JPanel {
 
 					//Début partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 4, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
+					*/
 
 				}
 			});
@@ -186,11 +185,13 @@ public class PlayersNumberChoice extends JPanel {
 
 					//D�but partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 5, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					*/
 
 				}
 			});
@@ -206,11 +207,13 @@ public class PlayersNumberChoice extends JPanel {
 
 					//D�but partie.
 
+					/*
 					try {
 						DatabaseConnect.saveGame(game, 6, 9, 13);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					*/
 
 				}
 			});
@@ -241,8 +244,10 @@ public class PlayersNumberChoice extends JPanel {
 		label2.setBounds(0, 0, 1000, 600);
 		add(label2);
 	}
-	
-	public void playAbalone(boolean IA, MouseEvent e){
+
+	public void playAbalone(boolean IA, MouseEvent e) throws IOException {
+		boardAB.setIA(IA);
+		boardAB.setName(pan.getBoardView().getName());
 		pan.click(e);
 		// Quand on clique sur un bouton de mouvement
 		if(pan.getConfirmDirection() != 0){
@@ -270,7 +275,8 @@ public class PlayersNumberChoice extends JPanel {
 
 			//AFFICHAGE DU PLATEAU
 			pan.refreshBoard();
-
+			
+			
 			if(IA){
 				executeAI();
 			}
