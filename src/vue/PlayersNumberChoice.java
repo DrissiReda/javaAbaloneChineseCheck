@@ -1,6 +1,7 @@
 package vue;
 
 import controleur.ControlerAbalone;
+import controleur.ControlerDC;
 import modele.BoardAbalone;
 
 import javax.swing.*;
@@ -159,6 +160,9 @@ public class PlayersNumberChoice extends JPanel {
 						e.printStackTrace();
 					}
 					*/
+					
+					setVisible(false);
+					ControlerDC controler = new ControlerDC(parent, playerName, 4, 1, false);
 
 				}
 			});
@@ -166,27 +170,6 @@ public class PlayersNumberChoice extends JPanel {
 			bouton4Joueurs.setFont(new Font("Arial", Font.BOLD, 15));
 			bouton4Joueurs.setBounds(535, 300, 195, 65);
 			add(bouton4Joueurs);
-
-			JButton bouton5Joueurs = new JButton("5 JOUEURS");
-			bouton5Joueurs.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-
-					//D�but partie.
-
-					/*
-					try {
-						DatabaseConnect.saveGame(game, 5, 9, 13);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					*/
-
-				}
-			});
-			bouton5Joueurs.setBackground(UIManager.getColor("Button.background"));
-			bouton5Joueurs.setFont(new Font("Arial", Font.BOLD, 15));
-			bouton5Joueurs.setBounds(290, 376, 195, 65);
-			add(bouton5Joueurs);
 
 
 			JButton bouton6Joueurs = new JButton("6 JOUEURS");
@@ -202,6 +185,8 @@ public class PlayersNumberChoice extends JPanel {
 						e.printStackTrace();
 					}
 					*/
+					setVisible(false);
+					ControlerDC controler = new ControlerDC(parent, playerName, 6, 1, false);
 
 				}
 			});

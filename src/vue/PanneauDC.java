@@ -1,18 +1,26 @@
 package vue;
 
-import modele.BoardDC;
-import modele.Config;
-import modele.Config.Color;
-import modele.Coords;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import modele.BoardDC;
+import modele.Config;
+import modele.Config.Color;
+import modele.Coords;
 
 public class PanneauDC extends JPanel{
 	
@@ -171,22 +179,42 @@ public class PanneauDC extends JPanel{
     
     public void displayPlayers(int nbPlayers, ArrayList <String> pseudos, ArrayList <Config.Color> colors){
     	setLayout(null);
+    	ArrayList<Color> listColors;
     	ArrayList <JLabel> listPlayers = new ArrayList <JLabel>();
     	int i = 0;
-    	
-    	for(String pseudo : pseudos)
+
+    	// Exclusion des doublons de pseudos dans distinctPseudos
+        Set set = new HashSet() ;
+        set.addAll(pseudos) ;
+        ArrayList <String> distinctPseudos = new ArrayList<String>(set) ;
+        Collections.reverse(distinctPseudos);
+        // **************************
+        
+        
+    	for(String pseudo : distinctPseudos)
     		listPlayers.add(new JLabel(pseudo));
 
     	int height = 235;
+    	int x = 750;
+    	int decal;
+    	JLabel imgColor;
     	for(JLabel player : listPlayers){
-    		player.setBounds(750, height, 170, 50);
+    		decal = -70;
+    		listColors = boardView.getColors(player.getText());
+    		player.setBounds(x, height, 170, 50);
     		player.setFont(new Font("Arial", Font.BOLD, 20));
     		add(player);
-    		height += 50;
+    		for(Color color : listColors){
+    			ImageIcon image = generateImage(color);
+    			imgColor = new JLabel(image);
+    			imgColor.setBounds(x+decal, height+30, 170, 50);
+    			add(imgColor);
+    			decal += 35;
+    		}
+    		height += 70;
     	}
+    	
     }
-    	
-    	
     	/*
     	joueur1 = new JLabel("Joueur");
     	setLayout(null);
@@ -219,5 +247,22 @@ public class PanneauDC extends JPanel{
     		System.out.println("");
 		}
 	}
-
+    
+    public ImageIcon generateImage(Color color){
+    	switch(color){
+		case BLACK :
+			return new ImageIcon("Images/dames/BallDameBrown.png");
+		case WHITE :
+			return new ImageIcon("Images/dames/BallDameViolet.png");
+		case GREEN :
+			return new ImageIcon("Images/dames/BallDameGreen.png");
+		case RED :
+			return new ImageIcon("Images/dames/BallDameRed.png");
+		case BLUE :
+			return new ImageIcon("Images/dames/BallDameBlue.png");
+		case YELLOW :
+			return new ImageIcon("Images/dames/BallDameYellow.png");
+    	default : return new ImageIcon("Images/dames/BallDameBrown.png");
+    	}
+    }
 }

@@ -180,6 +180,13 @@ public class BoardDC extends Board{
 		}
 		return true;
 	}
+	public ArrayList<Color> getColors(String p){
+		ArrayList<Color> ret=new ArrayList<>();
+		for(Color k : players)
+			if(Owns(k,p))
+				ret.add(k);
+		return ret;
+	}
 	public ArrayList<Color> getColors(){
 		return players;
 	}
