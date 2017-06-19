@@ -220,27 +220,27 @@ public class Panneau extends JPanel{
 
     }
 
-    void copyTab(BoardAbalone b) {
+    public void copyTab(BoardAbalone b) {
         this.boardView = b;
     }
 
-    void refreshBoard(){
+    public void refreshBoard(){
         repaint();
     }
 
-    void setMarbleLeftBlack(int marbleLeftBlack) {
+    public void setMarbleLeftBlack(int marbleLeftBlack) {
         this.marbleLeftBlack = marbleLeftBlack;
     }
 
-    void setMarbleLeftWhite(int marbleLeftWhite) {
+    public void setMarbleLeftWhite(int marbleLeftWhite) {
         this.marbleLeftWhite = marbleLeftWhite;
     }
 
-    int getConfirmValidation() {
+    public int getConfirmValidation() {
         return confirmValidation;
     }
 
-    int getConfirmDirection() {
+    public int getConfirmDirection() {
         return confirmDirection;
     }
 
@@ -350,7 +350,7 @@ public class Panneau extends JPanel{
         repaint();
     }
 
-    void reInit(){
+    public void reInit(){
         boardView.initTabPieces();
         this.confirmValidation=0;
         this.confirmDirection=0;
@@ -363,12 +363,12 @@ public class Panneau extends JPanel{
         tabDirections.clear();
     }
 
-    private void moveIntoTabPieces(){
+    public void moveIntoTabPieces(){
         boardView.tabPieces[3].x= this.direction.ordinal();
         boardView.tabPieces[3].y= 88;
     }
 
-    Coords[] getTabPieces() {
+    public Coords[] getTabPieces() {
         return boardView.getTabPieces();
     }
 

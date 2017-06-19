@@ -11,6 +11,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import controleur.AbaloneControl;
 import modele.BoardAbalone;
 import modele.BoardDC;
 import modele.Config;
@@ -64,22 +65,10 @@ public class PlayersNumberChoice extends JPanel {
 				}
 
 				setVisible(false);
-				pan = new Panneau();
-				pan.setVisible(true);
-				parent.getContentPane().add(pan);
-
-				boardAB = new BoardAbalone();
-
-				parent.addMouseListener(new MouseAdapter() {
-					@Override
-
-					// Quand on clique sur le Panel
-					public void mouseClicked(MouseEvent e) {
-
-						playAbalone(true, e);
-
-					}
-				});
+				
+				/******************* DEBUT PARTIE *******************/
+				AbaloneControl controler = new AbaloneControl(parent, true);
+				/****************************************************/
 			}
 		});
 
@@ -96,8 +85,6 @@ public class PlayersNumberChoice extends JPanel {
 
 				if(game=="Abalone")
 				{
-					//D�but partie.
-
 					try {
 						DatabaseConnect.saveGame(game, 2, 9, 13);
 					} catch (Exception e) {
@@ -105,23 +92,10 @@ public class PlayersNumberChoice extends JPanel {
 					}
 					
 					setVisible(false);
-					pan = new Panneau();
-					pan.setVisible(true);
-					parent.getContentPane().add(pan);
-
-					boardAB = new BoardAbalone();
-
-					parent.addMouseListener(new MouseAdapter() {
-						@Override
-
-						// Quand on clique sur le Panel
-						public void mouseClicked(MouseEvent e) {
-
-							playAbalone(false, e);
-
-						}
-					});
-
+					
+					/******************* DEBUT PARTIE *******************/
+					AbaloneControl controler = new AbaloneControl(parent, false);
+					/****************************************************/
 
 				}
 
@@ -296,8 +270,7 @@ public class PlayersNumberChoice extends JPanel {
 
 			//AFFICHAGE DU PLATEAU
 			pan.refreshBoard();
-			
-			
+
 			if(IA){
 				executeAI();
 			}
