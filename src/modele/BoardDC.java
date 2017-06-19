@@ -86,13 +86,67 @@ public class BoardDC extends Board{
 	public ArrayList <String> getPseudos(){
 		return this.pseudos;
 	}
-	public void setPseudo(String pseudo){
-		this.pseudoPlayer = pseudo;
-	}
-	
+
+    public void initPlayers(int nbColor, int nbPlayers) {
+        if (nbColor == 2 && nbPlayers == 2) {
+            players.add(Color.BLACK);
+            pseudos.add(getPseudo());
+            players.add(Color.WHITE);
+            pseudos.add(getPseudo());
+            //j2
+            players.add(Color.GREEN);
+            pseudos.add("Guest1");
+            players.add(Color.YELLOW);
+            pseudos.add("Guest1");
+            return;
+        }
+        if (nbColor == 1 && nbPlayers == 4) {
+            players.add(Color.BLACK);
+            pseudos.add(getPseudo());
+            players.add(Color.WHITE);
+            pseudos.add("Guest1");
+            players.add(Color.GREEN);
+            pseudos.add("Guest2");
+            players.add(Color.YELLOW);
+            pseudos.add("Guest3");
+            return;
+        }
+        if (nbPlayers == 3 && nbColor == 1) {
+            players.add(Color.BLACK);
+            pseudos.add(getPseudo());
+            players.add(Color.RED);
+            pseudos.add("Guest1");
+            players.add(Color.BLUE);
+            pseudos.add("Guest2");
+            return;
+        }
+        Color tmp = Color.BLACK;
+        if (nbPlayers == 1) {
+            pseudos.add(getPseudo());
+            players.add(Color.BLACK);
+            pseudos.add("CPU");
+            players.add(Color.GREEN);
+        }
+        // 6P 1C - 3P 2C - 2P 3C
+        for (int i = 0; i < nbPlayers; i++) {
+            for (int j = 0; j < nbColor; j++) {
+                if (i == 0)
+                    pseudos.add(getPseudo());
+                else
+                    pseudos.add("Guest" + i);
+                players.add(tmp);
+                tmp = tmp.getNext();
+            }
+        }
+    }
+
 	public String getPseudo(){
 		return this.pseudoPlayer;
 	}
+
+    public void setPseudo(String pseudo) {
+        this.pseudoPlayer = pseudo;
+    }
 
 	public void switchPlayer() {
 		currentplayer = switchPlayer(currentplayer);
