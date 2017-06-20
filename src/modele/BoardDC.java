@@ -126,6 +126,7 @@ public class BoardDC extends Board{
             players.add(Color.BLACK);
             pseudos.add("CPU");
             players.add(Color.GREEN);
+            return;
         }
         // 6P 1C - 3P 2C - 2P 3C
         for (int i = 0; i < nbPlayers; i++) {
