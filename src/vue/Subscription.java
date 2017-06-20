@@ -85,7 +85,7 @@ public class Subscription extends JPanel {
 				{
 					String password = String.valueOf(passwordField.getPassword());
 					
-					if(password.length()>4 && textField.getText().length()>4)
+					if(password.length()>5 && textField.getText().length()>5)
 					{
 						DatabaseConnect.saveUser(textField.getText(), password);
 						setVisible(false);
@@ -97,7 +97,7 @@ public class Subscription extends JPanel {
 					
 					else
 					{
-						labelSubscriptionFailure.setText("<html>Echec d'inscription<br>(Pseudo/mdp > 4 caractÃ¨res)</html>");
+						labelSubscriptionFailure.setText("<html>Echec d'inscription<br>(Pseudo/mdp > 5 caractères)</html>");
 					}
 					
 				} 
