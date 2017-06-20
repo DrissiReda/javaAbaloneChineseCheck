@@ -7,6 +7,9 @@ import vue.Endgame;
 import vue.PanneauAbalone;
 
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -24,7 +27,7 @@ public class ControlerAbalone{
 
        	pan.setAI(AI);
 		pan.setVisible(true);
-
+		pan.buttonAI.setEnabled(false);
 		parent.getContentPane().add(pan);
 		if(mode == "standard")
 			boardAB = new BoardAbalone();
@@ -39,7 +42,12 @@ public class ControlerAbalone{
         pan.setFrame(parent);
         parent.getContentPane().add(pan);
 
-
+        pan.buttonAI.addActionListener(new ActionListener(){
+	        public void actionPerformed(ActionEvent event){
+	        	executeAI();
+	        	pan.buttonAI.setEnabled(false);
+	        }
+	    });
 		clickFunction(AI);
 	}
 	
@@ -49,21 +57,14 @@ public class ControlerAbalone{
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-                    if (IA)
-                        if (moveOk) {
-                            executeAI();
-                        } else {
-                            playAbalone(e);
-                        }
-                    else {
-                        playAbalone(e);
-                    }
+                    playAbalone(e);
                 } catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
 	}
+	
 	
 	public void playAbalone(MouseEvent e) throws IOException{
 		pan.click(e);
@@ -95,6 +96,7 @@ public class ControlerAbalone{
 
 			//AFFICHAGE DU PLATEAU
 			pan.refreshBoard();
+			pan.buttonAI.setEnabled(true);
 		}
 	}
 

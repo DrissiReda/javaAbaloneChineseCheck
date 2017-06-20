@@ -24,10 +24,13 @@ public class PanneauAbalone extends JPanel {
     private int marbleLeftWhite = 14;
     private BoardAbalone boardView = new BoardAbalone();
     private int tabSelec[][] = new int[11][19];
+    
     private int initParam=1;
     private int confirmValidation=0;
     private int confirmDirection=0;
     private boolean AI;
+    
+    public JButton buttonAI = new JButton("Executer l'IA");
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
     private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
@@ -69,6 +72,9 @@ public class PanneauAbalone extends JPanel {
             if(AI){
 	            slideDif.setBounds(600,90,50,208);
 	            add(slideDif);
+	            
+	            buttonAI.setBounds(20,58,200,50);
+	            add(buttonAI);
             }
 
             //police
