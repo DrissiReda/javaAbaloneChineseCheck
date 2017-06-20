@@ -62,6 +62,13 @@ public class ControlerDC {
                     if (AI) ;
                     //executeIA();
                 }
+                int i;
+                if (boardDC.winner() != null) {
+
+                    //ce winner renvoie le pseudo du gagnant
+                    //fct(boardDC.winner());
+                    i = 0;
+                }
             }
 		});
 		//clickFunction();
