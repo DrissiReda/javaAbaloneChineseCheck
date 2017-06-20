@@ -83,8 +83,18 @@ public class ControlerAbalone{
 			//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
 			pan.setMarbleLeftBlack(boardAB.marble_count(Config.Color.BLACK));
 			pan.setMarbleLeftWhite(boardAB.marble_count(Config.Color.WHITE));
-            if (boardAB.winner() == null)
-                EndWhite();
+            int i;
+            if (boardAB.winner() != null) {
+                if (boardAB.winner() == Config.Color.WHITE)
+                    //White wins lance ton truc
+                    //fct("Guest1");
+                    i = 0;
+                else
+                    //Black wins lance ton truc
+                    //fct(pan.getName());
+                    i = 0;
+            }
+
 
 			//CHANGEMENT DE JOUEUR
 			boardAB.switchPlayer();				

@@ -701,6 +701,19 @@ public class BoardDC extends Board{
         return null;
     }
 
+	public String winner() {
+		int total = 0;
+		for (String p : pseudos) {
+			total = 0;
+			for (Color c : Color.values())
+				if (Owns(c, p) && marble_count(c) >= 10)
+					total += 10;
+			if (total >= 30)
+				return p;
+		}
+		return null;
+	}
+
 	public void setJumping(boolean jumping) {
 		this.jumping = jumping;
 	}
