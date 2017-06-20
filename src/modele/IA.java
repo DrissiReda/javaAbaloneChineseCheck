@@ -77,7 +77,8 @@ public class IA {
                     res+=DCdistance[i][j]-17*50;
         return res;
     }
-    private int eval_adjacency(Color player)
+
+    private int eval_adjacency()
     {
         int res=0;
         //initialisation du tableau de visites
@@ -113,7 +114,6 @@ public class IA {
         return Long.parseLong(null);
     }
     public long eval_DC(Color player){
-        long res=0;
         if(b.marble_count(player)>=10)
             return 600000;
         if(b.marble_count(b.switchPlayerIA(player))>=10)
@@ -137,63 +137,9 @@ public class IA {
                     res+=getPlayerVal(b.getCase(marble))*ABweight[i][j];
             }
         }
-        return getPlayerVal(player)*(res +eval_adjacency(player) + (b.marble_count(Color.WHITE)-b.marble_count(Color.BLACK))*50000);
+        return getPlayerVal(player) * (res + eval_adjacency() + (b.marble_count(Color.WHITE) - b.marble_count(Color.BLACK)) * 50000);
     }
 
- 
-
-///////////////////////////////////////////////////////////////////////
-
-    //just display, most boring function
-
-/////////////////////////////////////////////////////////////////////
-
-    /*void init_display()
-    {
-        int i,j;
-        for (i=0;i<HEIGHT;i++)
-        {
-            for(j=0;j<WIDTH;j++)
-            {
-                tiles[i][j]=tilesempty[i][j];
-                if(tiles[i][j]!=1 && tiles[i][j]!=-1)
-                    if(tiles[i][j]==0)
-                        printf(" . ");
-                    else
-                        printf("   ");
-                else
-                    printf(" %d ",tiles[i][j]);
-                zobristTable[i*WIDTH+j][0]= rand()%10000;
-                zobristTable[i*WIDTH+j][1]= rand()%10000;
-            }
-            printf("\n");
-        }
-    }
-    void display()
-    {
-        printf("______________________________________\n__________________________________________\n__________________________________\n");
-        int i,j;
-        for (i=0;i<HEIGHT;i++)
-        {
-            for(j=0;j<WIDTH;j++)
-            {
-                if(tiles[i][j]!=1 && tiles[i][j]!=-1)
-                    if(tiles[i][j]==0)
-                        printf(" . ");
-                    else
-                        printf("   ");
-                else
-                    printf(" %c ",tiles[i][j]==1 ? 'W' : 'B');
-            }
-            printf("\n");
-        }
-    }*/
-
-//TODO implement a fully functional tail recursion to avoid stack overflow
-//TODO something is wrong with undo and causes a butterfly effect : fixed
-//TODO figure out the cause of the memory leak
-//TODO improve move ordering with A/C into consideration
-//TODO improve eval_board accuracy
 //(*)  current has the best move + the score to maximize or minimize
 //(*)  main keeps track of the player wanting to make the smart move, crucial to differentiate
 //     evaluations, as maximizing/minimizing should be done for the same respective player throughout
@@ -202,10 +148,8 @@ public class IA {
     {
         long eval=eval_board(main);
         String moves= b.MoveOrdering(player);
-        //String moves=b.AvailableMoves(player);
         if(b.AvailableMoves(player).length()%b.moveSize != 0) {
-            System.out.println(b.AvailableMoves(player));
-            System.out.println(b.AvailableMoves(player).length());
+
         }
         int hash_id = hashZobristAB();
 
@@ -217,11 +161,9 @@ public class IA {
         {
             score.put(hash_id,current+eval);// we can always check
             return score.get(hash_id);
-            //return current+eval;
         }
         for(int i=0;i<(moves.length()>(b.moveSize*diff)?b.moveSize*diff:moves.length());i+=b.moveSize)
         {
-            //System.out.println(dept+" of "+i+" string "+moves.substring(i,i+b.moveSize));
             b.executeMove(b.stringToMove(moves.substring(i,i+b.moveSize)),player);
             String returnString= alphaBeta(deptG,dept-1, alpha, beta,moves.substring(i,i+b.moveSize), b.switchPlayerIA(player),main,diff);
             int value = Integer.parseInt(returnString.substring(b.moveSize));

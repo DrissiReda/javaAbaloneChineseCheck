@@ -1,24 +1,13 @@
 package vue;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.UIManager;
-
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Start extends JPanel {
 
-	//Premier ?cran : cliquez pour continuer.
+	//Premier écran : cliquez pour continuer.
 	
 	public Start(JFrame parent){
 		addMouseListener(new MouseAdapter() {

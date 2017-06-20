@@ -1,30 +1,18 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-
 import modele.DatabaseConnect;
 
-import javax.swing.JPasswordField;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class Subscription extends JPanel {
 	private JTextField textField;
 	private JPasswordField passwordField;
 
-	//ï¿½cran de connexion.
+	//Ã©cran de connexion.
 	
 	public Subscription(JFrame parent) {
 		
@@ -97,7 +85,7 @@ public class Subscription extends JPanel {
 					
 					else
 					{
-						labelSubscriptionFailure.setText("<html>Echec d'inscription<br>(Pseudo/mdp > 5 caractères)</html>");
+						labelSubscriptionFailure.setText("<html>Echec d'inscription<br>(Pseudo/mdp > 5 caractï¿½res)</html>");
 					}
 					
 				} 

@@ -1,6 +1,5 @@
 package vue;
 
-import controleur.ControlerAbalone;
 import controleur.ControlerDC;
 
 import javax.swing.*;
@@ -35,15 +34,6 @@ public class PlayersNumberChoice extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// Lancement Abalone
-				
-				/*
-				try {
-					DatabaseConnect.saveGame(game, 1, 9, 13);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				*/
-				
 				setVisible(false);
 				if (game == "Abalone"){
 					setVisible(false);
@@ -72,15 +62,7 @@ public class PlayersNumberChoice extends JPanel {
 
 				if(game=="Abalone")
 				{
-					//D�but partie.
-
-					/*
-					try {
-						DatabaseConnect.saveGame(game, 2, 9, 13);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					*/
+					//Début partie.
 
 					setVisible(false);
 					JPanel starter = new StarterChoice(parent, playerName, false);
@@ -157,14 +139,6 @@ public class PlayersNumberChoice extends JPanel {
 
 					//Début partie.
 
-					/*
-					try {
-						DatabaseConnect.saveGame(game, 4, 9, 13);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					*/
-					
 					setVisible(false);
 					ControlerDC controler = new ControlerDC(parent, playerName, 4, 1, false);
 
@@ -180,15 +154,8 @@ public class PlayersNumberChoice extends JPanel {
 			bouton6Joueurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-					//D�but partie.
+					//Début partie.
 
-					/*
-					try {
-						DatabaseConnect.saveGame(game, 6, 9, 13);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					*/
 					setVisible(false);
 					ControlerDC controler = new ControlerDC(parent, playerName, 6, 1, false);
 

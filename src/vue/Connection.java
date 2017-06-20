@@ -1,28 +1,18 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-
 import modele.DatabaseConnect;
 
-import javax.swing.JPasswordField;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class Connection extends JPanel {
 	private JTextField textField;
 	private JPasswordField passwordField;
 
-	//?cran de connexion.
+	//Écran de connexion.
 	
 	public Connection(JFrame parent) {
 		

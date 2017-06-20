@@ -1,5 +1,11 @@
 package controleur;
 
+import modele.BoardAbalone;
+import modele.Config;
+import modele.IA;
+import vue.PanneauAbalone;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,7 +18,6 @@ import javax.swing.JOptionPane;
 import modele.BoardAbalone;
 import modele.Config;
 import modele.IA;
-import vue.Endgame;
 import vue.PanneauAbalone;
 
 public class ControlerAbalone{
@@ -107,17 +112,8 @@ public class ControlerAbalone{
 		}
 	}
 
-    public void EndWhite() {
-        System.out.println("WINNING");
-        //Endgame end=new Endgame(boardAB.marble_count(Config.Color.WHITE),boardAB.marble_count(Config.Color.BLACK),true,boardAB.getName());
-        Endgame end = new Endgame();
-        end.affiche(boardAB.marble_count(Config.Color.WHITE), boardAB.marble_count(Config.Color.BLACK), true, boardAB.getName());
-        end.setVisible(true);
-        end.setBounds(0, 0, 1000, 600);
-        parent.getContentPane().add(end);
-    }
 
-    public void executeAI(){
+	public void executeAI(){
 		moveOk = false;
 		IA computeur = new IA(boardAB);
 		//pan.refreshBoard();
