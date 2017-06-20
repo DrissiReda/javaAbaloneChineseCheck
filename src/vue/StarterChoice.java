@@ -2,6 +2,7 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,9 +18,14 @@ public class StarterChoice extends JPanel{
 	private JPanel centerArea;
 	private JPanel southArea;
 	private JPanel northArea;
+	private JLabel name;
 	private int indice = 0;
 	
-	public StarterChoice(JFrame parent, String playerName, boolean AI){		
+	public StarterChoice(JFrame parent, String playerName, boolean AI){
+		
+		name = new JLabel("Standard");
+		name.setFont(new Font("Arial", Font.BOLD, 40));
+		
 		setLayout(new BorderLayout());
 		CardLayout cl = new CardLayout();
 		
@@ -38,6 +44,8 @@ public class StarterChoice extends JPanel{
 		southArea.add(previous);
 		southArea.add(launch);
 		southArea.add(next);
+		
+		northArea.add(name);
 		
 		// Images CardLayout
 		JPanel card1 = new JPanel();
@@ -59,12 +67,14 @@ public class StarterChoice extends JPanel{
 	        public void actionPerformed(ActionEvent event){
 	          cl.next(centerArea);
 	          setIndice(true); //indice++
+	          refreshLabel(indice);
 	        }
 	    });
 	    previous.addActionListener(new ActionListener(){
 	        public void actionPerformed(ActionEvent event){
 	          cl.previous(centerArea);
 	          setIndice(false); //indice--
+	          refreshLabel(indice);
 	        }
 	    });
 	    
@@ -72,9 +82,7 @@ public class StarterChoice extends JPanel{
 	        public void actionPerformed(ActionEvent event){
 	        	setVisible(false);
 	        	String mode = getMode(indice);
-	        	System.out.println(mode);
 	        	ControlerAbalone abalone = new ControlerAbalone(parent, playerName, AI, mode);
-	        	
 	        }
 	    });
 	    
@@ -116,5 +124,9 @@ public class StarterChoice extends JPanel{
 			return "Marguerite Belge";
 		else
 			return "Allienage";
+	}
+	
+	public void refreshLabel(int indice){
+		this.name.setText(getTitre(indice));
 	}
 }
