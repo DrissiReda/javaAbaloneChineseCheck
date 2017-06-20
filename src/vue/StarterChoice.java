@@ -19,7 +19,7 @@ public class StarterChoice extends JPanel{
 	private JPanel northArea;
 	private int indice = 0;
 	
-	public StarterChoice(JFrame parent, boolean AI){		
+	public StarterChoice(JFrame parent, String playerName, boolean AI){		
 		setLayout(new BorderLayout());
 		CardLayout cl = new CardLayout();
 		
@@ -73,7 +73,7 @@ public class StarterChoice extends JPanel{
 	        	setVisible(false);
 	        	String mode = getMode(indice);
 	        	System.out.println(mode);
-	        	ControlerAbalone abalone = new ControlerAbalone(parent, AI, mode);
+	        	ControlerAbalone abalone = new ControlerAbalone(parent, playerName, AI, mode);
 	        	
 	        }
 	    });

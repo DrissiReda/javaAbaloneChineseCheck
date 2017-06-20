@@ -1,8 +1,10 @@
 package controleur;
 
 import modele.BoardDC;
+import modele.Config;
 import modele.Config.Direction;
 import modele.Coords;
+import modele.IA;
 import vue.PanneauDC;
 
 import javax.swing.*;
@@ -13,8 +15,9 @@ public class ControlerDC {
 	JFrame parent;
 	BoardDC boardDC;
 	PanneauDC pan;
-	
-	public ControlerDC(JFrame parent, String playerName, int nbPlayers, int nbColors, boolean IA) {
+    boolean moveOk = false;
+
+    public ControlerDC(JFrame parent, String playerName, int nbPlayers, int nbColors, boolean IA) {
 		this.parent = parent;
 		pan = new PanneauDC();
 		pan.setVisible(true);
@@ -26,46 +29,95 @@ public class ControlerDC {
 		boardDC.setCurrentPlayer(playerName); // changez cette valeur pour changer le joueur qui joue
         boardDC.initPlayers(nbColors, nbPlayers);
         boardDC.initBoard();
-		boardDC.affichePlateau();
+        for (int i = 0; i < boardDC.getColors().size(); i++)
+            System.out.println("I AAM" + boardDC.getColors().get(i) + " " + boardDC.getPseudos().get(i));
+        boardDC.affichePlateau();
 		pan.copyTab(boardDC);
 
 		pan.affichePlateau();
 		pan.displayPlayers(nbPlayers, boardDC.getPseudos(), boardDC.getColors());
-		parent.addMouseListener(new MouseAdapter() {
+        if (IA) {
+            //executeIA();
+        }
+        parent.addMouseListener(new MouseAdapter() {
 			@Override
 
 			// Quand on clique sur le Panel
 			public void mouseClicked(MouseEvent e) {
-                int switcher;
                 //playDC returns true if a movement have been executed
-                switcher = playDC(true, false, e);
-                if (switcher == 2) {
+				int switcher = playDC(false, false, e);
+				if (switcher == 2) {
                     //manages dynamic jump
                     while (true) {
-                        if (playDC(true, true, e) != 2)
-                            break;
-                    }
+						if (playDC(false, true, e) != 2) {
+							System.out.println("BREAAK");
+							break;
+						}
+					}
                     boardDC.setJumping(false);
 
                 }
-                if (switcher != 0)
+                if (switcher != 0) {
                     boardDC.switchPlayer();
-
+                    if (IA) ;
+                    //executeIA();
+                }
             }
 		});
 		//clickFunction();
-	}
-	
-	public void clickFunction(){ // add boolean IA
-		
+        //clickFunction(IA);
+    }
+
+	public void clickFunction(boolean IA) { // add boolean IA
+        parent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if (IA)
+                    if (moveOk) {
+                        executeIA();
+                    } else {
+                        playDC(IA, false, e);
+                    }
+                else {
+                    playDC(IA, false, e);
+                }
+            }
+        });
+    }
+
+    public void executeIA() {
+        moveOk = false;
+        modele.IA computeur = new IA(boardDC);
+		//pan.refreshBoard();
+		int d = pan.getDifficulty();
+        d = 4;
+        String move;
+        System.out.println("CURR" + boardDC.getCurrentplayer());
+        if (d < 4)
+            move = computeur.alphaBeta(d, d, Integer.MIN_VALUE, Integer.MAX_VALUE, "", Config.Color.GREEN, Config.Color.GREEN, Integer.MAX_VALUE);
+        else if (d <= 9)
+            move = computeur.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "", Config.Color.GREEN, Config.Color.GREEN, Integer.MAX_VALUE);
+
+		else
+            move = computeur.alphaBeta(5, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "", Config.Color.GREEN, Config.Color.GREEN, Integer.MAX_VALUE);
+        System.out.println("OUR MOVE" + move);
+        boardDC.executeMove(boardDC.stringToMove(move.substring(0, 12)), Config.Color.GREEN);
+
+		//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
+
+		boardDC.switchPlayer();
+		pan.copyTab(boardDC);
+		pan.reset();
+		pan.refreshBoard();
 	}
 
     public int playDC(boolean IA, boolean flag, MouseEvent e) {
         pan.click(e);
         int ret = 0;
         if(pan.moveOk()){
-			
-			Coords marble = pan.getMarble();
+            moveOk = true;
+            Coords marble = pan.getMarble();
 			Coords target = pan.getTarget();
 			Direction dir = pan.getDirection();
 
@@ -85,10 +137,14 @@ public class ControlerDC {
  			 */
 
 			ret=boardDC.executeMove(tabPieces, boardDC.getCase(marble));
+            /*if(ret==2)
+				ret=playDC(IA,true,e);*/
             if (flag && ret != 2)
                 boardDC.undo(tabPieces,boardDC.getCase(marble));
-			if(flag && boardDC.generateDir(tabPieces).size()==0)
+            if (flag && boardDC.generateDir(marble).size() == 0) {
+
                 return 0;
+            }
             /*if(boardDC.executeMove(tabPieces,boardDC.getCase(marble))==false)
 				boardDC.undo(tabPieces,boardDC.getCase(marble));*/
 			pan.copyTab(boardDC);

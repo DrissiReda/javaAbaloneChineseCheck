@@ -115,9 +115,9 @@ public class IA {
     public long eval_DC(Color player){
         long res=0;
         if(b.marble_count(player)>=10)
-            return Integer.MAX_VALUE;
+            return 600000;
         if(b.marble_count(b.switchPlayerIA(player))>=10)
-            return Integer.MIN_VALUE;
+            return 600000;
         return getPlayerVal(player)*(eval_distance(player)+(b.marble_count(player)-b.marble_count(b.switchPlayerIA(player)))*2000);
     }
 
@@ -125,9 +125,9 @@ public class IA {
     {
         long res=0;
         if(b.marble_count(Color.WHITE)<=8)
-            return Integer.MIN_VALUE;  //losing case avoid at all costs
+            return 600000;  //losing case avoid at all costs
         if(b.marble_count(Color.BLACK)<=8)
-            return  Integer.MAX_VALUE;  //winning case attain at all costs
+            return 600000;  //winning case attain at all costs
         for(int i=0;i<b.getHeight();i++)
         {
             for(int j=0;j<b.getWidth();j++)

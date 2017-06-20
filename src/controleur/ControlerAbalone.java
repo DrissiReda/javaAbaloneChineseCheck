@@ -16,11 +16,14 @@ public class ControlerAbalone{
 	BoardAbalone boardAB;
 	PanneauAbalone pan;
 	boolean moveOk = false;
-	
-	public ControlerAbalone(JFrame parent, boolean IA, String mode) {
-		this.parent = parent;
+
+    public ControlerAbalone(JFrame parent, String playerName, boolean IA, String mode) {
+        this.parent = parent;
 		pan = new PanneauAbalone();
+        pan.setName(playerName);
+
 		pan.setVisible(true);
+
 		parent.getContentPane().add(pan);
 		if(mode == "standard")
 			boardAB = new BoardAbalone();
@@ -29,6 +32,11 @@ public class ControlerAbalone{
 			System.out.println(mode);
 		}
 			
+
+        pan.setFrame(parent);
+        parent.getContentPane().add(pan);
+
+
 		clickFunction(IA);
 	}
 	

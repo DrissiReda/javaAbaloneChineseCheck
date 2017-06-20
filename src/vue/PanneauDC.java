@@ -1,8 +1,13 @@
 package vue;
 
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import modele.BoardDC;
+import modele.Config;
+import modele.Config.Color;
+import modele.Coords;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -12,35 +17,21 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import modele.BoardDC;
-import modele.Config;
-import modele.Config.Color;
-import modele.Coords;
-
 public class PanneauDC extends JPanel{
-	
+
+	JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
+	int difficulty = 1;
 	private BoardDC boardView = new BoardDC();
 	private ArrayList<Coords> listTargets = new ArrayList<Coords>();
 	private int tabTargets[][] = new int[19][27];
-
     private int initParam=1;
-	
 	private Coords[] tabPieces = new Coords[3];
 	private Coords marble = new Coords(0,0);
 	private Coords target = new Coords(0,0);
-	
 	private ArrayList<Color> players = new ArrayList<>();
-	
 	private Config.Direction direction = null;
-	
 	private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
-
-    JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
-	
-	// Elements graphiques
+    // Elements graphiques
 	private JLabel joueur1;
 	
 	public void paintComponent(Graphics g) {
@@ -150,14 +141,15 @@ public class PanneauDC extends JPanel{
 
 
 						break;
-					case 2: //MENU
+					case 2:
 						break;
 					case 3: //A PROPOS
 						break;
 				}
 			}
 		}
-        
+
+        this.difficulty=slideDif.getValue();
         repaint();
     }
     
@@ -273,6 +265,10 @@ public class PanneauDC extends JPanel{
     		System.out.println("");
 		}
 	}
+
+    public int getDifficulty() {
+        return difficulty;
+    }
     
     public ImageIcon generateImage(Color color){
     	switch(color){
