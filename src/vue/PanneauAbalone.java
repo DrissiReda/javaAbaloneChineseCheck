@@ -31,6 +31,7 @@ public class PanneauAbalone extends JPanel {
     private boolean AI;
     
     public JButton buttonAI = new JButton("Executer l'IA");
+    private JOptionPane popup = new JOptionPane();
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
     private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
@@ -50,6 +51,20 @@ public class PanneauAbalone extends JPanel {
     public void setIA(boolean b)
     {
     	boardView.setIA(b);
+    }
+    
+    public void endGame(boolean win){
+    	String resultat;
+    	if(win)
+    		resultat = "Victoire !";
+    	else
+    		resultat = "Défaite !";
+		popup.showMessageDialog(
+                null,
+                resultat,
+                "Partie terminée",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     public void paintComponent(Graphics g) {
@@ -73,7 +88,7 @@ public class PanneauAbalone extends JPanel {
 	            slideDif.setBounds(600,90,50,208);
 	            add(slideDif);
 	            
-	            buttonAI.setBounds(20,58,200,50);
+	            buttonAI.setBounds(20,58,130,30);
 	            add(buttonAI);
             }
 

@@ -1,18 +1,19 @@
 package controleur;
 
-import modele.BoardAbalone;
-import modele.Config;
-import modele.IA;
-import vue.Endgame;
-import vue.PanneauAbalone;
-
-import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import modele.BoardAbalone;
+import modele.Config;
+import modele.IA;
+import vue.Endgame;
+import vue.PanneauAbalone;
 
 public class ControlerAbalone{
 	JFrame parent;
@@ -87,13 +88,9 @@ public class ControlerAbalone{
             int i;
             if (boardAB.winner() != null) {
                 if (boardAB.winner() == Config.Color.WHITE)
-                    //White wins lance ton truc
-                    //fct("Guest1");
-                    i = 0;
+                	pan.endGame(true);
                 else
-                    //Black wins lance ton truc
-                    //fct(pan.getName());
-                    i = 0;
+                	pan.endGame(false);
             }
 
 

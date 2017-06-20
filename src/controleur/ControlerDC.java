@@ -62,20 +62,17 @@ public class ControlerDC {
                     if (AI) ;
                     //executeIA();
                 }
-                int i;
                 if (boardDC.winner() != null) {
-
-                    //ce winner renvoie le pseudo du gagnant
-                    //fct(boardDC.winner());
-                    i = 0;
+                	if(boardDC.winner().equals(boardDC.getPseudo()))
+                		pan.endGame(true);
+                	else
+                		pan.endGame(false);
                 }
             }
 		});
-		//clickFunction();
-        //clickFunction(IA);
     }
 
-	public void clickFunction(boolean IA) { // add boolean IA
+	public void clickFunction(boolean IA) { 
         parent.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

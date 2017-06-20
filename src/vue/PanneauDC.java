@@ -21,6 +21,7 @@ public class PanneauDC extends JPanel{
 
 	JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
 	private int difficulty = 1;
+	private JOptionPane popup = new JOptionPane();
 	private boolean AI = false;
 	private BoardDC boardView = new BoardDC();
 	private ArrayList<Coords> listTargets = new ArrayList<Coords>();
@@ -265,7 +266,21 @@ public class PanneauDC extends JPanel{
     		System.out.println("");
 		}
 	}
-
+    
+	public void endGame(boolean win){
+		String resultat;
+		if(win)
+			resultat = "Victoire !";
+		else
+			resultat = "Défaite !";
+		popup.showMessageDialog(
+                null,
+                resultat,
+                "Partie terminée",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+    
     public int getDifficulty() {
         return difficulty;
     }
