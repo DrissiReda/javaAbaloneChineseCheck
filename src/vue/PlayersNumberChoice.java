@@ -48,9 +48,11 @@ public class PlayersNumberChoice extends JPanel {
 				
 				setVisible(false);
 				if (game == "Abalone"){
-					/******************* Lancement jeu **********************/
-					ControlerAbalone abalone = new ControlerAbalone(parent, true);
-					/********************************************************/
+					setVisible(false);
+					JPanel starter = new StarterChoice(parent, true);
+					starter.setVisible(true);
+					starter.setBounds(0,0,1000,600);
+					parent.getContentPane().add(starter);
 				}else{
 					// Appel controleur Dames (vs ia)
 				}
@@ -79,11 +81,13 @@ public class PlayersNumberChoice extends JPanel {
 						e.printStackTrace();
 					}
 					*/
-					
+
 					setVisible(false);
-					/******************* Lancement jeu **********************/
-					ControlerAbalone abalone = new ControlerAbalone(parent, false);
-					/********************************************************/
+					JPanel starter = new StarterChoice(parent, false);
+					starter.setVisible(true);
+					starter.setBounds(0,0,1000,600);
+					parent.getContentPane().add(starter);
+					
 				}
 
 				if(game == "Dames chinoises")

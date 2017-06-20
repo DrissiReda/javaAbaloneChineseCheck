@@ -17,12 +17,18 @@ public class ControlerAbalone{
 	PanneauAbalone pan;
 	boolean moveOk = false;
 	
-	public ControlerAbalone(JFrame parent, boolean IA) {
+	public ControlerAbalone(JFrame parent, boolean IA, String mode) {
 		this.parent = parent;
 		pan = new PanneauAbalone();
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
-		boardAB = new BoardAbalone();
+		if(mode == "standard")
+			boardAB = new BoardAbalone();
+		else{
+			boardAB = new BoardAbalone(mode);
+			System.out.println(mode);
+		}
+			
 		clickFunction(IA);
 	}
 	

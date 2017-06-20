@@ -164,8 +164,8 @@ public class PanneauAbalone extends JPanel {
 
 
         //Mets à jour les "Boules restants
-        scoreB.setText("restants : "+marbleLeftBlack);
-        scoreW.setText("restants : "+marbleLeftWhite);
+        scoreB.setText("RESTANTS : "+marbleLeftBlack);
+        scoreW.setText("RESTANTS : "+marbleLeftWhite);
 
         int widthOffset = 0;
         int heightOffset = 153;

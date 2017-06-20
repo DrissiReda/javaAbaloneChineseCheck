@@ -35,7 +35,18 @@ public class BoardAbalone extends Board{
 		initTabPieces();
     }
     
-    //Modification
+    public BoardAbalone(String mode) {
+    	super(11, 19,17);
+    	changeGameBoard(mode);
+		initTabPieces();
+	}
+    
+    public void changeGameBoard(String mode){
+    	System.out.println("mode : " + mode +", game board : " + Config.getBoard(mode));
+    	this.GameBoard = Config.getBoard(mode);
+    }
+
+	//Modification
     public ArrayList<Color> getColors()
     {
     	return null;
