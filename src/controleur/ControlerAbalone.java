@@ -31,6 +31,8 @@ public class ControlerAbalone{
 			boardAB = new BoardAbalone(mode);
 			System.out.println(mode);
 		}
+		
+		pan.copyTab(boardAB);
 			
 
         pan.setFrame(parent);

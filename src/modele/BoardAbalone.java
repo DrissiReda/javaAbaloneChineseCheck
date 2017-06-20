@@ -43,7 +43,26 @@ public class BoardAbalone extends Board{
     
     public void changeGameBoard(String mode){
     	System.out.println("mode : " + mode +", game board : " + Config.getBoard(mode));
-    	this.GameBoard = Config.getBoard(mode);
+    	//this.GameBoard = Config.getBoard(mode);
+    	copyTab(GameBoard, Config.getBoard(mode));
+    	test(Config.getBoard(mode));
+    }
+    public void copyTab(Tile oldTab[][], Tile newTab[][]){
+    	System.out.println("ok");
+    	
+    	for(int i = 0; i < height; i++){
+    		for(int j = 0; j < width; j++){
+    			GameBoard[i][j].setColor(newTab[i][j].getColor());
+    		}
+    	}
+    }
+    
+    public void test(Tile newTab[][]){
+    	for(int i = 0; i < height; i++){
+    		for(int j = 0; j < width; j++){
+    			System.out.println(newTab[i][j].getColor());
+    		}
+    	}
     }
 
 	//Modification
