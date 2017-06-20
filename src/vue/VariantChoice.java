@@ -1,19 +1,9 @@
 package vue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-
 import modele.DatabaseConnect;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.SystemColor;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -86,8 +76,8 @@ public class VariantChoice extends JPanel {
 		JButton boutonAvecVariante = new JButton("AVEC VARIANTE");
 		boutonAvecVariante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
-				//CrÈation tuple Partie -> idPartie, Joueur connectÈ, jeu, type, scores enregistrÈs ‡ la fin.
+
+				//Cr√©ation tuple Partie -> idPartie, Joueur connect√©, jeu, type, scores enregistr√©s √† la fin.
 				try {
 					DatabaseConnect.saveGame(game, 0, 123,123);
 				} catch (Exception e) {
@@ -107,8 +97,8 @@ public class VariantChoice extends JPanel {
 		JButton boutonSansVariante = new JButton("SANS VARIANTE");
 		boutonSansVariante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				//CrÈation tuple Partie -> idPartie, idJoueur, jeu, nombrejoueurs, type, scores enregistrÈs ‡ la fin.
+
+				//Cr√©ation tuple Partie -> idPartie, idJoueur, jeu, nombrejoueurs, type, scores enregistr√©s √† la fin.
 				try {
 					DatabaseConnect.saveGame(game, 0, 123,123);
 				} catch (Exception e) {
