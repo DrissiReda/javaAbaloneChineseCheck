@@ -88,6 +88,8 @@ public class BoardDC extends Board{
 	}
 
     public void initPlayers(int nbColor, int nbPlayers) {
+
+        setCurrentPlayer(getPseudo());
         if (nbColor == 2 && nbPlayers == 2) {
             players.add(Color.BLACK);
             pseudos.add(getPseudo());
@@ -122,9 +124,9 @@ public class BoardDC extends Board{
         }
         Color tmp = Color.BLACK;
         if (nbPlayers == 1) {
-            pseudos.add(getPseudo());
-            players.add(Color.BLACK);
             pseudos.add("CPU");
+            players.add(Color.BLACK);
+            pseudos.add(getPseudo());
             players.add(Color.GREEN);
             return;
         }
