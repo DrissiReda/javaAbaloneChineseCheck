@@ -20,7 +20,8 @@ import java.util.Set;
 public class PanneauDC extends JPanel{
 
 	JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
-	int difficulty = 1;
+	private int difficulty = 1;
+	private boolean AI = false;
 	private BoardDC boardView = new BoardDC();
 	private ArrayList<Coords> listTargets = new ArrayList<Coords>();
 	private int tabTargets[][] = new int[19][27];
@@ -36,12 +37,14 @@ public class PanneauDC extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 
-        if(initParam==1){
+        if(initParam==1 && AI){
             slideDif.setBounds(600,140,50,208);
             add(slideDif);
         }
-		
-		addImage(g, "Images/dames/Board.png", 0, 0, this);
+		if(AI)
+			addImage(g, "Images/dames/BoardAI.png", 0, 0, this);
+		else
+			addImage(g, "Images/dames/Board.png", 0, 0, this);
 		 
         int widthOffset = 0;
         int heightOffset = 152;
@@ -148,8 +151,8 @@ public class PanneauDC extends JPanel{
 				}
 			}
 		}
-
-        this.difficulty=slideDif.getValue();
+		if(AI)
+			this.difficulty=slideDif.getValue();
         repaint();
     }
     
@@ -233,13 +236,10 @@ public class PanneauDC extends JPanel{
     	}
     	
     }
-    	/*
-    	joueur1 = new JLabel("Joueur");
-    	setLayout(null);
-    	joueur1.setBounds(730, 250, 1000, 600);
-    	joueur1.setFont(new Font("Synchro LET", Font.BOLD, 20));
-    	add(joueur1);
-    	*/
+   
+    public void setAI(boolean AI){
+    	this.AI = AI;
+    }
 
     public void affichePlateau()
 	{

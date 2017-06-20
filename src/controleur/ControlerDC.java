@@ -17,16 +17,16 @@ public class ControlerDC {
 	PanneauDC pan;
     boolean moveOk = false;
 
-    public ControlerDC(JFrame parent, String playerName, int nbPlayers, int nbColors, boolean IA) {
+    public ControlerDC(JFrame parent, String playerName, int nbPlayers, int nbColors, boolean AI) {
 		this.parent = parent;
 		pan = new PanneauDC();
+		pan.setAI(AI);
 		pan.setVisible(true);
 		parent.getContentPane().add(pan);
 		
 		boardDC = new BoardDC();
 		boardDC.setPseudo(playerName);
-		
-		boardDC.setCurrentPlayer(playerName); // changez cette valeur pour changer le joueur qui joue
+		boardDC.setCurrentPlayer(playerName);
         boardDC.initPlayers(nbColors, nbPlayers);
         boardDC.initBoard();
         for (int i = 0; i < boardDC.getColors().size(); i++)
@@ -36,7 +36,7 @@ public class ControlerDC {
 
 		pan.affichePlateau();
 		pan.displayPlayers(nbPlayers, boardDC.getPseudos(), boardDC.getColors());
-        if (IA) {
+        if (AI) {
             //executeIA();
         }
         parent.addMouseListener(new MouseAdapter() {
@@ -59,7 +59,7 @@ public class ControlerDC {
                 }
                 if (switcher != 0) {
                     boardDC.switchPlayer();
-                    if (IA) ;
+                    if (AI) ;
                     //executeIA();
                 }
             }

@@ -17,11 +17,12 @@ public class ControlerAbalone{
 	PanneauAbalone pan;
 	boolean moveOk = false;
 
-    public ControlerAbalone(JFrame parent, String playerName, boolean IA, String mode) {
+    public ControlerAbalone(JFrame parent, String playerName, boolean AI, String mode) {
         this.parent = parent;
 		pan = new PanneauAbalone();
         pan.setName(playerName);
 
+       	pan.setAI(AI);
 		pan.setVisible(true);
 
 		parent.getContentPane().add(pan);
@@ -39,7 +40,7 @@ public class ControlerAbalone{
         parent.getContentPane().add(pan);
 
 
-		clickFunction(IA);
+		clickFunction(AI);
 	}
 	
 	public void clickFunction(boolean IA){

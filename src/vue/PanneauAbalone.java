@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class PanneauAbalone extends JPanel {
 
     JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
-    int difficulty = 1;
+    private int difficulty = 1;
     JFrame frame = new JFrame();
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
@@ -27,6 +27,7 @@ public class PanneauAbalone extends JPanel {
     private int initParam=1;
     private int confirmValidation=0;
     private int confirmDirection=0;
+    private boolean AI;
     private JLabel scoreB = new JLabel("restants : "+marbleLeftBlack);
     private JLabel scoreW = new JLabel("restants : "+marbleLeftWhite);
     private JLabel validButtonDown = new JLabel(new ImageIcon("Images/ValidDown.png"));
@@ -57,11 +58,6 @@ public class PanneauAbalone extends JPanel {
             scoreB.setFont(new Font("Synchro LET", Font.BOLD, 20));
             scoreW.setFont(new Font("Synchro LET", Font.BOLD, 20));
             
-            /*
-            scoreB.setForeground(new Color(0xE97628));
-            scoreW.setForeground(new Color(0x5ABEB1));
-			*/
-            
             scoreB.setBounds(730, 450, 170, 50);
             scoreW.setBounds(730, 487, 170, 50);
             add(scoreB);
@@ -70,8 +66,10 @@ public class PanneauAbalone extends JPanel {
             validButtonDown.setBounds(530, 140, 170, 50);
             validButtonUp.setBounds(530, 140, 170, 50);
 
-            slideDif.setBounds(600,90,50,208);
-            add(slideDif);
+            if(AI){
+	            slideDif.setBounds(600,90,50,208);
+	            add(slideDif);
+            }
 
             //police
             try {
@@ -86,19 +84,34 @@ public class PanneauAbalone extends JPanel {
         }
 
         //Affiche le fond
-        try {
-            if(boardView.player == Config.Color.BLACK) {
-                Image img = ImageIO.read(new File("Images/AbaFondTourPBLACK.png"));
-                g.drawImage(img, 0, 0, this);
-            }
-            else{
-                Image img = ImageIO.read(new File("Images/AbaFondTourPWHITE.png"));
-                g.drawImage(img, 0, 0, this);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(AI){
+	        try {
+	            if(boardView.player == Config.Color.BLACK) {
+	                Image img = ImageIO.read(new File("Images/AbaFondTourPBLACKAI.png"));
+	                g.drawImage(img, 0, 0, this);
+	            }
+	            else{
+	                Image img = ImageIO.read(new File("Images/AbaFondTourPWHITEAI.png"));
+	                g.drawImage(img, 0, 0, this);
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
         }
-
+        else{
+        	try {
+	            if(boardView.player == Config.Color.BLACK) {
+	                Image img = ImageIO.read(new File("Images/AbaFondTourPBLACK.png"));
+	                g.drawImage(img, 0, 0, this);
+	            }
+	            else{
+	                Image img = ImageIO.read(new File("Images/AbaFondTourPWHITE.png"));
+	                g.drawImage(img, 0, 0, this);
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+        }
         //Mets à jour le pad directionnel
         if(verifMoveTabDirections(Config.Direction.UPRIGHT)){
             try {
@@ -524,6 +537,10 @@ public class PanneauAbalone extends JPanel {
                 board.getPseudos().add(temp);
             }
         }
+    }
+    
+    public void setAI(boolean AI){
+    	this.AI = AI;
     }
     public void save(String playerName, int nbPlayers, int playerRound, Board board)
     {
