@@ -1,8 +1,10 @@
 package controleur;
 
 import modele.BoardDC;
+import modele.Config;
 import modele.Config.Direction;
 import modele.Coords;
+import modele.IA;
 import vue.PanneauDC;
 
 import javax.swing.*;
@@ -36,28 +38,52 @@ public class ControlerDC {
 
 			// Quand on clique sur le Panel
 			public void mouseClicked(MouseEvent e) {
-                int switcher;
                 //playDC returns true if a movement have been executed
-                switcher = playDC(true, false, e);
-                if (switcher == 2) {
+				int switcher = playDC(false, false, e);
+				if (switcher == 2) {
                     //manages dynamic jump
                     while (true) {
-                        if (playDC(true, true, e) != 2)
-                            break;
-                    }
+						if (playDC(false, true, e) != 2) {
+							System.out.println("BREAAK");
+							break;
+						}
+					}
                     boardDC.setJumping(false);
 
                 }
                 if (switcher != 0)
                     boardDC.switchPlayer();
-
             }
 		});
 		//clickFunction();
+		clickFunction(IA);
 	}
-	
-	public void clickFunction(){ // add boolean IA
-		
+
+	public void clickFunction(boolean IA) { // add boolean IA
+		if (IA)
+			ExecuteIA();
+	}
+
+	public void ExecuteIA() {
+		modele.IA computeur = new IA(boardDC);
+		//pan.refreshBoard();
+		int d = pan.getDifficulty();
+		String move;
+		if (d < 4)
+			move = computeur.alphaBeta(d, d, Integer.MIN_VALUE, Integer.MAX_VALUE, "", Config.Color.BLACK, Config.Color.BLACK, Integer.MAX_VALUE);
+		else if (d <= 9)
+			move = computeur.alphaBeta(4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, "", Config.Color.BLACK, Config.Color.BLACK, Integer.MAX_VALUE);
+
+		else
+			move = computeur.alphaBeta(5, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "", Config.Color.BLACK, Config.Color.BLACK, Integer.MAX_VALUE);
+		boardDC.executeMove(boardDC.stringToMove(move.substring(0, 8)), Config.Color.BLACK);
+
+		//MISE A JOUR DES INDICATEURS DE BOULES RESTANTES
+
+		boardDC.switchPlayer();
+		pan.copyTab(boardDC);
+		pan.reset();
+		pan.refreshBoard();
 	}
 
     public int playDC(boolean IA, boolean flag, MouseEvent e) {
@@ -87,8 +113,8 @@ public class ControlerDC {
 			ret=boardDC.executeMove(tabPieces, boardDC.getCase(marble));
             if (flag && ret != 2)
                 boardDC.undo(tabPieces,boardDC.getCase(marble));
-			if(flag && boardDC.generateDir(tabPieces).size()==0)
-                return 0;
+			/*if(flag && boardDC.generateDir(tabPieces).size()==0)
+				return 0;*/
             /*if(boardDC.executeMove(tabPieces,boardDC.getCase(marble))==false)
 				boardDC.undo(tabPieces,boardDC.getCase(marble));*/
 			pan.copyTab(boardDC);

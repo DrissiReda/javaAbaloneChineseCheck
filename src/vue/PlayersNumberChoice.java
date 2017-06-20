@@ -2,7 +2,6 @@ package vue;
 
 import controleur.ControlerAbalone;
 import controleur.ControlerDC;
-import modele.BoardAbalone;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +10,6 @@ import java.awt.event.ActionListener;
 
 public class PlayersNumberChoice extends JPanel {
 
-	private BoardAbalone boardAB;
 	private PanneauAbalone pan;
 
 
@@ -49,10 +47,11 @@ public class PlayersNumberChoice extends JPanel {
 				setVisible(false);
 				if (game == "Abalone"){
 					/******************* Lancement jeu **********************/
-					ControlerAbalone abalone = new ControlerAbalone(parent, true);
+					ControlerAbalone abalone = new ControlerAbalone(parent, playerName, true);
 					/********************************************************/
 				}else{
 					// Appel controleur Dames (vs ia)
+					ControlerDC dc = new ControlerDC(parent, playerName, 1, 1, true);
 				}
 			}
 		});
@@ -82,7 +81,7 @@ public class PlayersNumberChoice extends JPanel {
 					
 					setVisible(false);
 					/******************* Lancement jeu **********************/
-					ControlerAbalone abalone = new ControlerAbalone(parent, false);
+					ControlerAbalone abalone = new ControlerAbalone(parent, playerName, false);
 					/********************************************************/
 				}
 

@@ -19,6 +19,7 @@ public class PanneauAbalone extends JPanel {
 
     JSlider slideDif = new JSlider(JSlider.VERTICAL, 1, 10, 1);
     int difficulty = 1;
+    JFrame frame = new JFrame();
     private int marbleLeftBlack = 14;
     private int marbleLeftWhite = 14;
     private BoardAbalone boardView = new BoardAbalone();
@@ -32,6 +33,10 @@ public class PanneauAbalone extends JPanel {
     private JLabel validButtonUp = new JLabel(new ImageIcon("Images/ValidUp.png"));
     private Config.Direction direction=null;
     private ArrayList<Config.Direction> tabDirections = new ArrayList<Config.Direction>();
+
+    public void setFrame(JFrame j) {
+        frame = j;
+    }
     
     public void setName(String s)
     {
@@ -325,8 +330,13 @@ public class PanneauAbalone extends JPanel {
 
                     	System.out.println("TEST");
                     	break;
-                    case 2: //MENU
-                    	break;
+                    case 2:
+                        setVisible(false);
+                        JPanel panel6 = new Menu(frame, boardView.getName(), "Abalone");
+                        panel6.setVisible(true);
+                        panel6.setBounds(0, 0, 1000, 600);
+                        frame.getContentPane().add(panel6);
+                        break;
                     case 3: //A PROPOS
                     	break;
                 }

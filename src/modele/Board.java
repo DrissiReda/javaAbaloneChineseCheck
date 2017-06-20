@@ -32,6 +32,10 @@ public abstract class Board {
 	public abstract String MoveOrdering(Color player);
 	public int getHeight(){ return height;}
 	public int getWidth(){return width;}
+
+	public int getMoveSize() {
+		return moveSize;
+	}
 	public abstract Color getCase(Coords pos);
 	public abstract void setCase(Coords pos, Color col);
 	public abstract int marble_count(Color player);
